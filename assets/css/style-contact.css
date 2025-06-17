@@ -610,9 +610,9 @@ opacity: 1;
   #hero .carousel-control-next {
     width: 5%;
   }
-  .col-xl-9{
+  /* .col-xl-9{
       box-shadow: ;
-  }
+  } */
 }
 
 /*--------------------------------------------------------------
@@ -669,7 +669,8 @@ section {
   transform: skewY(-3deg);
 }
 form .text-center button{
-  margin-top: 10px;
+  margin-top: 15px;
+  border:1px solid var(--bg);
   background-color: var(--bg1);
   color: #fff;
   height: 40px;
@@ -677,6 +678,8 @@ form .text-center button{
 }
 form .text-center button:hover{
   background-color: var(--col);
+  border:1px solid var(--col);
+  transition: ease-in-out .5s;
 }
 /*--------------------------------------------------------------
 # Contact

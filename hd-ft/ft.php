@@ -71,7 +71,7 @@
         &copy; Copyright <strong><span>Bowaba n Congo <?php echo date('Y')?></span></strong>. Tout Droit Réservé.
       </div>
       <div class="credits">
-        Developped by <a href="#">CM</a>
+        Developed by <a style="color:#ffcf2a;" href="https://claude-mutela.dev" target="_blank">Claude Mutela</a>
       </div>
     </div>
      </footer><!-- End Footer -->

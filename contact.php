@@ -31,7 +31,7 @@
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
   <!--  CSS File -->
-  <link href="assets/css/contact.css" rel="stylesheet">
+  <link href="assets/css/style-contact.css" rel="stylesheet">
 </head>
 <body>
 
@@ -49,7 +49,7 @@
             <div class="carousel-container">
               <div class="carousel-content container">
                 <h2 class="animate__animated animate__fadeInDown"><span>Contactez-vous</span></h2>
-                <p class="animate__animated animate__fadeInUp">S'en ai pour nous un plaisir...</p>
+                <!-- <p class="animate__animated animate__fadeInUp">S'en ai pour nous un plaisir...</p> -->
               </div>
             </div>
           </div>
@@ -70,9 +70,8 @@
               <i class="bx bx-map"></i>
               <h3>Notre Adresse</h3>
               <p>
-                10, les travailleurs Quartier gare <br>
-                Commune de la Gombe <br>
-                Réf : En face de l'hôtel belle vie.
+                01, Avenue LUAMBO-MAKIADI, Gallerie ATTOUÉ, <br>
+                local 307, Kin-Mazière, Commune de la Gombe. 
               </p>
             </div>
           </div>
@@ -82,13 +81,17 @@
               <i class="bx bx-envelope"></i>
               <h3>Notre Mail</h3>
               <p><a href="mailto:contact@bowaba.com.com">contact@bowabancongo.com</a></p>
+              <p><a href="mailto:contact@bowaba.com.com">ceo@bowabancongo.com</a></p>
             </div>
           </div>
           <div class="col-xl-3 col-lg-4 mt-4" data-aos="fade-up" data-aos-delay="200">
             <div class="info-box">
               <i class="bx bx-phone-call"></i>
               <h3>Appelez-nous au:</h3>
-              <p>+243 977 411 608</p>
+              <p>
+                <a href="tel:243816695000 ">+243 816 695 000</a>
+              </p>
+
             </div>
           </div>
         </div>
@@ -126,7 +129,9 @@
                   <?= isset($_SESSION['inputs']) ? $_SESSION['inputs']['message'] : ''; ?>
                 </textarea>
               </div>
-              <div class="text-center"><button type="submit">Envoyez votre message</button></div>
+              <div class="text-center">
+                <button type="submit">Envoyez votre message</button>
+              </div>
             </form>
 
       </div>
