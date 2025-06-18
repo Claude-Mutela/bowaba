@@ -634,6 +634,9 @@ section {
     position: relative;
     color: #fff;
   }
+  .section-title .equipe {
+  color: var(--bg1);
+}
   
   .section-title h2::after {
     content: "";

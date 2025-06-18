@@ -31,7 +31,7 @@
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
   <!-- Template Main CSS File -->
-  <link href="assets/css/abt.css" rel="stylesheet">
+  <link href="assets/css/about.css" rel="stylesheet">
 </head>
 <body>
    <!-- ======= Hero Section ======= -->
@@ -94,7 +94,7 @@
       <div class="container" data-aos="fade-up">
 
         <div class="section-title">
-          <h2>EQUIPE</h2>
+          <h2 class="equipe">NOTRE EQUIPE</h2>
           <p>L'Equipe Bowaba</p>
         </div>
 
@@ -102,72 +102,72 @@
 
           <div class="col-xl-3 col-lg-4 col-md-6">
             <div class="member" data-aos="zoom-in" data-aos-delay="100">
-              <img src="assets/img/team/team-1.jpg" class="img-fluid" alt="">
+              <img src="assets/img/team/kipay.png" class="img-fluid" alt="">
               <div class="member-info">
                 <div class="member-info-content">
-                  <h4>Walter White</h4>
-                  <span>Chief Executive Officer</span>
+                  <h4>Wise KIPAY</h4>
+                  <span>Chief Executive Officer (CEO)</span>
                 </div>
-                <div class="social">
+                <!-- <div class="social">
                   <a href=""><i class="bi bi-twitter"></i></a>
                   <a href=""><i class="bi bi-facebook"></i></a>
                   <a href=""><i class="bi bi-instagram"></i></a>
                   <a href=""><i class="bi bi-linkedin"></i></a>
-                </div>
+                </div> -->
               </div>
             </div>
           </div>
 
           <div class="col-xl-3 col-lg-4 col-md-6" data-wow-delay="0.1s">
             <div class="member" data-aos="zoom-in" data-aos-delay="200">
-              <img src="assets/img/team/team-2.jpg" class="img-fluid" alt="">
+              <img src="assets/img/team/JEANCY.png" class="img-fluid" alt="">
               <div class="member-info">
                 <div class="member-info-content">
-                  <h4>Sarah Jhonson</h4>
-                  <span>Product Manager</span>
+                  <h4>Jeancy KITOKO</h4>
+                  <span>Conseiller Juridique</span>
                 </div>
-                <div class="social">
+                <!-- <div class="social">
                   <a href=""><i class="bi bi-twitter"></i></a>
                   <a href=""><i class="bi bi-facebook"></i></a>
                   <a href=""><i class="bi bi-instagram"></i></a>
                   <a href=""><i class="bi bi-linkedin"></i></a>
-                </div>
+                </div> -->
               </div>
             </div>
           </div>
 
           <div class="col-xl-3 col-lg-4 col-md-6" data-wow-delay="0.2s">
             <div class="member" data-aos="zoom-in" data-aos-delay="300">
-              <img src="assets/img/team/team-3.jpg" class="img-fluid" alt="">
+              <img src="assets/img/team/joseph.png" class="img-fluid" alt="">
               <div class="member-info">
                 <div class="member-info-content">
-                  <h4>William Anderson</h4>
-                  <span>CTO</span>
+                  <h4>Joseph OMEKENGA</h4>
+                  <span>Coach-formateur</span>
                 </div>
-                <div class="social">
+                <!-- <div class="social">
                   <a href=""><i class="bi bi-twitter"></i></a>
                   <a href=""><i class="bi bi-facebook"></i></a>
                   <a href=""><i class="bi bi-instagram"></i></a>
                   <a href=""><i class="bi bi-linkedin"></i></a>
-                </div>
+                </div> -->
               </div>
             </div>
           </div>
 
           <div class="col-xl-3 col-lg-4 col-md-6" data-wow-delay="0.3s">
             <div class="member" data-aos="zoom-in" data-aos-delay="400">
-              <img src="assets/img/team/team-4.jpg" class="img-fluid" alt="">
+              <img src="assets/img/team/JONATHA.png" class="img-fluid" alt="">
               <div class="member-info">
                 <div class="member-info-content">
-                  <h4>Amanda Jepson</h4>
-                  <span>Accountant</span>
+                  <h4>Jonathan MBABU</h4>
+                  <span>Coach-formateur</span>
                 </div>
-                <div class="social">
+                <!-- <div class="social">
                   <a href=""><i class="bi bi-twitter"></i></a>
                   <a href=""><i class="bi bi-facebook"></i></a>
                   <a href=""><i class="bi bi-instagram"></i></a>
                   <a href=""><i class="bi bi-linkedin"></i></a>
-                </div>
+                </div> -->
               </div>
             </div>
           </div>
