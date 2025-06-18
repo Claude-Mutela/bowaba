@@ -874,6 +874,7 @@ section {
   }
 .section-title #faq{
     color: #fff;
+    padding-top: 15px;
 }  
   .faq .faq-list ul {
     padding: 0;
