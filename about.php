@@ -105,7 +105,7 @@
               <img src="assets/img/team/kipay.png" class="img-fluid" alt="">
               <div class="member-info">
                 <div class="member-info-content">
-                  <h4>Wise KIPAY</h4>
+                  <h4>KIPEY Ezekiel Wise</h4>
                   <span>Chief Executive Officer (CEO)</span>
                 </div>
                 <!-- <div class="social">
@@ -120,11 +120,11 @@
 
           <div class="col-xl-3 col-lg-4 col-md-6" data-wow-delay="0.1s">
             <div class="member" data-aos="zoom-in" data-aos-delay="200">
-              <img src="assets/img/team/JEANCY.png" class="img-fluid" alt="">
+              <img src="assets/img/team/jency.jpg" class="img-fluid" alt="">
               <div class="member-info">
                 <div class="member-info-content">
                   <h4>Jeancy KITOKO</h4>
-                  <span>Conseiller Juridique</span>
+                  <span>Assistant du CEO</span>
                 </div>
                 <!-- <div class="social">
                   <a href=""><i class="bi bi-twitter"></i></a>
@@ -160,6 +160,24 @@
               <div class="member-info">
                 <div class="member-info-content">
                   <h4>Jonathan MBABU</h4>
+                  <span>Coach-formateur</span>
+                </div>
+                <!-- <div class="social">
+                  <a href=""><i class="bi bi-twitter"></i></a>
+                  <a href=""><i class="bi bi-facebook"></i></a>
+                  <a href=""><i class="bi bi-instagram"></i></a>
+                  <a href=""><i class="bi bi-linkedin"></i></a>
+                </div> -->
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl-3 col-lg-4 col-md-6" data-wow-delay="0.3s">
+            <div class="member" data-aos="zoom-in" data-aos-delay="400">
+              <img src="assets/img/team/lubamba.jpg" class="img-fluid" alt="">
+              <div class="member-info">
+                <div class="member-info-content">
+                  <h4>LUBAMBA UBA FÉLIX</h4>
                   <span>Coach-formateur</span>
                 </div>
                 <!-- <div class="social">

@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fondation Bowabancongo - Professionnalisation des acteurs non étatiques</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo">Fondation <span>Bowabancongo</span></a>
+                <ul class="nav-links">
+                    <li><a href="#home">Accueil</a></li>
+                    <li><a href="#about">À propos</a></li>
+                    <li><a href="#activities">Activités</a></li>
+                    <li><a href="#missions">Missions</a></li>
+                    <li><a href="#objectives">Objectifs</a></li>
+                    <li><a href="#training">Formation</a></li>
+                    <li><a href="#agrobusiness">Agrobusiness</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <div class="hamburger">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Carousel -->
+    <section class="hero" id="home">
+        <div class="carousel">
+            <!-- Slide 1 -->
+            <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');">
+                <div class="slide-content">
+                    <h1>Renforcement des Capacités Professionnelles</h1>
+                    <p>Nous professionnalisons les acteurs non étatiques pour augmenter leurs capacités dans la mobilisation des fonds et l'absorption des capitaux.</p>
+                    <a href="#about" class="btn">En savoir plus</a>
+                    <a href="#contact" class="btn btn-accent">Nous contacter</a>
+                </div>
+            </div>
+            
+            <!-- Slide 2 -->
+            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');">
+                <div class="slide-content">
+                    <h1>Formation et Accompagnement Entrepreneurial</h1>
+                    <p>Nous accompagnons les MPME et OSC portées par des femmes et des jeunes pour concrétiser leurs projets innovants.</p>
+                    <a href="#training" class="btn">Nos formations</a>
+                    <a href="#contact" class="btn btn-accent">S'inscrire</a>
+                </div>
+            </div>
+            
+            <!-- Slide 3 -->
+            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');">
+                <div class="slide-content">
+                    <h1>Entrepreneuriat Agricole et Innovation</h1>
+                    <p>Développement des compétences en agrobusiness pour une agriculture durable et rentable.</p>
+                    <a href="#agrobusiness" class="btn">Découvrir</a>
+                    <a href="#contact" class="btn btn-accent">Participer</a>
+                </div>
+            </div>
+            
+            <div class="carousel-controls">
+                <div class="control-dot active" data-slide="0"></div>
+                <div class="control-dot" data-slide="1"></div>
+                <div class="control-dot" data-slide="2"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <h2>À propos de nous</h2>
+            <div class="about-content">
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Équipe de la Fondation Bowabancongo">
+                </div>
+                <div class="about-text">
+                    <h3>Fondation Bowabancongo (FOB ASBL)</h3>
+                    <p>La Fondation Bowabancongo est une organisation à but non lucratif représentée par Monsieur KIPEY EZEKIEL E. Wise, en tant que Président de la fondation.</p>
+                    <p><strong>Objectif principal :</strong> Professionnaliser les acteurs non étatiques afin d'augmenter leurs capacités dans la mobilisation des fonds et l'absorption des capitaux.</p>
+                    <p><strong>Domaines d'intervention :</strong></p>
+                    <ul>
+                        <li>Actions Humanitaires (assistance aux personnes vulnérables)</li>
+                        <li>Droits humains (promotion et protection des droits humains) et justice transitionnelle</li>
+                        <li>Entrepreneuriat (promotion de la culture entrepreneuriale)</li>
+                        <li>Entrepreneuriat Agricole</li>
+                        <li>Éducation, culture et arts</li>
+                        <li>Genre, famille et enfant</li>
+                        <li>Santé et protection de l'environnement</li>
+                    </ul>
+                    <a href="#contact" class="btn">Nous contacter</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Activities Section -->
+    <section class="activities" id="activities">
+        <div class="container">
+            <h2>Nos Activités</h2>
+            <div class="cards-container">
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-hands-helping"></i>
+                    </div>
+                    <h3>Accompagnement</h3>
+                    <p>Accompagnement des MPME et OSC portées par des femmes et des jeunes pour concrétiser leurs projets innovants.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3>Formation</h3>
+                    <p>Formations en renforcement des capacités techniques et entrepreneuriales pour divers secteurs d'activité.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Coaching</h3>
+                    <p>Coaching personnalisé pour aider les bénéficiaires à développer leurs compétences et leurs entreprises.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Missions Section -->
+    <section class="missions" id="missions">
+        <div class="container">
+            <h2>Nos Missions</h2>
+            <div class="cards-container">
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Renforcement des capacités</h3>
+                    <p>Renforcer les capacités administratives et de gestion des organisations et entreprises.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h3>Outils de gestion</h3>
+                    <p>Concevoir des outils de gestion et d'administration adaptés aux besoins des bénéficiaires.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h3>Mise en consortium</h3>
+                    <p>Regrouper et mettre en consortium des organisations autour des thématiques communes.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Objectives Section -->
+    <section class="objectives" id="objectives">
+        <div class="container">
+            <h2>Nos Objectifs</h2>
+            <div class="cards-container">
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-bullhorn"></i>
+                    </div>
+                    <h3>Communication</h3>
+                    <p>Définir les mécanismes de communication et de valorisation des œuvres d'esprit et réalisations des organisations.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h3>Accompagnement</h3>
+                    <p>Identifier et accompagner les organisations à forte potentialité œuvrant dans l'informel pour leur formalisation.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-piggy-bank"></i>
+                    </div>
+                    <h3>Autonomisation</h3>
+                    <p>Autonomiser et diversifier les ressources financières des organisations par la création d'activités génératrices de revenus.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AgroBusiness Section -->
+    <section class="agrobusiness" id="agrobusiness">
+        <div class="container">
+            <h2>Agrobusiness</h2>
+            <p class="text-center">Nos programmes en entrepreneuriat agricole visent à développer des compétences clés pour réussir dans le secteur agricole.</p>
+            
+            <div class="cards-container">
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-seedling"></i>
+                    </div>
+                    <h3>Entrepreneuriat agricole</h3>
+                    <p>Formation complète sur les fondamentaux de l'entrepreneuriat dans le secteur agricole.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-project-diagram"></i>
+                    </div>
+                    <h3>Chaine de valeur</h3>
+                    <p>Comprendre et maîtriser la chaîne de valeur dans le secteur agricole pour maximiser les profits.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <h3>Étude de marché</h3>
+                    <p>Apprendre à réaliser des études de marché pertinentes pour les produits agricoles.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <h3>Planning de production</h3>
+                    <p>Méthode RAM pour une planification efficace de la production agricole.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-business-time"></i>
+                    </div>
+                    <h3>Business Model</h3>
+                    <p>Développer un modèle économique viable pour son entreprise agricole.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-store"></i>
+                    </div>
+                    <h3>Marketing</h3>
+                    <p>Techniques de marketing de terrain et digital pour promouvoir ses produits agricoles.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Training Section -->
+    <section class="training" id="training">
+        <div class="container">
+            <h2>Nos Formations</h2>
+            <p class="text-center">Découvrez notre catalogue complet de formations professionnelles adaptées à vos besoins.</p>
+            
+            <div class="training-categories">
+                <!-- Gestion Category -->
+                <div class="category">
+                    <h3>Gestion Entrepreneuriale</h3>
+                    <div class="training-list">
+                        <div class="training-item">
+                            <h4>Entrepreneuriat <span class="training-duration">1 semaine</span></h4>
+                            <p>Formation aux fondamentaux de l'entrepreneuriat.</p>
+                        </div>
+                        <div class="training-item">
+                            <h4>Business Analysis (Analyse des affaires) <span class="training-duration">2 semaines</span></h4>
+                            <p>Techniques d'analyse des opportunités commerciales.</p>
+                        </div>
+                        <div class="training-item">
+                            <h4>Elaboration du Business Model et Business Plan <span class="training-duration">2 semaines</span></h4>
+                            <p>Méthodologie pour créer des modèles économiques et plans d'affaires solides.</p>
+                        </div>
+                        <div class="training-item">
+                            <h4>Gestion des projets avec MS-PROJECT <span class="training-duration">2 semaines</span></h4>
+                            <p>Maîtrise du logiciel pour une gestion efficace des projets.</p>
+                        </div>
+                        <div class="training-item">
+                            <h4>Planification, Suivi et Evaluation des projets <span class="training-duration">2 semaines</span></h4>
+                            <p>Outils pour planifier, suivre et évaluer les projets d'entreprise.</p>
+                        </div>
+                        <div class="training-item">
+                            <h4>Gestion de production <span class="training-duration">3 semaines</span></h4>
+                            <p>Maîtrise de la chaîne de production et gestion de stock MP et PF d'une MPMI.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Informatique Category -->
+                <div class="category">
+                    <h3>Informatique</h3>
+                    <div class="training-list">
+                        <div class="training-item">
+                            <h4>Pack Office (Word, Excel, Power Point) <span class="training-duration">1 mois</span></h4>
+                            <p>Maîtrise des outils bureautiques essentiels.</p>
+                        </div>
+                        <div class="training-item">
+                            <h4>Logiciels d'analyse statistiques <span class="training-duration">3 semaines</span></h4>
+                            <p>Utilisation de Spss, Stata, Excel avancé et Power BI.</p>
+                        </div>
+                        <div class="training-item">
+                            <h4>Conception et Création des sites web <span class="training-duration">1 mois</span></h4>
+                            <p>Avec WordPress, Elementor et Woocommerce.</p>
+                        </div>
+                        <div class="training-item">
+                            <h4>Design Graphic <span class="training-duration">2 mois</span></h4>
+                            <p>Formation complète en conception graphique.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Santé Category -->
+                <div class="category">
+                    <h3>Santé</h3>
+                    <div class="training-list">
+                        <div class="training-item">
+                            <h4>Epidémiologie de terrain <span class="training-duration">2 semaines</span></h4>
+                            <p>Techniques d'épidémiologie appliquée.</p>
+                        </div>
+                        <div class="training-item">
+                            <h4>Technique d'enquête en santé publique <span class="training-duration">1 semaine</span></h4>
+                            <p>Méthodologie pour mener des enquêtes en santé.</p>
+                        </div>
+                        <div class="training-item">
+                            <h4>Wash (eau hygiène et assainissement) <span class="training-duration">2 semaines</span></h4>
+                            <p>Principes fondamentaux de l'eau, l'hygiène et l'assainissement.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Agrobusiness Category -->
+                <div class="category">
+                    <h3>Agrobusiness</h3>
+                    <div class="training-list">
+                        <div class="training-item">
+                            <h4>Entrepreneuriat agricole <span class="training-duration">2 séances</span></h4>
+                            <p>Fondamentaux de l'entrepreneuriat dans le secteur agricole.</p>
+                        </div>
+                        <div class="training-item">
+                            <h4>Chaine de valeur <span class="training-duration">2 séances</span></h4>
+                            <p>Comprendre et optimiser la chaîne de valeur agricole.</p>
+                        </div>
+                        <div class="training-item">
+                            <h4>Création d'une entreprise agricole <span class="training-duration">3 semaines</span></h4>
+                            <p>Formalisation et aspects juridiques des entreprises agricoles.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2>Contactez-nous</h2>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>Informations de contact</h3>
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div>
+                            <h4>Adresse</h4>
+                            <p>
+                                01, Avenue LUAMBO-MAKIADI, Gallerie ATTOUÉ, <br>
+                                local 307, Kin-Mazière, Commune de la Gombe. 
+                            </p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <div>
+                            <h4>Téléphone</h4>
+                            <p>
+                                <a href="tel:+243816695000" target="_blank">+243 816 695 000</a>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div>
+                            <h4>Email</h4>
+                            <p>
+                                <a href="mailto:contact.fondation@bowabancongo.com">contact.fob@bowabancongo.com</a>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <h3>Envoyez-nous un message</h3>
+                    <form>
+                        <div class="form-group">
+                            <label for="name">Nom complet</label>
+                            <input type="text" id="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Sujet</label>
+                            <input type="text" id="subject" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn">Envoyer</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Fondation Bowabancongo</h3>
+                    <p>Professionnaliser les acteurs non étatiques afin d'augmenter leurs capacités dans la mobilisation des fonds et l'absorption des capitaux.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Liens rapides</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home">Accueil</a></li>
+                        <li><a href="#about">À propos</a></li>
+                        <li><a href="#activities">Activités</a></li>
+                        <li><a href="#training">Formations</a></li>
+                        <li><a href="#agrobusiness">Agrobusiness</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Nos formations</h3>
+                    <ul class="footer-links">
+                        <li><a href="#training">Gestion Entrepreneuriale</a></li>
+                        <li><a href="#training">Informatique</a></li>
+                        <li><a href="#training">Santé</a></li>
+                        <li><a href="#training">Agrobusiness</a></li>
+                        <li><a href="#training">Langues</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt"></i> 
+                            01, Avenue LUAMBO-MAKIADI, Gallerie ATTOUÉ, <br>
+                            local 307, Kin-Mazière, Commune de la Gombe. 
+                        </li>
+                        <li>
+                            <i class="fas fa-phone-alt"></i> 
+                            <a href="tel:+243816695000" target="_blank">+243 816 695 000</a>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <a href="mailto:contact.fondation@bowabancongo.com">contact.fob@bowabancongo.com</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <?php echo date('Y')?>  Fondation Bowabancongo. Tous droits réservés.</p>
+                <p class="signature">Designed & Developed by <a href="claude-mutela.dev" target="_blank"> Claude Mutela</a> </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/script.js"></script>
+</body>
+</html>

@@ -21,7 +21,7 @@
               <li><i class="bx bx-chevron-right"></i> <a href="index.php">Accueil</a></li>
               <li><i class="bx bx-chevron-right"></i> <a href="service.php">Services</a></li>
               <li><i class="bx bx-chevron-right"></i> <a href="about.php">A propos</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="blog.php">Blog</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="fondation.php">fondation</a></li>
               <li><i class="bx bx-chevron-right"></i> <a href="contact.php">Contact</a></li>
             </ul>
           </div>
