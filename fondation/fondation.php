@@ -1,24 +1,28 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fondation Bowabancongo - Professionnalisation des acteurs non étatiques</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/realisation.css">
 </head>
+
 <body>
     <!-- Header & Navigation -->
     <header>
         <div class="container">
             <nav class="navbar">
-                <a href="#" class="logo">Fondation <span>Bowabancongo</span></a>
+                <a href="#" class="logo">FO <span>B</span></a>
                 <ul class="nav-links">
                     <li><a href="#home">Accueil</a></li>
                     <li><a href="#about">À propos</a></li>
                     <li><a href="#activities">Activités</a></li>
                     <li><a href="#missions">Missions</a></li>
                     <li><a href="#objectives">Objectifs</a></li>
+                    <li><a href="#achievements">Réalisations </a></li>
                     <li><a href="#training">Formation</a></li>
                     <li><a href="#agrobusiness">Agrobusiness</a></li>
                     <li><a href="#contact">Contact</a></li>
@@ -34,7 +38,7 @@
     <section class="hero" id="home">
         <div class="carousel">
             <!-- Slide 1 -->
-            <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');">
+            <div class="slide active" style="background-image: url('assets/img/slides/slide3.jpg');">
                 <div class="slide-content">
                     <h1>Renforcement des Capacités Professionnelles</h1>
                     <p>Nous professionnalisons les acteurs non étatiques pour augmenter leurs capacités dans la mobilisation des fonds et l'absorption des capitaux.</p>
@@ -42,27 +46,27 @@
                     <a href="#contact" class="btn btn-accent">Nous contacter</a>
                 </div>
             </div>
-            
+
             <!-- Slide 2 -->
-            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');">
+            <div class="slide" style="background-image: url('assets/img/slides/slide2.jpeg');">
                 <div class="slide-content">
                     <h1>Formation et Accompagnement Entrepreneurial</h1>
                     <p>Nous accompagnons les MPME et OSC portées par des femmes et des jeunes pour concrétiser leurs projets innovants.</p>
                     <a href="#training" class="btn">Nos formations</a>
-                    <a href="#contact" class="btn btn-accent">S'inscrire</a>
+                    <!-- <a href="#contact" class="btn btn-accent">S'inscrire</a> -->
                 </div>
             </div>
-            
+
             <!-- Slide 3 -->
-            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');">
+             <div class="slide" style="background-image: url('assets/img/slides/slide1.jpg');">
                 <div class="slide-content">
                     <h1>Entrepreneuriat Agricole et Innovation</h1>
                     <p>Développement des compétences en agrobusiness pour une agriculture durable et rentable.</p>
                     <a href="#agrobusiness" class="btn">Découvrir</a>
-                    <a href="#contact" class="btn btn-accent">Participer</a>
+                    <!-- <a href="#contact" class="btn btn-accent">Participer</a> -->
                 </div>
             </div>
-            
+
             <div class="carousel-controls">
                 <div class="control-dot active" data-slide="0"></div>
                 <div class="control-dot" data-slide="1"></div>
@@ -77,7 +81,7 @@
             <h2>À propos de nous</h2>
             <div class="about-content">
                 <div class="about-image">
-                    <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Équipe de la Fondation Bowabancongo">
+                    <img src="assets/img/about.jpg" alt="Fondacteur FOB-Wise Kipey">
                 </div>
                 <div class="about-text">
                     <h3>Fondation Bowabancongo (FOB ASBL)</h3>
@@ -194,7 +198,7 @@
         <div class="container">
             <h2>Agrobusiness</h2>
             <p class="text-center">Nos programmes en entrepreneuriat agricole visent à développer des compétences clés pour réussir dans le secteur agricole.</p>
-            
+
             <div class="cards-container">
                 <div class="card">
                     <div class="card-icon">
@@ -242,12 +246,88 @@
         </div>
     </section>
 
+    <!-- Réalisations Section -->
+    <section class="achievements" id="achievements">
+        <div class="container">
+            <h2>Nos Réalisations</h2>
+            <p class="text-center">Découvrez quelques-unes de nos réalisations marquantes à travers le pays.</p>
+
+            <div class="achievements-grid">
+                <!-- Card 1 -->
+                <div class="achievement-card">
+                    <div class="card-image">
+                        <img src="assets/img/realisation/rel6.jpg">
+                    </div>
+                    <div class="card-overlay">
+                        <h3>Formation en renforcement des capacités</h3>
+                        <p>Formation et coaching personnalisé des personnes affectées par le projet d'aménagement hydroagricole dans la commune de Nsele, Kinshasa.</p>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="achievement-card">
+                    <div class="card-image">
+                        <img src="assets/img/realisation/rel5.jpg">
+                    </div>
+                    <div class="card-overlay">
+                        <h3>Accompagnement entrepreneurial</h3>
+                        <p>Projet d'accompagnement de 119 femmes entrepreneurs productrices de chitwangues pour le développement durable de leurs micro-entreprises.</p>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="achievement-card">
+                    <div class="card-image">
+                        <img src="assets/img/realisation/rel1.jpg">
+                    </div>
+                    <div class="card-overlay">
+                        <h3>Formation agricole</h3>
+                        <p>Formation et accompagnement entrepreneurial des producteurs agricoles dans le cadre du Programme APEFE/Haut-Katanga à Lubumbashi.</p>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="achievement-card">
+                    <div class="card-image">
+                        <img src="assets/img/realisation/rel3.jpg">
+                    </div>
+                    <div class="card-overlay">
+                        <h3>Restructuration organisationnelle</h3>
+                        <p>Diagnostic et rapport pour la restructuration organisationnelle de l'ONG locale AASD, avec production d'un manuel de procédures.</p>
+                    </div>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="achievement-card">
+                    <div class="card-image">
+                        <img src="assets/img/realisation/rel2.jpg">
+                    </div>
+                    <div class="card-overlay">
+                        <h3>Coaching entrepreneurial</h3>
+                        <p>Programme de coaching entrepreneurial pour autonomiser les jeunes apprenants par la création de micro-entreprises.</p>
+                    </div>
+                </div>
+
+                <!-- Card 6 -->
+                <div class="achievement-card">
+                    <div class="card-image">
+                        <img src="assets/img/realisation/rel4.jpg">
+                    </div>
+                    <div class="card-overlay">
+                        <h3>Formation en entrepreneuriat</h3>
+                        <p>Formation de 1 000 jeunes entrepreneurs en entrepreneuriat dans le cadre du projet Talents Pluriels lancé par CUSO INTERNATIONAL.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Training Section -->
     <section class="training" id="training">
         <div class="container">
             <h2>Nos Formations</h2>
             <p class="text-center">Découvrez notre catalogue complet de formations professionnelles adaptées à vos besoins.</p>
-            
+
             <div class="training-categories">
                 <!-- Gestion Category -->
                 <div class="category">
@@ -279,7 +359,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Informatique Category -->
                 <div class="category">
                     <h3>Informatique</h3>
@@ -302,7 +382,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Santé Category -->
                 <div class="category">
                     <h3>Santé</h3>
@@ -321,7 +401,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Agrobusiness Category -->
                 <div class="category">
                     <h3>Agrobusiness</h3>
@@ -359,7 +439,7 @@
                             <h4>Adresse</h4>
                             <p>
                                 01, Avenue LUAMBO-MAKIADI, Gallerie ATTOUÉ, <br>
-                                local 307, Kin-Mazière, Commune de la Gombe. 
+                                local 307, Kin-Mazière, Commune de la Gombe.
                             </p>
                         </div>
                     </div>
@@ -389,27 +469,26 @@
                         <a href="#"><i class="fab fa-facebook-f"></i></a>
                         <a href="#"><i class="fab fa-twitter"></i></a>
                         <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
                 <div class="contact-form">
                     <h3>Envoyez-nous un message</h3>
-                    <form>
+                    <form action="mail.php" method="post">
                         <div class="form-group">
                             <label for="name">Nom complet</label>
-                            <input type="text" id="name" required>
+                            <input type="text" name="name" id="name" required>
                         </div>
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="email" id="email" required>
+                            <input type="email" name="mail" id="email" required>
                         </div>
                         <div class="form-group">
                             <label for="subject">Sujet</label>
-                            <input type="text" id="subject" required>
+                            <input type="text" name="subject" id="subject" required>
                         </div>
                         <div class="form-group">
                             <label for="message">Message</label>
-                            <textarea id="message" required></textarea>
+                            <textarea name="message" id="message" required></textarea>
                         </div>
                         <button type="submit" class="btn">Envoyer</button>
                     </form>
@@ -429,7 +508,6 @@
                         <a href="#"><i class="fab fa-facebook-f"></i></a>
                         <a href="#"><i class="fab fa-twitter"></i></a>
                         <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
                 <div class="footer-column">
@@ -438,6 +516,7 @@
                         <li><a href="#home">Accueil</a></li>
                         <li><a href="#about">À propos</a></li>
                         <li><a href="#activities">Activités</a></li>
+                        <li><a href="#achievements">Réalisations </a></li>
                         <li><a href="#training">Formations</a></li>
                         <li><a href="#agrobusiness">Agrobusiness</a></li>
                         <li><a href="#contact">Contact</a></li>
@@ -456,12 +535,12 @@
                 <div class="footer-column">
                     <h3>Contact</h3>
                     <ul class="footer-links">
-                        <li><i class="fas fa-map-marker-alt"></i> 
+                        <li><i class="fas fa-map-marker-alt"></i>
                             01, Avenue LUAMBO-MAKIADI, Gallerie ATTOUÉ, <br>
-                            local 307, Kin-Mazière, Commune de la Gombe. 
+                            local 307, Kin-Mazière, Commune de la Gombe.
                         </li>
                         <li>
-                            <i class="fas fa-phone-alt"></i> 
+                            <i class="fas fa-phone-alt"></i>
                             <a href="tel:+243816695000" target="_blank">+243 816 695 000</a>
                         </li>
                         <li>
@@ -472,12 +551,14 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; <?php echo date('Y')?>  Fondation Bowabancongo. Tous droits réservés.</p>
-                <p class="signature">Designed & Developed by <a href="claude-mutela.dev" target="_blank"> Claude Mutela</a> </p>
+                <p>&copy; <?php echo date('Y') ?> Fondation Bowabancongo. Tous droits réservés.</p>
+                <p class="signature">Designed & Developed by <a href="https://claude-mutela.dev" target="_blank"> Claude Mutela</a> </p>
             </div>
         </div>
     </footer>
 
     <script src="assets/js/script.js"></script>
+    <script src="assets/js/realisation.js"></script>
 </body>
+
 </html>

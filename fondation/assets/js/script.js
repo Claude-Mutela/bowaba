@@ -56,6 +56,7 @@
             showSlide(nextSlide);
         }, 5000);
         
+        
         // Form submission (prevent default for demo)
         const form = document.querySelector('.contact-form form');
         form.addEventListener('submit', (e) => {
