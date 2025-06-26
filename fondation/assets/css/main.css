@@ -63,7 +63,20 @@
         p {
             margin-bottom: 15px;
         }
-        
+        .btn-status{
+            width: 100%;
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 15px;
+        }
+        .success-message{
+            background-color: rgb(109, 195, 109);
+            color: green;
+        }
+        .error-message{
+            background-color: rgb(211, 87, 87);
+            color: red;
+        }
         .btn {
             display: inline-block;
             padding: 12px 30px;

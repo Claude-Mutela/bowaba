@@ -1,3 +1,6 @@
+<?php
+    session_start();
+?>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -477,6 +480,15 @@
                 <div class="contact-form">
                     <h3>Envoyez-nous un message</h3>
                     <form action="mail.php" method="post">
+                        <div class="form-group">
+                            <?php if(isset($_SESSION['success'])) : ?>
+                                <p class="success-message btn-status">Message envoyé!</p>
+                            <?php endif ?>
+
+                            <?php if(isset($_SESSION['error'])) : ?>
+                                <p class="error-message btn-status"> Message non envoye, Ressayé !</p>
+                            <?php endif ?>
+                        </div>
                         <div class="form-group">
                             <label for="name">Nom complet</label>
                             <input type="text" name="name" id="name" required>
