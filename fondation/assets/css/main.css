@@ -113,14 +113,19 @@
         }
         
         .logo {
-            font-size: 1.8rem;
+            font-size: 1.25rem;
             font-weight: bold;
             color: var(--primary-color);
             text-decoration: none;
+            display: flex;
+            align-items:  center;
         }
-        
+        .navbar .logo img{
+            width: 150px;
+            height: 150px;
+        }
         .logo span {
-            color: var(--secondary-color);
+            display: none;
         }
         
         .nav-links {
@@ -153,7 +158,7 @@
             height: 100vh;
             position: relative;
             overflow: hidden;
-            margin-top: 70px;
+            margin-top: 30px;
         }
         
         .carousel {
@@ -422,7 +427,7 @@
         
         .form-group textarea {
             height: 150px;
-            resize: vertical;
+            resize: none;
         }
         
         /* Footer */
@@ -525,7 +530,14 @@
             .hamburger {
                 display: block;
             }
-            
+            .navbar .logo img{
+                width: 100px;
+                height: 100px;
+            }
+            .logo span {
+                display: block;
+                color: var(--secondary-color);
+            }
             .nav-links {
                 position: fixed;
                 top: 80px;

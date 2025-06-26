@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fondation Bowabancongo - Professionnalisation des acteurs non étatiques</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/main.css">
     <link rel="stylesheet" href="assets/css/realisation.css">
 </head>
 
@@ -15,7 +15,10 @@
     <header>
         <div class="container">
             <nav class="navbar">
-                <a href="#" class="logo">FO <span>B</span></a>
+                <a href="#" class="logo">
+                    <img src="assets/img/logo/logo.png" alt="logo fondation bowaba n congo">
+                    <span>Fondation BOWABA</span>
+                </a>
                 <ul class="nav-links">
                     <li><a href="#home">Accueil</a></li>
                     <li><a href="#about">À propos</a></li>
@@ -461,7 +464,7 @@
                         <div>
                             <h4>Email</h4>
                             <p>
-                                <a href="mailto:contact.fondation@bowabancongo.com">contact.fob@bowabancongo.com</a>
+                                <a href="mailto:contact@fondation.bowabancongo.com">contact@fondation.bowabancongo.com</a>
                             </p>
                         </div>
                     </div>
@@ -545,7 +548,7 @@
                         </li>
                         <li>
                             <i class="fas fa-envelope"></i>
-                            <a href="mailto:contact.fondation@bowabancongo.com">contact.fob@bowabancongo.com</a>
+                            <a href="mailto:contact.fondation@bowabancongo.com">contact@fondation.bowabancongo.com</a>
                         </li>
                     </ul>
                 </div>
