@@ -8,6 +8,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fondation Bowabancongo - Professionnalisation des acteurs non étatiques</title>
+
+    <meta name="description" content="Fondation Bowaba - Professionnalisation des acteurs non étatiques en RDC. Formations en entrepreneuriat, agrobusiness, gestion et renforcement des capacités pour OSC et MPME.">
+      <!-- Favicons -->
+    <link href="assets/img/logo/icone-fondation-bowaba.png" rel="icon">
+    <link href="assets/img/logo" rel="apple-touch-icon">
+
+    <meta name="description" content="Fondation Bowaba - Professionnalisation des acteurs non étatiques en RDC. Formations en entrepreneuriat, agrobusiness, gestion et renforcement des capacités pour OSC et MPME.">
+    <meta name="application-name" content="Fondation Bawaba n congo-Website">
+    <meta name="author" content="Bowaba n Congo">
+    <link rel="author" href="https://fondation.bowabancongo.com/">
+    <meta name="application-name" content="Bowaba n Congo-Website">
+    <meta name="keywords" content="fondation bowaba, formation entrepreneuriat RDC, renforcement capacités Congo, agrobusiness Kinshasa, coaching MPME Afrique, 
+    OSC République Démocratique Congo, formation gestion projet, financement organisations congolaises, entrepreneuriat féminin RDC, développement durable Congo">
+    <meta name="creator" content="Bowaba n Congo">
+    <meta name="publisher" content="Bowaba n Congo">
+
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="assets/css/main.css">
     <link rel="stylesheet" href="assets/css/realisation.css">
@@ -574,6 +591,30 @@
 
     <script src="assets/js/script.js"></script>
     <script src="assets/js/realisation.js"></script>
+    
+    <script type="application/ld+json">
+        {
+            "@context": "https://fondation.bowabancongo.com/",
+            "@type": "NGO",
+            "name": "Fondation Bowaba",
+            "description": "Organisation spécialisée dans le renforcement des capacités des acteurs non étatiques en RDC",
+            "url": "https://fondation.bowabancongo.com/",
+            "logo": "https://fondation.bowabancongo.com/assets/img/logo/icone-fondation-bowaba.png",
+            "address": 
+                {
+                    "@type": "PostalAddress",
+                    "addressLocality": "Kinshasa",
+                    "addressCountry": "CD"
+                },
+            "contactPoint": 
+            {
+                "@type": "ContactPoint",
+                "telephone": "+243 816 695 000",
+                "contactType": "Customer service",
+                "email": "contact@fondation.bowabancongo.com"
+            }
+        }
+</script>
 </body>
 
 </html>

