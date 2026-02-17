@@ -58,9 +58,9 @@
         
         
         // Form submission (prevent default for demo)
-        const form = document.querySelector('.contact-form form');
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            alert('Merci pour votre message! Nous vous contacterons bientôt.');
-            form.reset();
-        });
+        // const form = document.querySelector('.contact-form form');
+        // form.addEventListener('submit', (e) => {
+        //     e.preventDefault();
+        //     alert('Merci pour votre message! Nous vous contacterons bientôt.');
+        //     form.reset();
+        // });

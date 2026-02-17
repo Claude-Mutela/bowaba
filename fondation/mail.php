@@ -60,7 +60,7 @@
         }
         
         // Redirection vers la page de contact avec le message de succès/erreur
-        header("Location: fondation.php");
+        header("Location: index.php");
         exit();
     }    
 ?>

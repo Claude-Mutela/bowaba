@@ -496,7 +496,7 @@
                 </div>
                 <div class="contact-form">
                     <h3>Envoyez-nous un message</h3>
-                    <form action="mail.php" method="post">
+                    <form action="mail.php" method="POST">
                         <div class="form-group">
                             <?php if(isset($_SESSION['success'])) : ?>
                                 <p class="success-message btn-status">Message envoyé!</p>
@@ -588,7 +588,7 @@
             </div>
         </div>
     </footer>
-
+    
     <script src="assets/js/script.js"></script>
     <script src="assets/js/realisation.js"></script>
     
@@ -615,6 +615,13 @@
             }
         }
 </script>
+    <?php 
+    //Netoyage des sessions
+    unset($_SESSION['inputs']);
+    unset($_SESSION['success']);
+    unset($_SESSION['errors']);
+
+    ?> 
 </body>
 
 </html>
