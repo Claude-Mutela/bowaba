@@ -38,6 +38,7 @@
           <li><a class="nav-link scrollto <?php if($nav === 'index'):?>active <?php endif; ?>" href="index.php">Accueil</a></li>
           <li><a class="nav-link scrollto <?php if($nav === 'about'):?>active <?php endif; ?>" href="about.php">Apropos</a></li>
           <li><a class="nav-link scrollto <?php if($nav === 'service'):?>active <?php endif; ?>" href="service.php">Services</a></li>
+          <li><a class="nav-link scrollto <?php if($nav === 'blog'):?>active <?php endif; ?>" href="blog.php">Blog</a></li>
           <li><a class="nav-link scrollto <?php if($nav === 'fondation'):?>active <?php endif; ?>" href="https://fondation.bowabancongo.com/" target="_blank">Fondation</a></li>
           <li><a class="nav-link scrollto <?php if($nav === 'contact'):?>active <?php endif; ?>" href="contact.php">Contact</a></li>
         </ul>
