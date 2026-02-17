@@ -817,49 +817,63 @@ section {
 /*--------------------------------------------------------------
 # Counts
 --------------------------------------------------------------*/
+/*--------------------------------------------------------------
+# Counts
+--------------------------------------------------------------*/
 .counts {
-    padding-top: 80px;
+    padding: 60px 0;
   }
   
   .counts .count-box {
-    padding: 30px 30px 25px 30px;
+    padding: 30px;
     width: 100%;
     position: relative;
     text-align: center;
-    box-shadow: 0px 2px 35px rgba(0, 0, 0, 0.06);
-    border-radius: 4px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.08); /* Softer, more modern shadow */
+    transition: all 0.3s ease-in-out;
+    margin-bottom: 20px;
+  }
+
+  .counts .count-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 15px 40px rgba(0, 0, 0, 0.12);
   }
   
   .counts .count-box i {
-    position: absolute;
-    width: 54px;
-    height: 54px;
-    top: -27px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 24px;
-    background: #fff;
-    color: var(--col);
-    border-radius: 50px;
-    border: 2px solid #fff;
-    box-shadow: 0px 2px 25px rgba(0, 0, 0, 0.1);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+    font-size: 48px;
+    color: var(--col); /* Use the secondary color for the icon */
+    display: block;
+    margin-bottom: 15px;
+    line-height: 1;
   }
   
   .counts .count-box span {
-    font-size: 36px;
+    font-size: 42px; /* Larger, more impressive number */
     display: block;
     font-weight: 700;
-    color: #111111;
+    color: var(--bg); /* Use primary color for the number */
+    margin-bottom: 10px;
+    font-family: "Open Sans", sans-serif;
   }
   
   .counts .count-box p {
     padding: 0;
     margin: 0;
     font-family: "Raleway", sans-serif;
-    font-size: 14px;
+    font-size: 15px;
+    color: #555;
+    font-weight: 500;
+  }
+
+  .counts .count-box p strong {
+    display: block;
+    font-weight: 700;
+    font-size: 16px;
+    color: #333;
+    margin-top: 5px;
+    text-transform: uppercase;
   }
 /*--------------------------------------------------------------
 # Clients

@@ -185,55 +185,68 @@
       </div>
     </section><!-- End Why Us Section -->
 
-     <!-- ======= Counts Section ======= -->
-     <section id="counts" class="counts">
+    <!-- ======= Stats Section ======= -->
+    <section id="counts" class="counts section-bg">
       <div class="container" data-aos="fade-up">
 
-        <div class="row">
+        <div class="section-title">
+          <h2>Nos Chiffres Clés</h2>
+          <p>L'impact de Bowaba en quelques chiffres</p>
+        </div>
 
-          <div class="col-lg-3 col-md-6">
+        <div class="row justify-content-center">
+
+          <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch">
             <div class="count-box">
               <i class="bi bi-emoji-smile"></i>
-              <span data-purecounter-start="0" data-purecounter-end="'304" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Clients Satisfaits</p>
+              <span data-purecounter-start="0" data-purecounter-end="304" data-purecounter-duration="2" class="purecounter"></span>
+              <p>Creates Smiles</p> 
+              <p><strong>Clients Satisfaits</strong></p>
             </div>
           </div>
 
-          <div class="col-lg-3 col-md-6 mt-5 mt-md-0">
+          <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch">
             <div class="count-box">
               <i class="bi bi-journal-richtext"></i>
-              <span data-purecounter-start="0" data-purecounter-end="521" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Projets Réalisés</p>
+              <span data-purecounter-start="0" data-purecounter-end="521" data-purecounter-duration="2" class="purecounter"></span>
+               <p>Projects Done</p>
+              <p><strong>Projets Réalisés</strong></p>
             </div>
           </div>
 
-          <div class="col-lg-3 col-md-6 mt-5 mt-lg-0">
+          <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch">
             <div class="count-box">
               <i class="bi bi-pencil-fill"></i>
-              <span data-purecounter-start="0" data-purecounter-end="1463" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Formation</p>
+              <span data-purecounter-start="0" data-purecounter-end="1463" data-purecounter-duration="2" class="purecounter"></span>
+               <p>Trained People</p>
+              <p><strong>Personnes Formées</strong></p>
             </div>
           </div>
 
-          <div class="col-lg-3 col-md-6 mt-5 mt-lg-0">
+          <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch">
             <div class="count-box">
-              <i class="bi bi-people"></i>
-              <span data-purecounter-start="0" data-purecounter-end="15" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Entreprise Acompagnées</p>
+              <i class="bi bi-briefcase"></i>
+              <span data-purecounter-start="0" data-purecounter-end="15" data-purecounter-duration="2" class="purecounter"></span>
+               <p>Company Support</p>
+              <p><strong>Entreprises Accompagnées</strong></p>
             </div>
           </div>
 
         </div>
 
       </div>
-    </section><!-- End Counts Section -->
+    </section><!-- End Stats Section -->
 
-    <!-- ======= Clients Section /Parteners======= -->
+    <!-- ======= Clients Section ======= -->
     <section id="clients" class="clients">
       <div class="container" data-aos="fade-up">
 
+        <div class="section-title">
+          <h2>Ils nous font confiance</h2>
+          <p>Nos partenaires et clients</p>
+        </div>
+
         <div class="clients-slider swiper">
-          <h3>Ils nous font confiance</h3>
           <div class="swiper-wrapper align-items-center">
             <div class="swiper-slide"><img src="assets/img/clients/P1.png" class="img-fluid" alt=""></div>
             <div class="swiper-slide"><img src="assets/img/clients/P2.png" class="img-fluid" alt=""></div>
@@ -366,6 +379,7 @@
   <script src="assets/vendor/php-email-form/validate.js"></script>
 
   <!--  JS File -->
+  <script src="https://cdn.jsdelivr.net/npm/@srexi/purecounterjs/dist/purecounter_vanilla.js"></script>
   <script src="assets/js/main.js"></script>
   <script src="assets/js/c_main.js"></script>
   <script type="application/ld+json">
