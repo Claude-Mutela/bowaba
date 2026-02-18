@@ -23,6 +23,28 @@
 <!-- Admin JS -->
 <script src="<?= $adminBase ?? '../' ?>assets/js/admin.js"></script>
 
+<!-- Tagify — Tag input widget (only on article create/edit pages) -->
+<?php if (isset($allTags)): ?>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css">
+<script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
+<script>
+(function() {
+  const input = document.getElementById('tagsInput');
+  if (!input) return;
+  const whitelist = <?= json_encode(array_column($allTags ?? [], 'name')) ?>;
+  const tagify = new Tagify(input, {
+    whitelist: whitelist,
+    dropdown: {
+      enabled: 0,          // show suggestions from first char
+      maxItems: 20,
+      closeOnSelect: false
+    },
+    originalInputValueFormat: valuesArr => JSON.stringify(valuesArr)
+  });
+})();
+</script>
+<?php endif; ?>
+
 <?php if (isset($extraScripts)): ?>
   <?= $extraScripts ?>
 <?php endif; ?>

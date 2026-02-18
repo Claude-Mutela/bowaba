@@ -16,10 +16,9 @@ $errors = [];
 try {
   $categories = $conn->query("SELECT id, name FROM article_categories ORDER BY name")->fetchAll(PDO::FETCH_ASSOC);
   $users      = $conn->query("SELECT id, name FROM users ORDER BY name")->fetchAll(PDO::FETCH_ASSOC);
+  $allTags    = $conn->query("SELECT id, name, slug FROM tags ORDER BY name")->fetchAll(PDO::FETCH_ASSOC);
 
-  $stmt = $conn->prepare(
-    "SELECT * FROM articles WHERE id = :id LIMIT 1"
-  );
+  $stmt = $conn->prepare("SELECT * FROM articles WHERE id = :id LIMIT 1");
   $stmt->execute([':id' => $id]);
   $article = $stmt->fetch(PDO::FETCH_ASSOC);
   if (!$article) { header('Location: index.php'); exit; }
@@ -28,6 +27,15 @@ try {
   if (!canEditArticle($article['user_id'])) {
     requirePermission('articles.edit_all'); // will 403
   }
+
+  // Load current article tags
+  $atStmt = $conn->prepare(
+    "SELECT t.name FROM tags t
+     JOIN article_tags at ON at.tag_id = t.id
+     WHERE at.article_id = :id"
+  );
+  $atStmt->execute([':id' => $id]);
+  $articleTagNames = $atStmt->fetchAll(PDO::FETCH_COLUMN);
 
 } catch (Exception $e) {
   header('Location: index.php'); exit;
@@ -97,6 +105,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'category_id'=>$categoryId,'user_id'=>$userId,'status'=>$status,
         'is_featured'=>$isFeatured,'cover_image'=>$coverImage
       ]);
+
+      // Save tags — delete old links then reinsert
+      $conn->prepare("DELETE FROM article_tags WHERE article_id = :id")->execute([':id' => $id]);
+      $tagsInput = trim($_POST['tags_input'] ?? '');
+      if ($tagsInput) {
+        $tagData = json_decode($tagsInput, true) ?: [];
+        $insTag  = $conn->prepare("INSERT IGNORE INTO tags (name, slug) VALUES (:n, :s)");
+        $insLink = $conn->prepare("INSERT IGNORE INTO article_tags (article_id, tag_id) VALUES (:a, :t)");
+        $selTag  = $conn->prepare("SELECT id FROM tags WHERE slug = :s");
+        foreach ($tagData as $t) {
+          $tname = trim($t['value'] ?? '');
+          if (!$tname) continue;
+          $tslug = strtolower(preg_replace('/[^a-z0-9]+/i', '-', $tname));
+          $insTag->execute([':n' => $tname, ':s' => $tslug]);
+          $selTag->execute([':s' => $tslug]);
+          $tagId = $selTag->fetchColumn();
+          if ($tagId) $insLink->execute([':a' => $id, ':t' => $tagId]);
+        }
+        // Refresh articleTagNames for re-display
+        $articleTagNames = array_map(fn($t) => $t['value'], $tagData);
+      } else {
+        $articleTagNames = [];
+      }
+
       header("Location: edit.php?id=$id&saved=1");
       exit;
     } catch (PDOException $e) {
@@ -301,6 +333,25 @@ include __DIR__ . '/../partials/header.php';
               </option>
             <?php endforeach; ?>
           </select>
+        </div>
+      </div>
+
+      <!-- Tags -->
+      <div class="admin-card mb-4">
+        <div class="admin-card-header">
+          <h2 class="admin-card-title"><i class="bi bi-hash"></i> Tags</h2>
+        </div>
+        <div class="admin-card-body">
+          <?php
+            // Build Tagify initial value JSON from existing tags
+            $tagifyInit = json_encode(array_map(fn($n) => ['value' => $n], $articleTagNames ?? []));
+          ?>
+          <input id="tagsInput" name="tags_input"
+                 placeholder="Ajouter des tags…"
+                 value="<?= htmlspecialchars($tagifyInit === '[]' ? '' : $tagifyInit) ?>">
+          <div style="margin-top:8px; font-size:11px; color:var(--text-secondary);">
+            Tapez et appuyez sur <kbd>Entrée</kbd> ou <kbd>,</kbd> pour ajouter.
+          </div>
         </div>
       </div>
 

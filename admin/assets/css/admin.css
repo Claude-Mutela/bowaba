@@ -1167,3 +1167,58 @@ body.admin-body {
     background: var(--border-color);
     margin: 20px 0;
 }
+
+/* ============================================================
+   TAGIFY — Tag input overrides
+   ============================================================ */
+.tagify {
+    --tag-bg: var(--bbc-blue-light);
+    --tag-color: var(--bbc-blue-dark);
+    --tag-hover: #d0e8fb;
+    --tag-remove-btn-color: var(--bbc-blue-dark);
+    --tag-border-color: var(--border-color);
+    --tag-pad: 0.3em 0.6em;
+    --input-color: var(--text-primary);
+    --placeholder-color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    min-height: 38px;
+    padding: 4px 6px;
+    font-size: 13.5px;
+    transition: var(--transition);
+    background: #fff;
+}
+
+.tagify:focus-within {
+    border-color: var(--bbc-blue);
+    box-shadow: 0 0 0 3px rgba(0, 143, 242, .12);
+}
+
+.tagify__tag {
+    background: var(--bbc-blue-light);
+    color: var(--bbc-blue-dark);
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.tagify__tag>div::before {
+    box-shadow: none !important;
+    background: var(--bbc-blue-light) !important;
+}
+
+.tagify__tag:hover:not([readonly]) div::before {
+    background: var(--tag-hover) !important;
+}
+
+.tagify__dropdown {
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-md);
+    font-size: 13px;
+}
+
+.tagify__dropdown__item--active {
+    background: var(--bbc-blue-light);
+    color: var(--bbc-blue-dark);
+}

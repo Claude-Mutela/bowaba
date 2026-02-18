@@ -11,12 +11,13 @@ $adminBase  = '../';
 $errors = [];
 $success = false;
 
-// Load categories and users for selects
+// Load categories, users and tags for selects
 try {
   $categories = $conn->query("SELECT id, name FROM article_categories ORDER BY name")->fetchAll(PDO::FETCH_ASSOC);
   $users      = $conn->query("SELECT id, name FROM users ORDER BY name")->fetchAll(PDO::FETCH_ASSOC);
+  $allTags    = $conn->query("SELECT id, name, slug FROM tags ORDER BY name")->fetchAll(PDO::FETCH_ASSOC);
 } catch (Exception $e) {
-  $categories = $users = [];
+  $categories = $users = $allTags = [];
 }
 
 // Handle form submission
@@ -77,6 +78,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ':pub'      => $publishedAt,
       ]);
       $newId = $conn->lastInsertId();
+
+      // Save tags
+      $tagsInput = trim($_POST['tags_input'] ?? '');
+      if ($tagsInput) {
+        $tagData = json_decode($tagsInput, true) ?: [];
+        $insTag  = $conn->prepare("INSERT IGNORE INTO tags (name, slug) VALUES (:n, :s)");
+        $insLink = $conn->prepare("INSERT IGNORE INTO article_tags (article_id, tag_id) VALUES (:a, :t)");
+        $selTag  = $conn->prepare("SELECT id FROM tags WHERE slug = :s");
+        foreach ($tagData as $t) {
+          $tname = trim($t['value'] ?? '');
+          if (!$tname) continue;
+          $tslug = strtolower(preg_replace('/[^a-z0-9]+/i', '-', $tname));
+          $insTag->execute([':n' => $tname, ':s' => $tslug]);
+          $selTag->execute([':s' => $tslug]);
+          $tagId = $selTag->fetchColumn();
+          if ($tagId) $insLink->execute([':a' => $newId, ':t' => $tagId]);
+        }
+      }
+
       header("Location: index.php?saved=1");
       exit;
     } catch (PDOException $e) {
@@ -298,6 +318,20 @@ include __DIR__ . '/../partials/header.php';
             <a href="../categories/index.php" style="font-size:12px; color:var(--bbc-blue);">
               <i class="bi bi-plus-circle"></i> Gérer les catégories
             </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tags -->
+      <div class="admin-card mb-4">
+        <div class="admin-card-header">
+          <h2 class="admin-card-title"><i class="bi bi-hash"></i> Tags</h2>
+        </div>
+        <div class="admin-card-body">
+          <input id="tagsInput" name="tags_input" placeholder="Ajouter des tags…"
+                 value="<?= htmlspecialchars($_POST['tags_input'] ?? '') ?>">
+          <div style="margin-top:8px; font-size:11px; color:var(--text-secondary);">
+            Tapez et appuyez sur <kbd>Entrée</kbd> ou <kbd>,</kbd> pour ajouter.
           </div>
         </div>
       </div>
