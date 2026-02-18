@@ -3,6 +3,7 @@
  * Article Edit Form — admin/articles/edit.php
  */
 require_once __DIR__ . '/../../kon/conn.php';
+require_once __DIR__ . '/../partials/auth.php'; // Auth & Permissions
 
 $pageTitle  = 'Modifier l\'article';
 $activePage = 'articles';
@@ -13,22 +14,42 @@ if (!$id) { header('Location: index.php'); exit; }
 
 $errors = [];
 
+// Helper slugify
+function makeSlug($text) {
+    $text = preg_replace('~[^\pL\d]+~u', '-', $text);
+    $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
+    $text = preg_replace('~[^-\w]+~', '', $text);
+    $text = trim($text, '-');
+    $text = preg_replace('~-+~', '-', $text);
+    $text = strtolower($text);
+    return empty($text) ? 'n-a-' . time() : $text;
+}
+
 try {
   $categories = $conn->query("SELECT id, name FROM article_categories ORDER BY name")->fetchAll(PDO::FETCH_ASSOC);
   $users      = $conn->query("SELECT id, name FROM users ORDER BY name")->fetchAll(PDO::FETCH_ASSOC);
   $allTags    = $conn->query("SELECT id, name, slug FROM tags ORDER BY name")->fetchAll(PDO::FETCH_ASSOC);
+} catch (Exception $e) {
+  $categories = $users = $allTags = [];
+}
 
-  $stmt = $conn->prepare("SELECT * FROM articles WHERE id = :id LIMIT 1");
-  $stmt->execute([':id' => $id]);
-  $article = $stmt->fetch(PDO::FETCH_ASSOC);
-  if (!$article) { header('Location: index.php'); exit; }
+// Fetch article
+$stmt = $conn->prepare("SELECT * FROM articles WHERE id = :id LIMIT 1");
+$stmt->execute([':id' => $id]);
+$article = $stmt->fetch(PDO::FETCH_ASSOC);
 
-  // RBAC: authors can only edit their own articles
-  if (!canEditArticle($article['user_id'])) {
-    requirePermission('articles.edit_all'); // will 403
-  }
+if (!$article) {
+  echo "Article introuvable.";
+  exit;
+}
 
-  // Load current article tags
+// RBAC check: Authors can only edit their own articles
+if (!can('articles.edit_all') && !isOwner($article['user_id'])) {
+  requirePermission('articles.edit_own', 'Vous ne pouvez modifier que vos propres articles.');
+}
+
+// Load current article tags
+try {
   $atStmt = $conn->prepare(
     "SELECT t.name FROM tags t
      JOIN article_tags at ON at.tag_id = t.id
@@ -36,7 +57,6 @@ try {
   );
   $atStmt->execute([':id' => $id]);
   $articleTagNames = $atStmt->fetchAll(PDO::FETCH_COLUMN);
-
 } catch (Exception $e) {
   header('Location: index.php'); exit;
 }

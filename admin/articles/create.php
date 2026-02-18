@@ -3,6 +3,7 @@
  * Article Create Form — admin/articles/create.php
  */
 require_once __DIR__ . '/../../kon/conn.php';
+require_once __DIR__ . '/../partials/auth.php'; // Auth & Permissions
 
 $pageTitle  = 'Nouvel article';
 $activePage = 'articles';
@@ -10,6 +11,17 @@ $adminBase  = '../';
 
 $errors = [];
 $success = false;
+
+// Helper slugify
+function makeSlug($text) {
+    $text = preg_replace('~[^\pL\d]+~u', '-', $text);
+    $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
+    $text = preg_replace('~[^-\w]+~', '', $text);
+    $text = trim($text, '-');
+    $text = preg_replace('~-+~', '-', $text);
+    $text = strtolower($text);
+    return empty($text) ? 'n-a-' . time() : $text;
+}
 
 // Load categories, users and tags for selects
 try {
@@ -24,6 +36,14 @@ try {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $title       = trim($_POST['title'] ?? '');
   $slug        = trim($_POST['slug'] ?? '');
+  
+  // Auto-generate slug if empty
+  if (!$slug && $title) {
+      $slug = makeSlug($title);
+  }
+  // Sanitize slug
+  $slug = makeSlug($slug);
+  
   $excerpt     = trim($_POST['excerpt'] ?? '');
   $content     = $_POST['content'] ?? '';
   $categoryId  = !empty($_POST['category_id']) ? (int)$_POST['category_id'] : null;
@@ -39,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   // Validation
   if (!$title)   $errors[] = 'Le titre est obligatoire.';
-  if (!$slug)    $errors[] = 'Le slug est obligatoire.';
+  // Slug is now guaranteed to have a value if title exists
   if (!$content) $errors[] = 'Le contenu est obligatoire.';
 
   // Handle cover image upload
