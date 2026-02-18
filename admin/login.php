@@ -3,22 +3,31 @@
  * Admin Login — admin/login.php
  */
 
-// Simple session-based auth guard
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+  session_start();
+}
 
-// If already logged in, redirect to dashboard
-if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in'] === true) {
-  header('Location: index.php');
+// If already logged in, redirect to dashboard (or requested page)
+if (!empty($_SESSION['admin_logged_in'])) {
+  $dest = isset($_GET['redirect']) ? urldecode($_GET['redirect']) : 'index.php';
+  header('Location: ' . $dest);
   exit;
 }
 
 require_once __DIR__ . '/../kon/conn.php';
 
-$error = '';
+$error   = '';
+$success = '';
+
+// Show logout confirmation
+if (isset($_GET['logged_out'])) {
+  $success = 'Vous avez été déconnecté avec succès.';
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $email    = trim($_POST['email'] ?? '');
   $password = $_POST['password'] ?? '';
+  $redirect = trim($_POST['redirect'] ?? 'index.php');
 
   if ($email && $password) {
     try {
@@ -27,11 +36,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
       if ($user && password_verify($password, $user['password'])) {
-        $_SESSION['admin_logged_in'] = true;
-        $_SESSION['admin_user_id']   = $user['id'];
-        $_SESSION['admin_user_name'] = $user['name'];
-        $_SESSION['admin_user_role'] = $user['role'];
-        header('Location: index.php');
+        // Regenerate session ID to prevent session fixation
+        session_regenerate_id(true);
+        $_SESSION['admin_logged_in']    = true;
+        $_SESSION['admin_user_id']      = $user['id'];
+        $_SESSION['admin_user_name']    = $user['name'];
+        $_SESSION['admin_user_role']    = $user['role'];
+        $_SESSION['last_regenerated']   = time();
+        // Redirect to originally requested page or dashboard
+        $dest = (!empty($redirect) && strpos($redirect, 'login') === false)
+                ? $redirect : 'index.php';
+        header('Location: ' . $dest);
         exit;
       } else {
         $error = 'Email ou mot de passe incorrect.';
@@ -244,6 +259,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   <div class="login-divider"></div>
 
+  <!-- Success (logout) -->
+  <?php if ($success): ?>
+    <div class="error-alert" style="background:#d1fae5; color:#065f46;">
+      <i class="bi bi-check-circle-fill"></i>
+      <?= htmlspecialchars($success) ?>
+    </div>
+  <?php endif; ?>
+
   <!-- Error -->
   <?php if ($error): ?>
     <div class="error-alert">
@@ -254,6 +277,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   <!-- Form -->
   <form method="POST" autocomplete="on">
+    <input type="hidden" name="redirect" value="<?= htmlspecialchars($_GET['redirect'] ?? 'index.php') ?>">
 
     <div class="form-floating mb-3">
       <input type="email" class="form-control" id="loginEmail" name="email"

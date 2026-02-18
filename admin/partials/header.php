@@ -4,6 +4,9 @@
  * Include at the top of every admin page.
  * Required vars: $pageTitle, $activePage
  */
+
+// Auth guard — redirects to login if not authenticated
+require_once __DIR__ . '/auth.php';
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -89,7 +92,7 @@
       <span>Voir le site</span>
     </a>
 
-    <a href="<?= $adminBase ?? '../' ?>../login.php" class="nav-link">
+    <a href="<?= $adminBase ?? '../' ?>logout.php" class="nav-link" style="color:#ef4444;">
       <i class="bi bi-box-arrow-left"></i>
       <span>Déconnexion</span>
     </a>
@@ -99,10 +102,17 @@
   <!-- User Footer -->
   <div class="sidebar-footer">
     <div class="sidebar-user">
-      <div class="sidebar-user-avatar">A</div>
+      <div class="sidebar-user-avatar">
+        <?= strtoupper(mb_substr($adminUser['name'] ?? 'A', 0, 1)) ?>
+      </div>
       <div class="sidebar-user-info">
-        <div class="sidebar-user-name">Administrateur</div>
-        <div class="sidebar-user-role">Super Admin</div>
+        <div class="sidebar-user-name"><?= htmlspecialchars($adminUser['name'] ?? 'Administrateur') ?></div>
+        <div class="sidebar-user-role">
+          <?php
+            $roleLabels = ['admin'=>'Super Admin','editor'=>'Éditeur','author'=>'Auteur'];
+            echo $roleLabels[$adminUser['role'] ?? 'admin'] ?? 'Admin';
+          ?>
+        </div>
       </div>
     </div>
   </div>
