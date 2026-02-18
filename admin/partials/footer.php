@@ -18,8 +18,8 @@
 
 <!-- Bootstrap 5.3 JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<!-- TinyMCE CDN (self-hosted or cloud) -->
-<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+<!-- TinyMCE — self-hosted local -->
+<script src="<?= $adminBase ?? '../' ?>../assets/tinymce/tinymce.min.js"></script>
 <!-- Admin JS -->
 <script src="<?= $adminBase ?? '../' ?>assets/js/admin.js"></script>
 

@@ -19,9 +19,21 @@ function initTinyMCE(selector = '.tinymce-editor') {
         return;
     }
 
+    // Resolve the base path to /assets/tinymce/ dynamically
+    const base = (() => {
+        const scripts = document.querySelectorAll('script[src*="tinymce.min.js"]');
+        if (scripts.length) {
+            return scripts[0].src.replace('tinymce.min.js', '');
+        }
+        return '/bowaba/assets/tinymce/';
+    })();
+
     tinymce.init({
         selector: selector,
         language: 'fr_FR',
+        language_url: base + 'langs/fr_FR.js',
+        skin_url: base + 'skins/ui/oxide',
+        content_css: base + 'skins/content/tinymce-5/content.min.css',
         height: 480,
         menubar: true,
         plugins: [
@@ -36,7 +48,7 @@ function initTinyMCE(selector = '.tinymce-editor') {
             'bullist numlist outdent indent | link image media table | ' +
             'forecolor backcolor | removeformat | fullscreen code | help',
         toolbar_sticky: true,
-        toolbar_sticky_offset: 64, // topbar height
+        toolbar_sticky_offset: 64,
         content_style: `
       body {
         font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -60,13 +72,11 @@ function initTinyMCE(selector = '.tinymce-editor') {
         font-style: italic;
       }
     `,
-        skin: 'oxide',
-        icons: 'default',
         branding: false,
         promotion: false,
         resize: true,
         statusbar: true,
-        // Image upload handler (adapt to your backend)
+        // Image upload handler
         images_upload_url: '../api/upload-image.php',
         images_upload_credentials: true,
         automatic_uploads: true,
@@ -92,7 +102,7 @@ function initTinyMCE(selector = '.tinymce-editor') {
         },
         setup: (editor) => {
             editor.on('change', () => {
-                editor.save(); // sync with underlying textarea
+                editor.save();
             });
         }
     });
@@ -102,9 +112,18 @@ function initTinyMCE(selector = '.tinymce-editor') {
 function initTinyMCECompact(selector = '.tinymce-compact') {
     if (typeof tinymce === 'undefined') return;
 
+    const base = (() => {
+        const scripts = document.querySelectorAll('script[src*="tinymce.min.js"]');
+        if (scripts.length) return scripts[0].src.replace('tinymce.min.js', '');
+        return '/bowaba/assets/tinymce/';
+    })();
+
     tinymce.init({
         selector: selector,
         language: 'fr_FR',
+        language_url: base + 'langs/fr_FR.js',
+        skin_url: base + 'skins/ui/oxide',
+        content_css: base + 'skins/content/tinymce-5/content.min.css',
         height: 280,
         menubar: false,
         plugins: ['lists', 'link', 'autolink', 'wordcount'],
