@@ -3,6 +3,7 @@
  * Categories — admin/categories/index.php
  */
 require_once __DIR__ . '/../../kon/conn.php';
+require_once __DIR__ . '/../partials/auth.php'; // Auth & Permissions
 
 $pageTitle  = 'Catégories';
 $activePage = 'categories';
@@ -10,6 +11,17 @@ $adminBase  = '../';
 
 $errors  = [];
 $success = '';
+
+// Helper slugify
+function makeSlug($text) {
+    $text = preg_replace('~[^\pL\d]+~u', '-', $text);
+    $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
+    $text = preg_replace('~[^-\w]+~', '', $text);
+    $text = trim($text, '-');
+    $text = preg_replace('~-+~', '-', $text);
+    $text = strtolower($text);
+    return empty($text) ? 'n-a-' . time() : $text;
+}
 
 // Handle create / update / delete
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -19,7 +31,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     requirePermission('categories.delete');
     try {
       $conn->prepare("DELETE FROM article_categories WHERE id=:id")->execute([':id' => (int)$_POST['delete_id']]);
-      $success = 'Catégorie supprimée.';
+      // Redirect to avoid resubmission
+      $_SESSION['flash_success'] = 'Catégorie supprimée.';
+      header("Location: index.php");
+      exit;
     } catch (Exception $e) {
       $errors[] = 'Impossible de supprimer : ' . $e->getMessage();
     }
@@ -33,7 +48,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $editId      = (int)($_POST['edit_id'] ?? 0);
 
     if (!$name) $errors[] = 'Le nom est obligatoire.';
-    if (!$slug) $errors[] = 'Le slug est obligatoire.';
+    
+    // Auto-generate slug if empty
+    if (!$slug && $name) {
+      $slug = makeSlug($name);
+    }
+    // Sanitize slug
+    $slug = makeSlug($slug);
 
     if (empty($errors)) {
       try {
@@ -41,18 +62,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           $conn->prepare(
             "INSERT INTO article_categories (name, slug, description) VALUES (:n,:s,:d)"
           )->execute([':n'=>$name, ':s'=>$slug, ':d'=>$description]);
-          $success = 'Catégorie créée avec succès.';
+          $_SESSION['flash_success'] = 'Catégorie créée avec succès.';
         } else {
           $conn->prepare(
             "UPDATE article_categories SET name=:n, slug=:s, description=:d WHERE id=:id"
           )->execute([':n'=>$name, ':s'=>$slug, ':d'=>$description, ':id'=>$editId]);
-          $success = 'Catégorie mise à jour.';
+          $_SESSION['flash_success'] = 'Catégorie mise à jour.';
         }
+        header("Location: index.php");
+        exit;
       } catch (PDOException $e) {
-        $errors[] = $e->getCode() === '23000' ? 'Ce slug est déjà utilisé.' : $e->getMessage();
+        if ($e->getCode() == 23000) {
+           $errors[] = 'Ce slug est déjà utilisé. Veuillez en choisir un autre.';
+        } else {
+           $errors[] = $e->getMessage();
+        }
       }
     }
   }
+}
+
+// Flash messages
+if (isset($_SESSION['flash_success'])) {
+    $success = $_SESSION['flash_success'];
+    unset($_SESSION['flash_success']);
 }
 
 // Load categories with article count
