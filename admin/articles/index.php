@@ -69,8 +69,9 @@ try {
   $totalItems = $totalPages = 0;
 }
 
-// Handle delete
+// Handle delete — only admin/editor
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_id'])) {
+  requirePermission('articles.delete');
   try {
     $del = $conn->prepare("DELETE FROM articles WHERE id = :id");
     $del->execute([':id' => (int)$_POST['delete_id']]);
@@ -228,18 +229,22 @@ include __DIR__ . '/../partials/header.php';
             </td>
             <td>
               <div style="display:flex; gap:4px;">
+                <?php if (canEditArticle($art['user_id'] ?? 0)): ?>
                 <a href="edit.php?id=<?= $art['id'] ?>" class="btn-action edit" title="Modifier">
                   <i class="bi bi-pencil"></i>
                 </a>
+                <?php endif; ?>
                 <a href="../../blog-single.php?id=<?= $art['id'] ?>" class="btn-action view" title="Voir" target="_blank">
                   <i class="bi bi-eye"></i>
                 </a>
+                <?php if (can('articles.delete')): ?>
                 <form method="POST" style="display:inline;" onsubmit="return confirmDelete('Supprimer cet article définitivement ?')">
                   <input type="hidden" name="delete_id" value="<?= $art['id'] ?>">
                   <button type="submit" class="btn-action delete" title="Supprimer">
                     <i class="bi bi-trash"></i>
                   </button>
                 </form>
+                <?php endif; ?>
               </div>
             </td>
           </tr>

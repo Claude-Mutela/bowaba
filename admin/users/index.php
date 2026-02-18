@@ -3,10 +3,14 @@
  * Users Management — admin/users/index.php
  */
 require_once __DIR__ . '/../../kon/conn.php';
+require_once __DIR__ . '/../partials/auth.php'; // loads session + $adminUser + permissions
 
 $pageTitle  = 'Utilisateurs';
 $activePage = 'users';
 $adminBase  = '../';
+
+// RBAC: admin only
+requirePermission('users.view');
 
 $errors  = [];
 $success = '';

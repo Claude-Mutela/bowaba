@@ -16,6 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $action = $_POST['action'] ?? '';
 
   if ($action === 'delete' && !empty($_POST['delete_id'])) {
+    requirePermission('categories.delete');
     try {
       $conn->prepare("DELETE FROM article_categories WHERE id=:id")->execute([':id' => (int)$_POST['delete_id']]);
       $success = 'Catégorie supprimée.';
@@ -25,6 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   }
 
   if (in_array($action, ['create', 'update'])) {
+    requirePermission('categories.create');
     $name        = trim($_POST['name'] ?? '');
     $slug        = trim($_POST['slug'] ?? '');
     $description = trim($_POST['description'] ?? '');
@@ -145,9 +147,12 @@ include __DIR__ . '/../partials/header.php';
                 </td>
                 <td>
                   <div style="display:flex; gap:4px;">
+                    <?php if (can('categories.edit')): ?>
                     <a href="?edit=<?= $cat['id'] ?>" class="btn-action edit" title="Modifier">
                       <i class="bi bi-pencil"></i>
                     </a>
+                    <?php endif; ?>
+                    <?php if (can('categories.delete')): ?>
                     <form method="POST" onsubmit="return confirmDelete('Supprimer cette catégorie ?')">
                       <input type="hidden" name="action" value="delete">
                       <input type="hidden" name="delete_id" value="<?= $cat['id'] ?>">
@@ -155,6 +160,7 @@ include __DIR__ . '/../partials/header.php';
                         <i class="bi bi-trash"></i>
                       </button>
                     </form>
+                    <?php endif; ?>
                   </div>
                 </td>
               </tr>
@@ -167,6 +173,7 @@ include __DIR__ . '/../partials/header.php';
   </div>
 
   <!-- Create / Edit Form -->
+  <?php if (can('categories.create')): ?>
   <div class="col-lg-5">
     <div class="admin-card">
       <div class="admin-card-header">
@@ -218,6 +225,7 @@ include __DIR__ . '/../partials/header.php';
       </div>
     </div>
   </div>
+  <?php endif; ?>
 
 </div>
 

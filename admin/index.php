@@ -304,15 +304,21 @@ include __DIR__ . '/partials/header.php';
         <a href="articles/create.php" class="btn-bbc-primary w-100" style="justify-content:center;">
           <i class="bi bi-file-earmark-plus"></i> Nouvel article
         </a>
+        <?php if (can('categories.create')): ?>
         <a href="categories/index.php" class="btn-bbc-outline w-100" style="justify-content:center;">
           <i class="bi bi-tag-fill"></i> Gérer les catégories
         </a>
+        <?php endif; ?>
+        <?php if (can('services.view')): ?>
         <a href="services/index.php" class="btn-bbc-outline w-100" style="justify-content:center;">
           <i class="bi bi-briefcase"></i> Gérer les services
         </a>
+        <?php endif; ?>
+        <?php if (can('users.view')): ?>
         <a href="users/index.php" class="btn-bbc-outline w-100" style="justify-content:center;">
           <i class="bi bi-person-plus"></i> Gérer les utilisateurs
         </a>
+        <?php endif; ?>
       </div>
     </div>
   </div>

@@ -71,19 +71,23 @@ require_once __DIR__ . '/auth.php';
       <span>Catégories</span>
     </a>
 
+    <?php if (can('services.view')): ?>
     <a href="<?= $adminBase ?? '../' ?>services/index.php"
        class="nav-link <?= ($activePage ?? '') === 'services' ? 'active' : '' ?>">
       <i class="bi bi-briefcase-fill"></i>
       <span>Services</span>
     </a>
+    <?php endif; ?>
 
     <div class="sidebar-section-label">Gestion</div>
 
+    <?php if (can('users.view')): ?>
     <a href="<?= $adminBase ?? '../' ?>users/index.php"
        class="nav-link <?= ($activePage ?? '') === 'users' ? 'active' : '' ?>">
       <i class="bi bi-people-fill"></i>
       <span>Utilisateurs</span>
     </a>
+    <?php endif; ?>
 
     <div class="sidebar-section-label">Système</div>
 

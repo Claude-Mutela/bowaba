@@ -44,3 +44,6 @@ if (!isset($_SESSION['last_regenerated'])) {
     session_regenerate_id(true);
     $_SESSION['last_regenerated'] = time();
 }
+
+// Load permission helpers
+require_once __DIR__ . '/permissions.php';

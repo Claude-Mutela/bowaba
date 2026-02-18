@@ -3,10 +3,14 @@
  * Services Management — admin/services/index.php
  */
 require_once __DIR__ . '/../../kon/conn.php';
+require_once __DIR__ . '/../partials/auth.php'; // loads session + $adminUser + permissions
 
 $pageTitle  = 'Services';
 $activePage = 'services';
 $adminBase  = '../';
+
+// RBAC: admin (write) + editor/author (read-only)
+requirePermission('services.view');
 
 $errors  = [];
 $success = '';
@@ -16,6 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $action = $_POST['action'] ?? '';
 
   if ($action === 'delete' && !empty($_POST['delete_id'])) {
+    requirePermission('services.delete');
     try {
       $conn->prepare("DELETE FROM services WHERE id=:id")->execute([':id' => (int)$_POST['delete_id']]);
       $success = 'Service supprimé.';
@@ -25,6 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   }
 
   if (in_array($action, ['create', 'update'])) {
+    requirePermission('services.create');
     $title        = trim($_POST['title'] ?? '');
     $slug         = trim($_POST['slug'] ?? '');
     $description  = trim($_POST['description'] ?? '');
@@ -129,7 +135,7 @@ include __DIR__ . '/../partials/header.php';
   </div>
   <?php if ($editSvc): ?>
     <a href="index.php" class="btn-bbc-outline"><i class="bi bi-list-ul"></i> Voir la liste</a>
-  <?php else: ?>
+  <?php elseif (can('services.create')): ?>
     <a href="?new=1" class="btn-bbc-primary"><i class="bi bi-plus-lg"></i> Nouveau service</a>
   <?php endif; ?>
 </div>
@@ -151,7 +157,7 @@ include __DIR__ . '/../partials/header.php';
   </div>
 <?php endif; ?>
 
-<?php if ($editSvc || isset($_GET['new'])): ?>
+<?php if (($editSvc || isset($_GET['new'])) && can('services.create')): ?>
 <!-- ── Service Form (Edit / Create) ── -->
 <div class="row g-4">
   <div class="col-lg-8">
@@ -379,12 +385,15 @@ include __DIR__ . '/../partials/header.php';
             </td>
             <td>
               <div style="display:flex; gap:4px;">
+                <?php if (can('services.edit')): ?>
                 <a href="?edit=<?= $svc['id'] ?>" class="btn-action edit" title="Modifier">
                   <i class="bi bi-pencil"></i>
                 </a>
+                <?php endif; ?>
                 <a href="../../service-details.php?id=<?= $svc['id'] ?>" class="btn-action view" title="Voir" target="_blank">
                   <i class="bi bi-eye"></i>
                 </a>
+                <?php if (can('services.delete')): ?>
                 <form method="POST" onsubmit="return confirmDelete('Supprimer ce service ?')">
                   <input type="hidden" name="action" value="delete">
                   <input type="hidden" name="delete_id" value="<?= $svc['id'] ?>">
@@ -392,6 +401,7 @@ include __DIR__ . '/../partials/header.php';
                     <i class="bi bi-trash"></i>
                   </button>
                 </form>
+                <?php endif; ?>
               </div>
             </td>
           </tr>

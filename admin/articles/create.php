@@ -26,9 +26,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $excerpt     = trim($_POST['excerpt'] ?? '');
   $content     = $_POST['content'] ?? '';
   $categoryId  = !empty($_POST['category_id']) ? (int)$_POST['category_id'] : null;
-  $userId      = !empty($_POST['user_id'])      ? (int)$_POST['user_id']      : null;
+  // RBAC: authors are always set as the article's author
+  $userId      = can('articles.edit_all') && !empty($_POST['user_id'])
+                 ? (int)$_POST['user_id']
+                 : (int)$adminUser['id'];
+  // RBAC: authors can only save as draft
   $status      = in_array($_POST['status'] ?? '', ['draft','published','archived']) ? $_POST['status'] : 'draft';
-  $isFeatured  = isset($_POST['is_featured']) ? 1 : 0;
+  if (!can('articles.publish')) $status = 'draft';
+  $isFeatured  = (can('articles.feature') && isset($_POST['is_featured'])) ? 1 : 0;
   $publishedAt = ($status === 'published') ? date('Y-m-d H:i:s') : null;
 
   // Validation
@@ -210,6 +215,7 @@ include __DIR__ . '/../partials/header.php';
           <!-- Status -->
           <div class="mb-3">
             <label class="form-label" style="font-size:13px; font-weight:600;">Statut</label>
+            <?php if (can('articles.publish')): ?>
             <select class="form-select" name="status" id="articleStatus">
               <option value="draft"     <?= ($_POST['status'] ?? 'draft') === 'draft'     ? 'selected' : '' ?>>
                 📝 Brouillon
@@ -221,9 +227,16 @@ include __DIR__ . '/../partials/header.php';
                 📦 Archivé
               </option>
             </select>
+            <?php else: ?>
+            <input type="hidden" name="status" value="draft">
+            <div class="form-control bg-light" style="font-size:13px; color:#6b7a8d;">
+              📝 Brouillon <small>(les auteurs ne peuvent pas publier)</small>
+            </div>
+            <?php endif; ?>
           </div>
 
           <!-- Author -->
+          <?php if (can('articles.edit_all')): ?>
           <div class="mb-3">
             <label class="form-label" style="font-size:13px; font-weight:600;">Auteur</label>
             <select class="form-select" name="user_id">
@@ -235,9 +248,12 @@ include __DIR__ . '/../partials/header.php';
               <?php endforeach; ?>
             </select>
           </div>
+          <?php else: ?>
+          <input type="hidden" name="user_id" value="<?= $adminUser['id'] ?>">
+          <?php endif; ?>
 
           <!-- Featured -->
-          <div class="form-check form-switch mb-3">
+          <?php if (can('articles.feature')): ?>
             <input class="form-check-input" type="checkbox" role="switch"
                    id="isFeatured" name="is_featured" value="1"
                    <?= isset($_POST['is_featured']) ? 'checked' : '' ?>>
@@ -245,14 +261,17 @@ include __DIR__ . '/../partials/header.php';
               <i class="bi bi-star-fill" style="color:var(--bbc-gold-dark);"></i> Mettre à la une
             </label>
           </div>
+          <?php endif; ?>
 
           <div class="admin-divider"></div>
 
           <!-- Submit Buttons -->
           <div class="d-flex flex-column gap-2">
+            <?php if (can('articles.publish')): ?>
             <button type="submit" name="status_submit" value="published" class="btn-bbc-primary w-100" style="justify-content:center;">
               <i class="bi bi-send-fill"></i> Publier maintenant
             </button>
+            <?php endif; ?>
             <button type="submit" name="status_submit" value="draft" class="btn-bbc-outline w-100" style="justify-content:center;">
               <i class="bi bi-save"></i> Enregistrer brouillon
             </button>
