@@ -18,12 +18,12 @@
           <div class="col-lg-2 col-md-6 footer-links">
             <h4>Liens de navigation</h4>
             <ul>
-              <li><i class="bx bx-chevron-right"></i> <a href="index.php">Accueil</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="service.php">Services</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="about.php">A propos</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="blog.php">Blog</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="fondation.php">fondation</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="contact.php">Contact</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="index">Accueil</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="service">Services</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="about">A propos</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="blog">Blog</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="fondation">fondation</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="contact">Contact</a></li>
             </ul>
           </div>
 
