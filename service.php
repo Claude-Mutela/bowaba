@@ -68,145 +68,73 @@
     </section><!-- End Testimonials Section -->
 
         <div class="container" id="contente">
-          <div class="row row-cols-1 row-cols-md-3 g-6">
+          <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
              <?php
-                 $sql_details = $conn->prepare("SELECT nomService, detService FROM bowabanc_db.services WHERE id_Servi=1;");
-                 $sql_details->execute();
-                 while($plus = $sql_details->fetch(PDO::FETCH_OBJ)){?>
+                 // Service Data Fetching
+                 try {
+                     $stmt = $conn->query("SELECT * FROM services ORDER BY display_order ASC, id ASC");
+                     $services = $stmt->fetchAll(PDO::FETCH_OBJ);
+                 } catch (PDOException $e) {
+                     echo "<div class='alert alert-danger'>Erreur de chargement des services : " . htmlspecialchars($e->getMessage()) . "</div>";
+                     $services = [];
+                 }
 
-            <div class="col">
-              <div class="card">
-                <div class="card-img">
-                   <img src="assets/img/redaction.jpg" class="img-fluid" alt="Photo du service">
-                </div>                
-                <div class="card-body">
-                   <a href="service-details.php?nomService=<?php  echo $plus->nomService; ?>&detService=<?php  echo $plus->detService; ?>">
-                      <h5 ><?php echo $plus->nomService; ?></h5>
-                   </a>
-                  <p class="card-text"><?php echo substr($plus->detService, 0,200); ?> ...</p>
-                
-                  <a href="service-details.php?nomService=<?php  echo $plus->nomService; ?>&detService=<?php  echo $plus->detService; ?>">
-                  Lire Plus
-                </a>
-                </div>
-              </div>
-            </div>
-              <?php } ?>
-              <?php
-                 $sql_details = $conn->prepare("SELECT nomService, detService FROM bowabanc_db.services WHERE id_Servi=2;");
-                 $sql_details->execute();
-                 while($plus = $sql_details->fetch(PDO::FETCH_OBJ)){?>
-
-            <div class="col">
-              <div class="card">
-                <div class="card-img">
-                   <img src="assets/img/mentorat.jpg" class="img-fluid" alt="Photo du service">
-                </div>                
-                <div class="card-body">
-                   <a href="service-details.php?nomService=<?php  echo $plus->nomService; ?>&detService=<?php  echo $plus->detService; ?>">
-                      <h5 ><?php echo $plus->nomService; ?></h5>
-                   </a>
-                  <p class="card-text"><?php echo substr($plus->detService, 0,200); ?> ...</p>
-                
-                  <a href="service-details.php?nomService=<?php  echo $plus->nomService; ?>&detService=<?php  echo $plus->detService; ?>">
-                      Lire Plus
-                   </a>
-                </div>
-              </div>
-            </div>
-              <?php } ?>
-              <?php
-                 $sql_details = $conn->prepare("SELECT nomService, detService FROM bowabanc_db.services WHERE id_Servi=3;");
-                 $sql_details->execute();
-                 while($plus = $sql_details->fetch(PDO::FETCH_OBJ)){?>
-
-            <div class="col">
-              <div class="card">
-                <div class="card-img">
-                   <img src="assets/img/formation.jpg" class="img-fluid" alt="Photo du service">
-                </div>                
-                <div class="card-body">
-                   <a href="service-details.php?nomService=<?php  echo $plus->nomService; ?>&detService=<?php  echo $plus->detService; ?>">
-                      <h5 ><?php echo $plus->nomService; ?></h5>
-                   </a>
-                  <p class="card-text"><?php echo substr($plus->detService, 0,200); ?> ...</p>
-                  
-                  <a href="service-details.php?nomService=<?php  echo $plus->nomService; ?>&detService=<?php  echo $plus->detService; ?>">
-                      Lire Plus
-                   </a>
-                </div>
-              </div>
-            </div>
-              <?php } ?>
-              <?php
-                 $sql_details = $conn->prepare("SELECT nomService, detService FROM bowabanc_db.services WHERE id_Servi=4;");
-                 $sql_details->execute();
-                 while($plus = $sql_details->fetch(PDO::FETCH_OBJ)){?>
-
-            <div class="col">
-              <div class="card">
-                <div class="card-img">
-                   <img src="assets/img/suivi.jpg" class="img-fluid" alt="Photo du service">
-                </div>                
-                <div class="card-body">
-                   <a href="service-details.php?nomService=<?php  echo $plus->nomService; ?>&detService=<?php  echo $plus->detService; ?>">
-                      <h5 ><?php echo $plus->nomService; ?></h5>
-                   </a>
-                  <p class="card-text"><?php echo substr($plus->detService, 0,200); ?> ...</p>
-                  
-                  <a href="service-details.php?nomService=<?php  echo $plus->nomService; ?>&detService=<?php  echo $plus->detService; ?>">
-                     Lire Plus
-                   </a>
-                </div>
-              </div>
-            </div>
-              <?php } ?>
-              <?php
-                 $sql_details = $conn->prepare("SELECT nomService, detService FROM bowabanc_db.services WHERE id_Servi=5;");
-                 $sql_details->execute();
-                 while($plus = $sql_details->fetch(PDO::FETCH_OBJ)){?>
-
-            <div class="col">
-              <div class="card">
-                <div class="card-img">
-                   <img src="assets/img/comptable.jpg" class="img-fluid" alt="Photo du service">
-                </div>                
-                <div class="card-body">
-                   <a href="service-details.php?nomService=<?php  echo $plus->nomService; ?>&detService=<?php  echo $plus->detService; ?>">
-                      <h5 ><?php echo $plus->nomService; ?></h5>
-                   </a>
-                  <p class="card-text"><?php echo substr($plus->detService, 0,200); ?> ...</p>
+                 // Fallback Image Mapping (in case DB images are empty)
+                 $serviceImages = [
+                     1 => 'assets/img/redaction.jpg',
+                     2 => 'assets/img/mentorat.jpg',
+                     3 => 'assets/img/formation.jpg',
+                     4 => 'assets/img/suivi.jpg',
+                     5 => 'assets/img/comptable.jpg',
+                     6 => 'assets/img/dev.jpg',
+                 ];
                  
-                    <a href="service-details.php?nomService=<?php  echo $plus->nomService; ?>&detService=<?php  echo $plus->detService; ?>">
-                        Lire Plus
-                    </a>
-                </div>
-              </div>
-            </div>
-              <?php } ?>
-              <?php
-                 $sql_details = $conn->prepare("SELECT nomService, detService FROM bowabanc_db.services WHERE id_Servi=6;");
-                 $sql_details->execute();
-                 while($plus = $sql_details->fetch(PDO::FETCH_OBJ)){?>
+                 foreach($services as $service): 
+                    // Use DB image if exists, otherwise fallback to mapping or default
+                    if (!empty($service->image) && file_exists($service->image)) {
+                        $imgSrc = $service->image;
+                    } elseif (isset($serviceImages[$service->id])) {
+                        $imgSrc = $serviceImages[$service->id];
+                    } else {
+                        $imgSrc = 'assets/img/hero-bg.jpg'; // Ultimate fallback
+                    }
+
+                    // Content preparation
+                    $title = $service->title;
+                    $description = $service->description ?? ''; // Use description for summary
+                    // If description is empty, try truncating content
+                    if (empty($description) && !empty($service->content)) {
+                        $description = substr(strip_tags($service->content), 0, 150);
+                    }
+                    
+                    // Link to details (keeping query params logic but updated)
+                    $link = "service-details.php?nomService=" . urlencode($title) . "&detService=" . urlencode($service->content ?? $description);
+                 ?>
 
             <div class="col">
-              <div class="card">
-                <div class="card-img">
-                   <img src="assets/img/dev.jpg" class="img-fluid" alt="Photo du service">
+              <div class="service-card h-100">
+                <div class="service-img-wrapper">
+                   <img src="<?= htmlspecialchars($imgSrc) ?>" class="img-fluid" alt="<?= htmlspecialchars($title) ?>">
+                   <div class="overlay">
+                       <a href="<?= $link ?>" class="btn-read-more">Découvrir <i class="bi bi-arrow-right"></i></a>
+                   </div>
                 </div>                
                 <div class="card-body">
-                   <a href="service-details.php?nomService=<?php  echo $plus->nomService; ?>&detService=<?php  echo $plus->detService; ?>">
-                      <h5 ><?php echo $plus->nomService; ?></h5>
-                   </a>
-                  <p class="card-text"><?php echo substr($plus->detService, 0,200); ?> ...</p>
-             
-                    <a href="service-details.php?nomService=<?php  echo $plus->nomService; ?>&detService=<?php  echo $plus->detService; ?>">
-                        Lire Plus
+                   <h3 class="service-title">
+                       <a href="<?= $link ?>"><?= htmlspecialchars($title) ?></a>
+                   </h3>
+                   <p class="service-text">
+                       <?= htmlspecialchars(substr($description, 0, 120)) ?>...
+                   </p>
+                </div>
+                <div class="card-footer bg-transparent border-0 pt-0">
+                    <a href="<?= $link ?>" class="text-primary fw-bold text-decoration-none learn-more-link">
+                        En savoir plus <i class="bi bi-chevron-right small"></i>
                     </a>
                 </div>
               </div>
             </div>
-              <?php } ?>
+              <?php endforeach; ?>
           </div>
         </div>
 

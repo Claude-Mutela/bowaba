@@ -37,29 +37,58 @@
 </head>
 <body>
     
-     <!-- ======= Breadcrumbs ======= -->
-    <div class="top-bloc">
+    <!-- ======= Breadcrumbs Strip ======= -->
+    <div class="top-bloc small-header">
       <div class="content">
-      <ol>
-          <li><a href="index.php">Accueil</a>   /</li>
-          <li><a href="service.php">Retour aux Services</a></li>
+        <!-- Desktop: Breadcrumb complet avec titre -->
+        <ol class="d-none d-md-flex">
+          <li><a href="index.php">Accueil</a> /</li>
+          <li><a href="service.php">Services</a> /</li>
+          <li class="active"><?= htmlspecialchars($service_name) ?></li>
         </ol>
-        <h2></h2>
-      </div>
-  </div>
-    <!-- =======Contenu du service ======= -->
-
-    <section class="description_service">
-       <div class="container-sm" id="container">
-      <div class="box" id="content">
-        <div class="card" id="card">
-          <div class="card-body">
-            <h5 class="card-title"><?php echo $service_name;?></h5>
-              <p class="card-text"><?php echo $service_desc;?></p>
-          </div>
+        
+        <!-- Mobile: Lien retour simple sans titre -->
+        <div class="d-md-none">
+            <a href="service.php" style="color: #fff; font-weight: 600; text-decoration: none; display: flex; align-items: center;">
+                <i class="bx bx-left-arrow-alt fs-4 me-2"></i> Retour aux services
+            </a>
         </div>
       </div>
     </div>
+
+    <!-- ======= Contenu du service ======= -->
+    <section class="service-details-content">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="service-content-wrapper">
+                        <!-- Icone ou visuel décoratif (optionnel) -->
+                        <div class="service-icon mb-4 text-center">
+                           <i class="bx bx-layer fs-1 text-primary"></i> 
+                        </div>
+                        
+                        <div class="content-body">
+                            <!-- Affichage du contenu brut (attention : XSS si non sécurisé, mais nécessaire pour le rendu HTML) -->
+                            <?php if($service_desc): ?>
+                                <div class="lead mb-4 service-text-content">
+                                    <?= $service_desc ?>
+                                </div>
+                            <?php else: ?>
+                                <p class="text-muted">Aucune description disponible pour ce service.</p>
+                            <?php endif; ?>
+                        </div>
+
+                        <!-- CTA Section -->
+                        <div class="service-cta mt-5 p-4 bg-light rounded-3 text-center">
+                            <h3>Intéressé par ce service ?</h3>
+                            <p>Contactez-nous pour en discuter ou obtenir un devis personnalisé.</p>
+                            <a href="contact.php" class="btn btn-primary btn-lg mt-2">Nous contacter</a>
+                            <!-- Back button removed as requested -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
   <!-- JS Files -->
