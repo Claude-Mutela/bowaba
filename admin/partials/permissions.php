@@ -42,6 +42,34 @@ $PERMISSIONS = [
     'users.create'       => ['admin'],
     'users.edit'         => ['admin'],
     'users.delete'       => ['admin'],
+
+    // Projects (Portfolio)
+    'projects.view'      => ['admin', 'editor', 'author'],
+    'projects.create'    => ['admin', 'editor'],
+    'projects.edit'      => ['admin', 'editor'],
+    'projects.delete'    => ['admin', 'editor'],
+
+    // Partners (Entreprises)
+    'partners.view'      => ['admin', 'editor', 'author'],
+    'partners.create'    => ['admin', 'editor'],
+    'partners.edit'      => ['admin', 'editor'],
+    'partners.delete'    => ['admin', 'editor'],
+
+    // Testimonials (Clients)
+    'testimonials.view'  => ['admin', 'editor', 'author'],
+    'testimonials.create'=> ['admin', 'editor'],
+    'testimonials.edit'  => ['admin', 'editor'],
+    'testimonials.delete'=> ['admin', 'editor'],
+
+    // Students (Apprenants)
+    'students.view'      => ['admin', 'editor', 'author'],
+    'students.create'    => ['admin', 'editor'],
+    'students.edit'      => ['admin', 'editor'],
+    // Training Programs (Formations)
+    'training_programs.view'      => ['admin', 'editor', 'author'],
+    'training_programs.create'    => ['admin', 'editor'],
+    'training_programs.edit'      => ['admin', 'editor'],
+    'training_programs.delete'    => ['admin', 'editor'],
 ];
 
 // ── Helper Functions ───────────────────────────────────────────────────────

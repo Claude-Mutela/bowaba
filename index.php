@@ -200,8 +200,8 @@
             <div class="count-box">
               <i class="bi bi-emoji-smile"></i>
               <span data-purecounter-start="0" data-purecounter-end="304" data-purecounter-duration="2" class="purecounter"></span>
-              <p>Creates Smiles</p> 
-              <p><strong>Clients Satisfaits</strong></p>
+              <p><strong>Clients Satisfaits</strong></p> 
+              <!-- <p><strong>Clients Satisfaits</strong></p> -->
             </div>
           </div>
 
@@ -209,8 +209,8 @@
             <div class="count-box">
               <i class="bi bi-journal-richtext"></i>
               <span data-purecounter-start="0" data-purecounter-end="521" data-purecounter-duration="2" class="purecounter"></span>
-               <p>Projects Done</p>
-              <p><strong>Projets Réalisés</strong></p>
+               <p><strong>Projets Réalisés</strong></p>
+              <!-- <p><strong>Projets Réalisés</strong></p> -->
             </div>
           </div>
 
@@ -218,8 +218,8 @@
             <div class="count-box">
               <i class="bi bi-pencil-fill"></i>
               <span data-purecounter-start="0" data-purecounter-end="1463" data-purecounter-duration="2" class="purecounter"></span>
-               <p>Trained People</p>
-              <p><strong>Personnes Formées</strong></p>
+               <p><strong>Personnes Formées</strong></p>
+              <!-- <p><strong>Personnes Formées</strong></p> -->
             </div>
           </div>
 
@@ -227,8 +227,8 @@
             <div class="count-box">
               <i class="bi bi-briefcase"></i>
               <span data-purecounter-start="0" data-purecounter-end="15" data-purecounter-duration="2" class="purecounter"></span>
-               <p>Company Support</p>
-              <p><strong>Entreprises Accompagnées</strong></p>
+               <p><strong>Entreprises Accompagnées</strong></p>
+              <!-- <p><strong>Entreprises Accompagnées</strong></p> -->
             </div>
           </div>
 

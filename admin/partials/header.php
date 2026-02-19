@@ -79,6 +79,38 @@ require_once __DIR__ . '/auth.php';
     </a>
     <?php endif; ?>
 
+    <a href="<?= $adminBase ?? '../' ?>projects/index.php"
+       class="nav-link <?= ($activePage ?? '') === 'projects' ? 'active' : '' ?>">
+      <i class="bi bi-collection-play-fill"></i>
+      <span>Projets</span>
+    </a>
+
+    <div class="sidebar-section-label">Données</div>
+
+    <a href="<?= $adminBase ?? '../' ?>testimonials/index.php"
+       class="nav-link <?= ($activePage ?? '') === 'testimonials' ? 'active' : '' ?>">
+      <i class="bi bi-chat-quote-fill"></i>
+      <span>Témoignages</span>
+    </a>
+
+    <a href="<?= $adminBase ?? '../' ?>partners/index.php"
+       class="nav-link <?= ($activePage ?? '') === 'partners' ? 'active' : '' ?>">
+      <i class="bi bi-building"></i>
+      <span>Partenaires</span>
+    </a>
+
+    <a href="<?= $adminBase ?? '../' ?>training-programs/index.php"
+       class="nav-link <?= ($activePage ?? '') === 'training-programs' ? 'active' : '' ?>">
+      <i class="bi bi-book-half"></i>
+      <span>Formations</span>
+    </a>
+
+    <a href="<?= $adminBase ?? '../' ?>students/index.php"
+       class="nav-link <?= ($activePage ?? '') === 'students' ? 'active' : '' ?>">
+      <i class="bi bi-mortarboard-fill"></i>
+      <span>Apprenants</span>
+    </a>
+
     <div class="sidebar-section-label">Gestion</div>
 
     <?php if (can('users.view')): ?>
