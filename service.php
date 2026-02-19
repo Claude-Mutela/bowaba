@@ -1,10 +1,9 @@
 <?php
-    $title='NOS SERVICES';
+    $pageTitle='Nos Services - Bowaba n Congo';
+    $pageDesc='Découvrez l\'ensemble des services proposés par Bowaba n Congo : Incubateur, Formation, Développement Web, Marketing, et plus.';
     $nav='service';
     require'hd-ft/hd.php';
     require'kon/conn.php';
-
-   
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -12,10 +11,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title>Nos Services - Bowaba</title>
 
-    <meta content="" name="description">
-  <meta content="" name="keywords">
+    <meta content="Services, Incubateur, Formation, Web, Design, RDC" name="keywords">
 
   <!-- Favicons -->
   <link href="assets/img/icone-bw.png" rel="icon">
@@ -54,6 +52,7 @@
                 <p class="animate__animated animate__fadeInUp">Nous mettons à votre disposition toute une gamme de services pour la réussite de vos projets</p>
               </div>
             </div>
+          </div>
           </div>
   </section><!-- End Hero -->
 
@@ -107,8 +106,9 @@
                         $description = substr(strip_tags($service->content), 0, 150);
                     }
                     
-                    // Link to details (keeping query params logic but updated)
-                    $link = "service-details.php?nomService=" . urlencode($title) . "&detService=" . urlencode($service->content ?? $description);
+                    // Link to details (using slug)
+                    $slug = $service->slug ?? 'service-' . $service->id; // Fallback slug if missing
+                    $link = "service/" . $slug;
                  ?>
 
             <div class="col">

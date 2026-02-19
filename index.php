@@ -1,8 +1,8 @@
 <?php
-  $title='BOWABA N CONGO';
+  $pageTitle="Bowaba n Congo - Agence Digitale & Formation";
+  $pageDesc="Bowaba n Congo est une agence digitale experte en développement web, communication, marketing et formation.";
   $nav='index';
-  require'hd-ft/hd.php';
-  
+  require 'hd-ft/hd.php';
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -110,7 +110,7 @@
                 BOWABA N CONGO (Bolamu Wa Bato Na Congo) est la première entreprise qui combine un <strong>Incubateur</strong>
                 d'entreprise avec une <strong>Academy</strong> pour le renforcement des capacités multidisciplinaire (Langue, Informatique, Agrobusiness et Gestion Entrepreneurial) en République Démocratique du Congo.
               </p>
-              <a href="about.php" class="about-btn"><span>En savoir plus</span> <i class="bx bx-chevron-right"></i></a>
+              <a href="about" class="about-btn"><span>En savoir plus</span> <i class="bx bx-chevron-right"></i></a>
             </div>
           </div>
           <div class="col-xl-7 d-flex align-items-stretch">
@@ -275,7 +275,7 @@
           <div class="col-lg-4 col-md-6" data-aos="fade-up">
             <div class="icon-box">
               <div class="icon"><i class="bi bi-briefcase"></i></div>
-              <h4 class="title"><a href="service.php">Coaching et Mentorat Entrepreneuriaux personnels et d’entreprises
+              <h4 class="title"><a href="service">Coaching et Mentorat Entrepreneuriaux personnels et d’entreprises
               </a></h4>
               <p class="description"></p>
             </div>
@@ -283,7 +283,7 @@
           <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
             <div class="icon-box">
               <div class="icon"><i class="bi bi-card-checklist"></i></div>
-              <h4 class="title"><a href="service.php">Rédaction des projets économiques et de développement </a></h4>
+              <h4 class="title"><a href="service">Rédaction des projets économiques et de développement </a></h4>
               <p class="description">
               </p>
             </div>
@@ -291,28 +291,28 @@
           <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
             <div class="icon-box">
               <div class="icon"><i class="bi bi-bar-chart"></i></div>
-              <h4 class="title"><a href="service.php">Formation professionnelle et renforcement des capacités</a></h4>
+              <h4 class="title"><a href="service">Formation professionnelle et renforcement des capacités</a></h4>
               <p class="description"></p>
             </div>
           </div>
           <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
             <div class="icon-box">
               <div class="icon"><i class="bi bi-code-slash"></i></div>
-              <h4 class="title"><a href="service.php">Conception des Sites Web & Design Graphique</a></h4>
+              <h4 class="title"><a href="service">Conception des Sites Web & Design Graphique</a></h4>
               <p class="description"></p>
             </div>
           </div>
           <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
             <div class="icon-box">
               <div class="icon"><i class="bi bi-brightness-high"></i></div>
-              <h4 class="title"><a href="service.php">Le Suivi & Évaluation des projets </a></h4>
+              <h4 class="title"><a href="service">Le Suivi & Évaluation des projets </a></h4>
               <p class="description"></p>
             </div>
           </div>
           <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="500">
             <div class="icon-box">
               <div class="icon"><i class="bi bi-calendar4-week"></i></div>
-              <h4 class="title"><a href="service.php">Organisation comptable (élaboration des actifs financier pour les PME)</a></h4>
+              <h4 class="title"><a href="service">Organisation comptable (élaboration des actifs financier pour les PME)</a></h4>
               <p class="description"></p>
             </div>
           </div>

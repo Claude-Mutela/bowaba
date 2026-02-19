@@ -1,0 +1,27 @@
+RewriteEngine On
+RewriteBase /bowaba/
+
+# Hide .php extension
+RewriteCond %{THE_REQUEST} \s/+(.+?)\.php[\s?] [NC]
+RewriteRule ^ %1 [R=301,L]
+
+# Routing rules
+RewriteRule ^index$ index.php [L]
+RewriteRule ^services$ service.php [L]
+RewriteRule ^blog$ blog.php [L]
+RewriteRule ^contact$ contact.php [L]
+RewriteRule ^about$ about.php [L]
+RewriteRule ^fondation$ fondation/index.php [L]
+
+# Blog Article Rewrite (Slug)
+RewriteRule ^blog/([a-zA-Z0-9-]+)$ blog-single.php?slug=$1 [QSA,L]
+
+# Service Detail Rewrite (Slug)
+RewriteRule ^service/([a-zA-Z0-9-]+)$ service-details.php?slug=$1 [QSA,L]
+
+# Handle valid files/directories
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^([^\.]+)$ $1.php [NC,L]
+
+# ErrorDocument 404 /bowaba/404.php

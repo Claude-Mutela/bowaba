@@ -1,19 +1,19 @@
 <?php
-    $title='A PROPOS DE NOUS';
+    $pageTitle="A propos de nous - Bowaba n Congo";
+    $pageDesc="Découvrez Bowaba n Congo, le premier incubateur et academy multidisciplinaire en RDC pour l'accompagnement des entrepreneurs.";
     $nav='about';
-    require'hd-ft/hd.php';
+    require 'hd-ft/hd.php';
    
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title>A propos - Bowaba</title>
 
-    <meta content="" name="description">
-  <meta content="" name="keywords">
+    <meta content="Bowaba n Congo, Incubateur, Academy, RDC, Entrepreneuriat" name="keywords">
 
   <!-- Favicons -->
   <link rel="icon" href="assets/img/icone-bw.png" >
@@ -238,13 +238,6 @@
 
       </div>
     </section><!-- End F.A.Q Section -->
-
-
-
-
-
-
-
 
   <!-- JS Files -->
   <script src="assets/vendor/aos/aos.js"></script>

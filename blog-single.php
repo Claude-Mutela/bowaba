@@ -1,9 +1,9 @@
 <?php
   require 'kon/conn.php'; // DB Connection
 
-  // 1. Get Article ID
-  $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
-  if (!$id) {
+  // 1. Get Article Slug
+  $slug = filter_input(INPUT_GET, 'slug', FILTER_SANITIZE_SPECIAL_CHARS);
+  if (!$slug) {
       header("Location: blog.php");
       exit;
   }
@@ -14,18 +14,32 @@
       FROM articles a
       LEFT JOIN users u ON a.user_id = u.id
       LEFT JOIN article_categories c ON a.category_id = c.id
-      WHERE a.id = :id AND (a.status = 'published' OR a.status IS NULL)
+      WHERE a.slug = :slug AND (a.status = 'published' OR a.status IS NULL)
       LIMIT 1
   ");
-  $stmt->execute([':id' => $id]);
+  $stmt->execute([':slug' => $slug]);
   $article = $stmt->fetch(PDO::FETCH_ASSOC);
 
   // 404 if not found
   if (!$article) {
+      // Try to find by ID for backward compatibility or if slug fails
+      $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+      if($id){
+         $stmt = $conn->prepare("SELECT slug FROM articles WHERE id=:id");
+         $stmt->execute([':id'=>$id]);
+         $found = $stmt->fetchColumn();
+         if($found){
+             header("Location: blog/" . $found, true, 301);
+             exit;
+         }
+      }
+
       header("HTTP/1.0 404 Not Found");
       echo "Article introuvable.";
       exit;
   }
+  
+  $id = $article['id']; // Set ID for tags and views logic
 
   // 3. Fetch Tags
   $tagsStmt = $conn->prepare("
@@ -40,8 +54,14 @@
   // 4. Update View Count (optional, simple increment)
   $conn->prepare("UPDATE articles SET views_count = views_count + 1 WHERE id = :id")->execute([':id' => $id]);
 
-  // Page Metas
-  $title = $article['title'];
+  // Page Metas & SEO
+  $pageTitle = $article['title'] . ' - Blog Bowaba';
+  // Use excerpt or strip tags from content, limit to 160 chars
+  $pageDesc  = $article['excerpt'] ?: mb_substr(strip_tags($article['content']), 0, 160) . '...';
+  $pageImage = $article['cover_image'];
+  $pageUrl   = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]/bowaba/blog/" . $slug;
+
+  $nav = 'blog';
   require 'hd-ft/hd.php'; 
 ?>
 <!DOCTYPE html>
@@ -51,10 +71,6 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title><?= htmlspecialchars($article['title']) ?> - Bowaba</title>
-  <meta content="<?= htmlspecialchars($article['excerpt'] ?? '') ?>" name="description">
-
-  <!-- Favicons -->
   <link href="assets/img/icone-bw.png" rel="icon">
 
   <!-- Google Fonts -->
@@ -81,8 +97,8 @@
     <div class="top-bloc small-header">
       <div class="content">
       <ol>
-          <li><a href="index.php">Accueil</a> /</li>
-          <li><a href="blog.php">Blog</a> /</li>
+          <li><a href="index">Accueil</a> /</li>
+          <li><a href="blog">Blog</a> /</li>
           <li class="active"><?= htmlspecialchars($article['category_name'] ?? 'Article') ?></li>
         </ol>
       </div>
@@ -123,7 +139,7 @@
                 <?php if ($article['category_name']): ?>
                 <i class="bi bi-folder"></i>
                 <ul class="cats">
-                  <li><a href="blog.php?category=<?= $article['category_slug'] ?>"><?= htmlspecialchars($article['category_name']) ?></a></li>
+                  <li><a href="blog?category=<?= $article['category_slug'] ?>"><?= htmlspecialchars($article['category_name']) ?></a></li>
                 </ul>
                 <?php endif; ?>
 
@@ -131,7 +147,7 @@
                 <i class="bi bi-tags"></i>
                 <ul class="tags">
                   <?php foreach ($tags as $tag): ?>
-                  <li><a href="blog.php?tag=<?= $tag['slug'] ?>"><?= htmlspecialchars($tag['name']) ?></a></li>
+                  <li><a href="blog?tag=<?= $tag['slug'] ?>"><?= htmlspecialchars($tag['name']) ?></a></li>
                   <?php endforeach; ?>
                 </ul>
                 <?php endif; ?>
@@ -171,14 +187,17 @@
               <div class="sidebar-item recent-posts">
                 <?php
                   // Fetch Recent Posts (real data)
-                  $recentStmt = $conn->query("SELECT id, title, cover_image, published_at FROM articles WHERE status='published' ORDER BY published_at DESC LIMIT 5");
+                  // Added slug to query
+                  $recentStmt = $conn->query("SELECT id, title, slug, cover_image, published_at FROM articles WHERE status='published' ORDER BY published_at DESC LIMIT 5");
                   while($rec = $recentStmt->fetch(PDO::FETCH_ASSOC)):
+                     // Use slug in link
+                     $recLink = "blog/" . ($rec['slug'] ?? 'article-'.$rec['id']);
                 ?>
                 <div class="post-item clearfix">
                   <?php if($rec['cover_image']): ?>
                   <img src="<?= htmlspecialchars($rec['cover_image']) ?>" alt="">
                   <?php endif; ?>
-                  <h4><a href="blog-single.php?id=<?= $rec['id'] ?>"><?= htmlspecialchars($rec['title']) ?></a></h4>
+                  <h4><a href="<?= $recLink ?>"><?= htmlspecialchars($rec['title']) ?></a></h4>
                   <time datetime="<?= $rec['published_at'] ?>"><?= date('d M, Y', strtotime($rec['published_at'])) ?></time>
                 </div>
                 <?php endwhile; ?>

@@ -1,10 +1,46 @@
 <?php
-    $title='DETAILS SERVICE';
-    $nav='details-service';
-    require'hd-ft/hd.php';
+    require 'kon/conn.php';
 
-    $service_name = $_GET['nomService'];
-    $service_desc = $_GET['detService'];
+    // Get Slug
+    $slug = filter_input(INPUT_GET, 'slug', FILTER_SANITIZE_SPECIAL_CHARS);
+    
+    // Fetch Service
+    $service = null;
+    if ($slug) {
+        $stmt = $conn->prepare("SELECT * FROM services WHERE slug = :slug AND status = 'active' LIMIT 1");
+        $stmt->execute([':slug' => $slug]);
+        $service = $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    // 404 if not found
+    if (!$service) {
+        // Fallback: try ID if slug fails (for backward compatibility)
+        $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+        if($id){
+             $stmt = $conn->prepare("SELECT slug FROM services WHERE id=:id AND status='active'");
+             $stmt->execute([':id'=>$id]);
+             $found = $stmt->fetchColumn();
+             if($found){
+                 header("Location: service/" . $found, true, 301);
+                 exit;
+             }
+        }
+        
+        header("HTTP/1.0 404 Not Found");
+        require 'hd-ft/hd.php'; // Load header to show navbar even on 404
+        echo '<div class="container my-5 text-center"><h1>Service introuvable</h1><p>Ce service n\'existe pas ou a été retiré.</p><a href="service.php" class="btn btn-primary">Retour aux services</a></div>';
+        require 'hd-ft/ft.php';
+        exit;
+    }
+
+    // Meta Tags
+    $title = $service['title'];
+    $pageTitle = $service['title'];
+    $pageDesc  = $service['description'];
+    $pageImage = $service['image']; // For OG
+    $nav='details-service';
+    
+    require'hd-ft/hd.php';
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -12,28 +48,21 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title><?= htmlspecialchars($service['title']) ?> - Bowaba</title>
 
-    <meta content="" name="description">
-  <meta content="" name="keywords">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
-  <!-- Favicons -->
-  <link href="assets/img/icone-bw.png" rel="icon">
-  <link href="assets/img/icone-bw.png" rel="apple-touch-icon">
+    <!--  CSS Files -->
+    <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-
-  <!--  CSS Files -->
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-
-  <!-- Main CSS  -->
-  <link href="assets/css/detail-service.css" rel="stylesheet">
+    <!-- Main CSS  -->
+    <link href="assets/css/detail-service.css" rel="stylesheet">
 </head>
 <body>
     
@@ -44,7 +73,7 @@
         <ol class="d-none d-md-flex">
           <li><a href="index.php">Accueil</a> /</li>
           <li><a href="service.php">Services</a> /</li>
-          <li class="active"><?= htmlspecialchars($service_name) ?></li>
+          <li class="active"><?= htmlspecialchars($service['title']) ?></li>
         </ol>
         
         <!-- Mobile: Lien retour simple sans titre -->
@@ -62,19 +91,34 @@
             <div class="row justify-content-center">
                 <div class="col-lg-8">
                     <div class="service-content-wrapper">
-                        <!-- Icone ou visuel décoratif (optionnel) -->
+                        <!-- Icone ou visuel décoratif -->
                         <div class="service-icon mb-4 text-center">
-                           <i class="bx bx-layer fs-1 text-primary"></i> 
+                           <?php if($service['icon']): ?>
+                               <i class="<?= htmlspecialchars($service['icon']) ?> fs-1 text-primary"></i>
+                           <?php else: ?>
+                               <i class="bx bx-layer fs-1 text-primary"></i> 
+                           <?php endif; ?>
                         </div>
+
+                        <?php if($service['image']): ?>
+                        <div class="service-image mb-4 text-center">
+                            <img src="<?= htmlspecialchars($service['image']) ?>" alt="<?= htmlspecialchars($service['title']) ?>" class="img-fluid rounded shadow-sm">
+                        </div>
+                        <?php endif; ?>
                         
                         <div class="content-body">
-                            <!-- Affichage du contenu brut (attention : XSS si non sécurisé, mais nécessaire pour le rendu HTML) -->
-                            <?php if($service_desc): ?>
-                                <div class="lead mb-4 service-text-content">
-                                    <?= $service_desc ?>
+                            <h1 class="text-center mb-4"><?= htmlspecialchars($service['title']) ?></h1>
+
+                            <?php if($service['description']): ?>
+                                <div class="lead mb-4 service-intro text-center">
+                                    <?= nl2br(htmlspecialchars($service['description'])) ?>
                                 </div>
-                            <?php else: ?>
-                                <p class="text-muted">Aucune description disponible pour ce service.</p>
+                            <?php endif; ?>
+
+                            <?php if($service['content']): ?>
+                                <div class="service-text-content">
+                                    <?= $service['content'] // Raw HTML from TinyMCE ?>
+                                </div>
                             <?php endif; ?>
                         </div>
 
@@ -83,7 +127,6 @@
                             <h3>Intéressé par ce service ?</h3>
                             <p>Contactez-nous pour en discuter ou obtenir un devis personnalisé.</p>
                             <a href="contact.php" class="btn btn-primary btn-lg mt-2">Nous contacter</a>
-                            <!-- Back button removed as requested -->
                         </div>
                     </div>
                 </div>

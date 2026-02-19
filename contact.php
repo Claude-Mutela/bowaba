@@ -1,6 +1,7 @@
 <?php
     session_start();
-    $title='CONTACTEZ-NOUS';
+    $pageTitle='Contactez-nous - Bowaba n Congo';
+    $pageDesc='Une question ? Un projet ? Contactez Bowaba n Congo par téléphone, email ou via notre formulaire.';
     $nav='contact';
     require'hd-ft/hd.php';
     
@@ -11,10 +12,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title>Contact - Bowaba</title>
 
-    <meta content="" name="description">
-  <meta content="" name="keywords">
+    <meta content="Contact, Bowaba, Email, Téléphone, Adresse, Kinshasa" name="keywords">
 
  <!-- Favicons -->
  <link href="assets/img/icone-bw.png" rel="icon">

@@ -1,5 +1,6 @@
 <?php
-    $title='BLOG';
+    $pageTitle='Blog & Actualités - Bowaba n Congo';
+    $pageDesc='Suivez nos actualités, articles et conseils sur l\'entrepreneuriat, le digital et la formation en RDC.';
     $nav='blog';
     require'hd-ft/hd.php';
     require'kon/conn.php';
@@ -70,7 +71,7 @@
 
     // Sidebar Data: Recent Posts
     $recents = $conn->query("
-        SELECT id, title, cover_image, published_at 
+        SELECT id, title, slug, cover_image, published_at 
         FROM articles 
         WHERE status = 'published' 
         ORDER BY published_at DESC 
@@ -94,7 +95,7 @@
     <link href="assets/img/icone-bw.png" rel="icon">
 
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
     <!-- Vendor CSS Files -->
     <link href="assets/vendor/aos/aos.css" rel="stylesheet">
@@ -148,6 +149,10 @@
                                 // Truncate content for excerpt if excerpt is empty
                                 $desc = $art['excerpt'] ?: strip_tags($art['content']);
                                 $desc = substr($desc, 0, 200) . '...';
+                                
+                                // Slug link
+                                $slug = $art['slug'] ?? 'article-' . $art['id'];
+                                $link = "blog/" . $slug;
                             ?>
                                 <article class="entry">
 
@@ -158,7 +163,7 @@
                                     <?php endif; ?>
 
                                     <h2 class="entry-title">
-                                        <a href="blog-single.php?id=<?= $art['id'] ?>">
+                                        <a href="<?= $link ?>">
                                             <?= htmlspecialchars($art['title']) ?>
                                         </a>
                                     </h2>
@@ -177,7 +182,7 @@
                                     <div class="entry-content">
                                         <p><?= $desc ?></p>
                                         <div class="read-more">
-                                            <a href="blog-single.php?id=<?= $art['id'] ?>">Lire la suite</a>
+                                            <a href="<?= $link ?>">Lire la suite</a>
                                         </div>
                                     </div>
 
@@ -234,12 +239,14 @@
 
                             <h3 class="sidebar-title">Articles Récents</h3>
                             <div class="sidebar-item recent-posts">
-                                <?php foreach($recents as $r): ?>
+                                <?php foreach($recents as $r): 
+                                    $link = "blog/" . ($r['slug'] ?? 'article-'.$r['id']);
+                                ?>
                                     <div class="post-item clearfix">
                                         <?php if($r['cover_image']): ?>
                                         <img src="<?= htmlspecialchars($r['cover_image']) ?>" alt="">
                                         <?php endif; ?>
-                                        <h4><a href="blog-single.php?id=<?= $r['id'] ?>"><?= htmlspecialchars($r['title']) ?></a></h4>
+                                        <h4><a href="<?= $link ?>"><?= htmlspecialchars($r['title']) ?></a></h4>
                                         <time datetime="<?= $r['published_at'] ?>"><?= date('d M, Y', strtotime($r['published_at'])) ?></time>
                                     </div>
                                 <?php endforeach; ?>
@@ -280,3 +287,4 @@
 <?php
     require'hd-ft/ft.php';
 ?>
+</html>
