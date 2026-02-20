@@ -18,7 +18,7 @@ $errors = [];
 if (!empty($_POST['website'])) {
     // Silent fail: Redirect as if successful to fool the bot, but don't send email.
     $_SESSION['success'] = 1;
-    header('Location: contact.php');
+    header('Location: contact');
     exit();
 }
 
@@ -43,7 +43,7 @@ if (!isset($_POST['message']) || trim($_POST['message']) === '') {
 if (!empty($errors)) {
     $_SESSION['errors'] = $errors;
     $_SESSION['inputs'] = $_POST;
-    header('Location: contact.php');
+    header('Location: contact');
     exit();
 } 
 
@@ -92,14 +92,14 @@ try {
     $mail->send();
     
     $_SESSION['success'] = 1;
-    header('Location: contact.php');
+    header('Location: contact');
     
 } catch (Exception $e) {
     // Log error internally if possible
     // error_log($mail->ErrorInfo);
     $_SESSION['errors'] = ["Une erreur technique est survenue lors de l'envoi du message. Veuillez réessayer plus tard."];
     $_SESSION['inputs'] = $_POST;
-    header('Location: contact.php');
+    header('Location: contact');
 }
 
 

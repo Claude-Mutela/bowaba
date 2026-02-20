@@ -73,7 +73,7 @@
 
     <div class="container-ft">
       <div class="copyright">
-        &copy; Copyright <strong><span>Bowaba n Congo <?php echo date('Y')?></span></strong>. Tous Droit Réservé.
+        &copy; Copyright <strong><span>Bowaba n Congo <?php echo date('Y')?></span></strong>. Tous Droits Réservés.
       </div>
       <div class="credits">
         Developed by <a style="color:#ffcf2a;" href="https://claude-mutela.dev" target="_blank">Claude Mutela</a>

@@ -1,25 +1,74 @@
 RewriteEngine On
 RewriteBase /
 
-# Hide .php extension
-RewriteCond %{THE_REQUEST} \s/+(.+?)\.php[\s?] [NC]
+# Hide .php extension (front-end pages only, not admin)
+RewriteCond %{THE_REQUEST} \s/+((?!admin/)(.+?))\.php[\s?] [NC]
 RewriteRule ^ /%1 [R=301,L]
 
-# Routing rules
-RewriteRule ^index$ index.php [L]
-RewriteRule ^services$ service.php [L]
-RewriteRule ^blog$ blog.php [L]
-RewriteRule ^contact$ contact.php [L]
-RewriteRule ^about$ about.php [L]
-RewriteRule ^fondation$ fondation/index.php [L]
+# ============================================================
+# FRONT-END ROUTES
+# ============================================================
+RewriteRule ^index$                 index.php [L]
+RewriteRule ^services$              service.php [L]
+RewriteRule ^blog$                  blog.php [L]
+RewriteRule ^contact$               contact.php [L]
+RewriteRule ^about$                 about.php [L]
+RewriteRule ^login$                 login.php [L]
+RewriteRule ^account$               account.php [L]
+RewriteRule ^account-success$       account-success.php [L]
+RewriteRule ^post-account$          post-account.php [L]
+RewriteRule ^post-contact$          post-contact.php [L]
+RewriteRule ^fondation$             fondation/index.php [L]
 
 # Blog Article Rewrite (Slug)
-RewriteRule ^blog/([a-zA-Z0-9-]+)$ blog-single.php?slug=$1 [QSA,L]
+RewriteRule ^blog/([a-zA-Z0-9_-]+)$       blog-single.php?slug=$1 [QSA,L]
 
 # Service Detail Rewrite (Slug)
-RewriteRule ^service/([a-zA-Z0-9-]+)$ service-details.php?slug=$1 [QSA,L]
+RewriteRule ^service/([a-zA-Z0-9_-]+)$    service-details.php?slug=$1 [QSA,L]
 
-# Handle valid files/directories
+# ============================================================
+# ADMIN ROUTES (no .php stripping for admin)
+# ============================================================
+RewriteRule ^admin$                          admin/index.php [L]
+RewriteRule ^admin/login$                    admin/login.php [L]
+RewriteRule ^admin/logout$                   admin/logout.php [L]
+RewriteRule ^admin/setup$                    admin/setup.php [L]
+
+# Articles
+RewriteRule ^admin/articles$                 admin/articles/index.php [L]
+RewriteRule ^admin/articles/create$          admin/articles/create.php [L]
+RewriteRule ^admin/articles/edit$            admin/articles/edit.php [QSA,L]
+
+# Categories
+RewriteRule ^admin/categories$               admin/categories/index.php [L]
+
+# Partners
+RewriteRule ^admin/partners$                 admin/partners/index.php [L]
+
+# Projects
+RewriteRule ^admin/projects$                 admin/projects/index.php [L]
+
+# Services
+RewriteRule ^admin/services$                 admin/services/index.php [L]
+
+# Students
+RewriteRule ^admin/students$                 admin/students/index.php [L]
+
+# Testimonials
+RewriteRule ^admin/testimonials$             admin/testimonials/index.php [L]
+
+# Training Programs
+RewriteRule ^admin/training-programs$        admin/training-programs/index.php [L]
+
+# Users
+RewriteRule ^admin/users$                    admin/users/index.php [L]
+
+# Admin API
+RewriteRule ^admin/api/upload-image$         admin/api/upload-image.php [QSA,L]
+
+# ============================================================
+# FALLBACK: serve file/directory as-is
+# ============================================================
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^([^\.]+)$ $1.php [NC,L]

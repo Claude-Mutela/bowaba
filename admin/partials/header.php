@@ -123,7 +123,7 @@ require_once __DIR__ . '/auth.php';
 
     <div class="sidebar-section-label">Système</div>
 
-    <a href="<?= $adminBase ?? '../' ?>../index.php" class="nav-link" target="_blank">
+    <a href="<?= $adminBase ?? '../' ?>../" class="nav-link" target="_blank">
       <i class="bi bi-box-arrow-up-right"></i>
       <span>Voir le site</span>
     </a>
@@ -177,7 +177,7 @@ require_once __DIR__ . '/auth.php';
       <button class="topbar-btn has-notif" title="Notifications">
         <i class="bi bi-bell"></i>
       </button>
-      <a href="<?= $adminBase ?? '../' ?>../index.php" class="topbar-btn" title="Voir le site" target="_blank">
+      <a href="<?= $adminBase ?? '../' ?>../" class="topbar-btn" title="Voir le site" target="_blank">
         <i class="bi bi-globe"></i>
       </a>
     </div>
