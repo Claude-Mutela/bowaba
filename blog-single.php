@@ -70,6 +70,29 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title><?= htmlspecialchars($pageTitle) ?></title>
+  <meta name="description" content="<?= htmlspecialchars($pageDesc) ?>">
+
+  <!-- Open Graph (Facebook, LinkedIn, WhatsApp, etc.) -->
+  <meta property="og:type"        content="article">
+  <meta property="og:title"       content="<?= htmlspecialchars($pageTitle) ?>">
+  <meta property="og:description" content="<?= htmlspecialchars($pageDesc) ?>">
+  <meta property="og:url"         content="<?= htmlspecialchars($pageUrl) ?>">
+  <?php if (!empty($pageImage)): ?>
+  <meta property="og:image"       content="<?= htmlspecialchars((strpos($pageImage,'http')===0?$pageImage:'https://'.$_SERVER['HTTP_HOST'].'/'.$pageImage)) ?>">
+  <meta property="og:image:width"  content="1200">
+  <meta property="og:image:height" content="630">
+  <?php endif; ?>
+  <meta property="og:site_name"   content="Bowaba n Congo">
+  <meta property="og:locale"      content="fr_FR">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:title"       content="<?= htmlspecialchars($pageTitle) ?>">
+  <meta name="twitter:description" content="<?= htmlspecialchars($pageDesc) ?>">
+  <?php if (!empty($pageImage)): ?>
+  <meta name="twitter:image"       content="<?= htmlspecialchars((strpos($pageImage,'http')===0?$pageImage:'https://'.$_SERVER['HTTP_HOST'].'/'.$pageImage)) ?>">
+  <?php endif; ?>
 
   <link href="assets/img/icone-bw.png" rel="icon">
 
@@ -221,7 +244,7 @@
   <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
   <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <!-- validate.js supprimé -->
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
