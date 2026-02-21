@@ -111,7 +111,7 @@
                             <?php unset($_SESSION['success']); ?>
                         <?php endif; ?>
 
-                        <form action="post-contact.php" method="post" role="form" class="php-email-form-custom">
+                        <form action="post-contact" method="post" role="form" class="php-email-form-custom">
                             <!-- Honeypot field (hidden from users, visible to bots) -->
                             <div style="display:none;">
                                 <label for="website">Leave this field blank</label>
@@ -153,7 +153,7 @@
   <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
   <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
+  
 
   <!--  JS File -->
   <script src="assets/js/main.js"></script>

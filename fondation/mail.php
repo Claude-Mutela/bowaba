@@ -26,13 +26,13 @@
 
         $mail = new PHPMailer(true);
 
-        $mail->isSMTP();                                      // Envoyer en utilisant SMTP
-        $mail->Host = 'fondation.bowabancongo.com';          // Spécifiez le serveur SMTP
-        $mail->SMTPAuth = true;                               // Activer l'authentification SMTP
-        $mail->Username = 'contact@fondation.bowabancongo.com';           
-        $mail->Password = 'Motdepasse@fondation2025';                  
-        $mail->SMTPSecure = 'tls';                            // Activer TLS
-        $mail->Port = 465;                                    // Port à utiliser
+        $mail->isSMTP();
+        $mail->Host = 'fondation.bowabancongo.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'contact@fondation.bowabancongo.com';
+        $mail->Password = 'Motdepasse@fondation2025';
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;  // Port 465 → SMTPS
+        $mail->Port = 465;
         $mail->CharSet = 'UTF-8';
         $mail->Encoding = 'base64';
         $mail->addReplyTo($email, $name);
@@ -55,8 +55,8 @@
             $mail->send();
             $_SESSION['success'] = true; // Message de succès
         } catch (Exception $e) {
-            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
-            $_SESSION['error'] = false; // Message d'erreur
+            error_log('[fondation/mail] PHPMailer error: ' . $mail->ErrorInfo);
+            $_SESSION['error'] = true;
         }
         
         // Redirection vers la page de contact avec le message de succès/erreur

@@ -4,7 +4,7 @@
   // 1. Get Article Slug
   $slug = filter_input(INPUT_GET, 'slug', FILTER_SANITIZE_SPECIAL_CHARS);
   if (!$slug) {
-      header("Location: blog.php");
+      header("Location: blog");
       exit;
   }
 

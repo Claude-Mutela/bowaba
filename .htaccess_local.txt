@@ -2,7 +2,7 @@ RewriteEngine On
 RewriteBase /bowaba/
 
 # Hide .php extension (front-end pages only)
-RewriteCond %{THE_REQUEST} \s/+bowaba/((?!admin/)(.+?))\.php[\s?] [NC]
+RewriteCond %{THE_REQUEST} \s/+bowaba/((?!admin/)(?!fondation/)(.+?))\.php[\s?] [NC]
 RewriteRule ^ /bowaba/%1 [R=301,L]
 
 # ============================================================
@@ -19,6 +19,7 @@ RewriteRule ^account-success$       account-success.php [L]
 RewriteRule ^post-account$          post-account.php [L]
 RewriteRule ^post-contact$          post-contact.php [L]
 RewriteRule ^fondation$             fondation/index.php [L]
+RewriteRule ^fondation/mail$        fondation/mail.php [QSA,L]
 
 # Blog Article Rewrite (Slug)
 RewriteRule ^blog/([a-zA-Z0-9_-]+)$       blog-single.php?slug=$1 [QSA,L]
@@ -71,6 +72,7 @@ RewriteRule ^admin/api/upload-image$         admin/api/upload-image.php [QSA,L]
 # ============================================================
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_URI} !^/fondation
 RewriteRule ^([^\.]+)$ $1.php [NC,L]
 
 # ErrorDocument 404 /bowaba/404.php

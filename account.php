@@ -36,7 +36,7 @@
             ?>
 
 
-        <form class="form" method="POST" action="post-account.php">
+        <form class="form" method="POST" action="post-account">
                 <p class="title">Inscription </p>
                 <p class="message"> Créez le compte pour vous connecter</p>
                 <div class="flex">

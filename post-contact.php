@@ -62,7 +62,7 @@ try {
     $mail->Host       = 'mail.bowabancongo.com';                     //Set the SMTP server to send through
     $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
     $mail->Username   = 'contact@bowabancongo.com';                     //SMTP username
-    $mail->Password   = 'M0tD3P@ss3S3cur3!';                               //SMTP password (TO BE REPLACED WITH REAL CREDENTIALS VIA ENV IF POSSIBLE)
+    $mail->Password   = 'Contact@bowaba';                               //SMTP password (TO BE REPLACED WITH REAL CREDENTIALS VIA ENV IF POSSIBLE)
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
     $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
@@ -95,8 +95,7 @@ try {
     header('Location: contact');
     
 } catch (Exception $e) {
-    // Log error internally if possible
-    // error_log($mail->ErrorInfo);
+    error_log('[post-contact] PHPMailer error: ' . $mail->ErrorInfo);
     $_SESSION['errors'] = ["Une erreur technique est survenue lors de l'envoi du message. Veuillez réessayer plus tard."];
     $_SESSION['inputs'] = $_POST;
     header('Location: contact');

@@ -52,7 +52,7 @@
         
         $_SESSION['errors'] = $errors;//envoie du tableau contenant des erreurs à la var globale $_session
         $_SESSION['inputs'] = $_POST;//envoie des données entrées dans les champs du formulaire
-        header('Location: account.php');
+        header('Location: account');
     }
     else{
 
@@ -92,7 +92,7 @@
             mail($to, $subject, $message);
             */
          
-            header('Location:account-success.php');
+            header('Location: account-success');
 
 
 
