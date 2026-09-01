@@ -14,6 +14,17 @@
     $category = trim($_GET['category'] ?? ''); // slug
     $tag      = trim($_GET['tag'] ?? '');      // slug
 
+    // Helper to build blog pagination URLs preserving current filters
+    function blogPaginationUrl($p, $search, $category, $tag) {
+        $params = [];
+        if ($search !== '')   $params['search']   = $search;
+        if ($category !== '') $params['category'] = $category;
+        if ($tag !== '')      $params['tag']      = $tag;
+        if ($p > 1)           $params['page']     = $p;
+        $qs = http_build_query($params);
+        return 'blog' . ($qs ? '?' . $qs : '');
+    }
+
     // Build Query
     $where  = ["a.status = 'published'"];
     $params = [];
@@ -173,7 +184,7 @@
                                             <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="#"><?= htmlspecialchars($art['author_name'] ?? 'Admin') ?></a></li>
                                             <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="#"><time datetime="<?= $art['published_at'] ?>"><?= date('d M, Y', $date) ?></time></a></li>
                                             <?php if($art['category_name']): ?>
-                                            <li class="d-flex align-items-center"><i class="bi bi-folder"></i> <a href="?category=<?= $art['category_slug'] ?>"><?= htmlspecialchars($art['category_name']) ?></a></li>
+                                            <li class="d-flex align-items-center"><i class="bi bi-folder"></i> <a href="blog?category=<?= urlencode($art['category_slug']) ?>"><?= htmlspecialchars($art['category_name']) ?></a></li>
                                             <?php endif; ?>
                                             <li class="d-flex align-items-center"><i class="bi bi-eye"></i> <?= $art['views_count'] ?> Vues</li>
                                         </ul>
@@ -196,19 +207,19 @@
                             <ul class="justify-content-center">
                                 <!-- Prev -->
                                 <li class="<?= ($page <= 1) ? 'disabled' : '' ?>">
-                                    <a href="<?= ($page <= 1) ? '#' : '?page='.($page-1) ?>"><i class="bi bi-chevron-left"></i></a>
+                                    <a href="<?= ($page <= 1) ? '#' : blogPaginationUrl($page - 1, $search, $category, $tag) ?>"><i class="bi bi-chevron-left"></i></a>
                                 </li>
                                 
                                 <!-- Pages -->
-                                <?php for($p=1; $p<=$totalPages; $p++): ?>
+                                <?php for($p = 1; $p <= $totalPages; $p++): ?>
                                 <li class="<?= ($page == $p) ? 'active' : '' ?>">
-                                    <a href="?page=<?= $p ?>"><?= $p ?></a>
+                                    <a href="<?= blogPaginationUrl($p, $search, $category, $tag) ?>"><?= $p ?></a>
                                 </li>
                                 <?php endfor; ?>
 
                                 <!-- Next -->
                                 <li class="<?= ($page >= $totalPages) ? 'disabled' : '' ?>">
-                                    <a href="<?= ($page >= $totalPages) ? '#' : '?page='.($page+1) ?>"><i class="bi bi-chevron-right"></i></a>
+                                    <a href="<?= ($page >= $totalPages) ? '#' : blogPaginationUrl($page + 1, $search, $category, $tag) ?>"><i class="bi bi-chevron-right"></i></a>
                                 </li>
                             </ul>
                         </div>
@@ -222,7 +233,7 @@
 
                             <h3 class="sidebar-title">Recherche</h3>
                             <div class="sidebar-item search-form">
-                                <form action="" method="GET">
+                                <form action="blog" method="GET">
                                     <input type="text" name="search" placeholder="Rechercher..." value="<?= htmlspecialchars($search) ?>">
                                     <button type="submit"><i class="bi bi-search"></i></button>
                                 </form>
@@ -232,7 +243,7 @@
                             <div class="sidebar-item categories">
                                 <ul>
                                     <?php foreach($cats as $c): ?>
-                                    <li><a href="?category=<?= $c['slug'] ?>"><?= htmlspecialchars($c['name']) ?> <span>(<?= $c['count'] ?>)</span></a></li>
+                                    <li><a href="blog?category=<?= urlencode($c['slug']) ?>"><?= htmlspecialchars($c['name']) ?> <span>(<?= $c['count'] ?>)</span></a></li>
                                     <?php endforeach; ?>
                                 </ul>
                             </div><!-- End sidebar categories-->
@@ -256,7 +267,7 @@
                             <div class="sidebar-item tags">
                                 <ul>
                                     <?php foreach($allTags as $t): ?>
-                                    <li><a href="?tag=<?= $t['slug'] ?>"><?= htmlspecialchars($t['name']) ?></a></li>
+                                    <li><a href="blog?tag=<?= urlencode($t['slug']) ?>"><?= htmlspecialchars($t['name']) ?></a></li>
                                     <?php endforeach; ?>
                                 </ul>
                             </div><!-- End sidebar tags-->

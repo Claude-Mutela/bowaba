@@ -1,10 +1,9 @@
 RewriteEngine On
-RewriteBase /
+RewriteBase /bowaba/
 
-# Hide .php extension (front-end pages only, not admin)
-RewriteCond %{HTTP_HOST} !^fondation\. [NC]
-RewriteCond %{THE_REQUEST} \s/+((?!admin/)(.+?))\.php[\s?] [NC]
-RewriteRule ^ /%1 [R=301,L]
+# Hide .php extension (front-end pages only)
+RewriteCond %{THE_REQUEST} \s/+bowaba/((?!admin/)(?!fondation/)(.+?))\.php[\s?] [NC]
+RewriteRule ^ /bowaba/%1 [R=301,L]
 
 # ============================================================
 # FRONT-END ROUTES
