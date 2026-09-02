@@ -48,10 +48,10 @@ if (!empty($errors)) {
 } 
 
 // 4. SANITIZATION & EMAIL SENDING
-$name = htmlspecialchars(trim($_POST['name']));
+$name = trim($_POST['name']);
 $email = filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL);
-$subject = htmlspecialchars(trim($_POST['subject']));
-$message = htmlspecialchars(trim($_POST['message']));
+$subject = trim($_POST['subject']);
+$message = trim($_POST['message']);
 
 $mail = new PHPMailer(true);
 
@@ -59,12 +59,14 @@ try {
     //Server settings
     // $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
     $mail->isSMTP();                                            //Send using SMTP
-    $mail->Host       = 'mail.bowabancongo.com';                     //Set the SMTP server to send through
+    $mail->Host       = 'mail.bowabancongo.com';                 //Set the SMTP server to send through
     $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-    $mail->Username   = 'contact@bowabancongo.com';                     //SMTP username
-    $mail->Password   = 'Contact@bowaba';                               //SMTP password (TO BE REPLACED WITH REAL CREDENTIALS VIA ENV IF POSSIBLE)
+    $mail->Username   = 'contact@bowabancongo.com';             //SMTP username
+    $mail->Password   = 'Contact@bowaba';                       //SMTP password
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
-    $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+    $mail->Port       = 465;                                    //TCP port to connect to
+    $mail->CharSet    = 'UTF-8';                                //Encodage UTF-8 pour accents français
+    $mail->Encoding   = 'base64';
 
     //Recipients
     $mail->setFrom('contact@bowabancongo.com', 'Contact Web');
@@ -76,12 +78,17 @@ try {
     $mail->Subject = '[Contact Web] ' . $subject;
     
     // HTML Message Body
+    $nameHtml    = htmlspecialchars($name, ENT_QUOTES, 'UTF-8');
+    $emailHtml   = htmlspecialchars($email, ENT_QUOTES, 'UTF-8');
+    $subjectHtml = htmlspecialchars($subject, ENT_QUOTES, 'UTF-8');
+    $messageHtml = nl2br(htmlspecialchars($message, ENT_QUOTES, 'UTF-8'));
+
     $mail->Body    = "
         <h2>Nouveau message depuis le site web</h2>
-        <p><strong>Nom:</strong> {$name}</p>
-        <p><strong>Email:</strong> {$email}</p>
-        <p><strong>Sujet:</strong> {$subject}</p>
-        <p><strong>Message:</strong><br>" . nl2br($message) . "</p>
+        <p><strong>Nom:</strong> {$nameHtml}</p>
+        <p><strong>Email:</strong> {$emailHtml}</p>
+        <p><strong>Sujet:</strong> {$subjectHtml}</p>
+        <p><strong>Message:</strong><br>{$messageHtml}</p>
         <br>
         <small>Ce message a été envoyé via le formulaire de contact de bowabancongo.com</small>
     ";
@@ -92,13 +99,16 @@ try {
     $mail->send();
     
     $_SESSION['success'] = 1;
+    unset($_SESSION['inputs']);
     header('Location: contact');
+    exit();
     
 } catch (Exception $e) {
     error_log('[post-contact] PHPMailer error: ' . $mail->ErrorInfo);
     $_SESSION['errors'] = ["Une erreur technique est survenue lors de l'envoi du message. Veuillez réessayer plus tard."];
     $_SESSION['inputs'] = $_POST;
     header('Location: contact');
+    exit();
 }
 
 
