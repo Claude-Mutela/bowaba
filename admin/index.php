@@ -29,7 +29,7 @@ if (!isset($conn)) {
 
     // Recent articles
     $recentArticles = $conn->query(
-      "SELECT a.id, a.title, a.status, a.is_featured, a.views_count, a.created_at,
+      "SELECT a.id, a.user_id, a.title, a.slug, a.status, a.is_featured, a.views_count, a.created_at,
               c.name AS category_name, u.name AS author_name
        FROM articles a
        LEFT JOIN article_categories c ON a.category_id = c.id
@@ -39,7 +39,7 @@ if (!isset($conn)) {
 
     // Top articles by views
     $topArticles = $conn->query(
-      "SELECT title, views_count, status FROM articles ORDER BY views_count DESC LIMIT 5"
+      "SELECT id, title, slug, views_count, status FROM articles ORDER BY views_count DESC LIMIT 5"
     )->fetchAll(PDO::FETCH_ASSOC);
 
   } catch (PDOException $e) {
@@ -47,6 +47,18 @@ if (!isset($conn)) {
       <strong>Solution :</strong> Importez le fichier <code>bowabanc_db.sql</code> dans phpMyAdmin 
       (base de données : <code>bowabanc_db</code>).";
   }
+}
+
+// Handle delete — only admin/editor
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_id'])) {
+  require_once __DIR__ . '/partials/auth.php';
+  requirePermission('articles.delete');
+  try {
+    $del = $conn->prepare("DELETE FROM articles WHERE id = :id");
+    $del->execute([':id' => (int)$_POST['delete_id']]);
+    header('Location: index.php?deleted=1');
+    exit;
+  } catch (Exception $e) {}
 }
 
 include __DIR__ . '/partials/header.php';
@@ -81,6 +93,13 @@ include __DIR__ . '/partials/header.php';
     </a>
   </div>
 </div>
+
+<!-- Alert -->
+<?php if (isset($_GET['deleted'])): ?>
+  <div class="admin-alert admin-alert-success" data-auto-dismiss="3000">
+    <i class="bi bi-check-circle-fill"></i> Article supprimé avec succès.
+  </div>
+<?php endif; ?>
 
 <!-- ── Stats Cards ── -->
 <div class="row g-3 mb-4">
@@ -243,12 +262,22 @@ include __DIR__ . '/partials/header.php';
                 </td>
                 <td>
                   <div style="display:flex; gap:4px;">
+                    <?php if (canEditArticle($art['user_id'] ?? 0)): ?>
                     <a href="articles/edit.php?id=<?= $art['id'] ?>" class="btn-action edit" title="Modifier">
                       <i class="bi bi-pencil"></i>
                     </a>
-                    <a href="../blog-single.php?id=<?= $art['id'] ?>" class="btn-action view" title="Voir" target="_blank">
+                    <?php endif; ?>
+                    <a href="../blog/<?= htmlspecialchars($art['slug'] ?? '') ?>" class="btn-action view" title="Voir" target="_blank">
                       <i class="bi bi-eye"></i>
                     </a>
+                    <?php if (can('articles.delete')): ?>
+                    <form method="POST" style="display:inline;" onsubmit="return confirmDelete('Supprimer cet article définitivement ?')">
+                      <input type="hidden" name="delete_id" value="<?= $art['id'] ?>">
+                      <button type="submit" class="btn-action delete" title="Supprimer">
+                        <i class="bi bi-trash"></i>
+                      </button>
+                    </form>
+                    <?php endif; ?>
                   </div>
                 </td>
               </tr>
@@ -280,7 +309,13 @@ include __DIR__ . '/partials/header.php';
             </div>
             <div style="flex:1; min-width:0;">
               <div style="font-size:13px; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
-                <?= htmlspecialchars($art['title']) ?>
+                <?php if (canEditArticle($art['user_id'] ?? 0)): ?>
+                <a href="articles/edit.php?id=<?= $art['id'] ?>" style="color:inherit; text-decoration:none;" title="Modifier">
+                  <?= htmlspecialchars($art['title']) ?>
+                </a>
+                <?php else: ?>
+                  <?= htmlspecialchars($art['title']) ?>
+                <?php endif; ?>
               </div>
               <div style="font-size:11px; color:var(--text-secondary);">
                 <i class="bi bi-eye"></i> <?= number_format($art['views_count']) ?> vues

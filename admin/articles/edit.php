@@ -10,7 +10,7 @@ $activePage = 'articles';
 $adminBase  = '../';
 
 $id = (int)($_GET['id'] ?? 0);
-if (!$id) { header('Location: index.php'); exit; }
+if ($id <= 0) { header('Location: index.php'); exit; }
 
 $errors = [];
 
@@ -182,7 +182,7 @@ include __DIR__ . '/../partials/header.php';
     </p>
   </div>
   <div class="d-flex gap-2">
-    <a href="../../blog-single.php?id=<?= $id ?>" class="btn-bbc-outline" target="_blank">
+    <a href="../../blog/<?= htmlspecialchars($article['slug'] ?? '') ?>" class="btn-bbc-outline" target="_blank">
       <i class="bi bi-eye"></i> Voir
     </a>
     <a href="index.php" class="btn-bbc-outline">

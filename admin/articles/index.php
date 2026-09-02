@@ -46,7 +46,7 @@ try {
 
   // Articles
   $stmt = $conn->prepare(
-    "SELECT a.id, a.title, a.slug, a.status, a.is_featured, a.views_count, a.published_at, a.created_at,
+    "SELECT a.id, a.user_id, a.title, a.slug, a.status, a.is_featured, a.views_count, a.published_at, a.created_at,
             c.name AS category_name, u.name AS author_name
      FROM articles a
      LEFT JOIN article_categories c ON a.category_id = c.id
@@ -234,7 +234,7 @@ include __DIR__ . '/../partials/header.php';
                   <i class="bi bi-pencil"></i>
                 </a>
                 <?php endif; ?>
-                <a href="../../blog-single.php?id=<?= $art['id'] ?>" class="btn-action view" title="Voir" target="_blank">
+                <a href="../../blog/<?= htmlspecialchars($art['slug'] ?? '') ?>" class="btn-action view" title="Voir" target="_blank">
                   <i class="bi bi-eye"></i>
                 </a>
                 <?php if (can('articles.delete')): ?>
