@@ -76,10 +76,8 @@ CREATE TABLE `views` (
     `ip_address` VARCHAR(45) NOT NULL,  -- Support IPv6
     `user_agent` TEXT NULL,             -- Pour info device/browser
     `viewed_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    
+    KEY `idx_article_ip` (`article_id`, `ip_address`),
     FOREIGN KEY (`article_id`) REFERENCES `articles`(`id`) ON DELETE CASCADE
-    -- Index pour éviter de compter plusieurs fois la même IP le même jour si besoin
-    -- KEY `idx_article_ip_date` (`article_id`, `ip_address`, `viewed_at`) 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 7. SERVICES

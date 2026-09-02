@@ -51,8 +51,56 @@
   $tagsStmt->execute([':id' => $id]);
   $tags = $tagsStmt->fetchAll(PDO::FETCH_ASSOC);
 
-  // 4. Update View Count (optional, simple increment)
-  $conn->prepare("UPDATE articles SET views_count = views_count + 1 WHERE id = :id")->execute([':id' => $id]);
+  // 4. Update View Count (Comptabilisation unique par adresse IP)
+  try {
+      // Détection fiable de l'adresse IP client (compatible proxys, load balancers, Cloudflare)
+      $clientIp = null;
+      $ipKeys = ['HTTP_CF_CONNECTING_IP', 'HTTP_X_FORWARDED_FOR', 'HTTP_X_REAL_IP', 'REMOTE_ADDR'];
+      foreach ($ipKeys as $key) {
+          if (!empty($_SERVER[$key])) {
+              $ips = explode(',', $_SERVER[$key]);
+              foreach ($ips as $ip) {
+                  $ip = trim($ip);
+                  if (filter_var($ip, FILTER_VALIDATE_IP)) {
+                      $clientIp = $ip;
+                      break 2;
+                  }
+              }
+          }
+      }
+      if (!$clientIp) {
+          $clientIp = $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
+      }
+
+      $userAgent = isset($_SERVER['HTTP_USER_AGENT']) ? mb_substr($_SERVER['HTTP_USER_AGENT'], 0, 500) : null;
+      $isBot     = $userAgent ? (bool) preg_match('/(bot|crawl|spider|slurp|facebookexternalhit|whatsapp|preview)/i', $userAgent) : false;
+
+      // On n'incrémente pas pour les bots de crawl
+      if (!$isBot) {
+          // Vérification si cette IP a déjà consulté cet article
+          $checkStmt = $conn->prepare("SELECT 1 FROM views WHERE article_id = :article_id AND ip_address = :ip_address LIMIT 1");
+          $checkStmt->execute([
+              ':article_id' => $id,
+              ':ip_address' => $clientIp
+          ]);
+
+          if (!$checkStmt->fetchColumn()) {
+              // Enregistrement de l'IP unique pour cet article
+              $insStmt = $conn->prepare("INSERT INTO views (article_id, ip_address, user_agent, viewed_at) VALUES (:article_id, :ip_address, :user_agent, NOW())");
+              $insStmt->execute([
+                  ':article_id' => $id,
+                  ':ip_address' => $clientIp,
+                  ':user_agent' => $userAgent
+              ]);
+
+              // Incrémentation du compteur d'affichage
+              $conn->prepare("UPDATE articles SET views_count = views_count + 1 WHERE id = :id")->execute([':id' => $id]);
+              $article['views_count'] = ((int)($article['views_count'] ?? 0)) + 1;
+          }
+      }
+  } catch (PDOException $e) {
+      error_log("Views tracking error: " . $e->getMessage());
+  }
 
   // Page Metas & SEO
   $pageTitle = $article['title'] . ' - Blog Bowaba';
