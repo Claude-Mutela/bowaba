@@ -325,19 +325,24 @@
     <section id="values" class="values">
       <div class="container">
 
+        <div class="section-title" data-aos="fade-up">
+          <h2>Nos Valeurs</h2>
+          <p>Les piliers fondamentaux qui guident notre engagement et notre vision au quotidien</p>
+        </div>
+
         <div class="row">
           <div class="col-md-6 d-flex align-items-stretch" data-aos="fade-up">
             <div class="card" style="background-image: url(assets/img/values-1.jpg);">
               <div class="card-body">
-                <h5 class="card-title"><a href="">Notre Mission</a></h5>
-                <p class="card-text">La mission de BOWABA N CONGO est de contribuer au réel changement socio-économique des congolaises et congolais grâce à la formation qui permet d'optimiser la productivité des entreprises et juguler le chômage.</p>
+                <h5 class="card-title"><a href="about">Notre Mission</a></h5>
+                <p class="card-text">La mission de BOWABA N CONGO est de contribuer au réel changement socio-économique des congolaises et congolais grâce à la formation qui permet d'optimiser la productivité des entreprises et juguler le chômage.</p>
               </div>
             </div>
           </div>
           <div class="col-md-6 d-flex align-items-stretch mt-4 mt-md-0" data-aos="fade-up" data-aos-delay="100">
             <div class="card" style="background-image: url(assets/img/values-2.jpg);">
               <div class="card-body">
-                <h5 class="card-title"><a href="">Notre Vison</a></h5>
+                <h5 class="card-title"><a href="about">Notre Vision</a></h5>
                 <p class="card-text">Etre la plus grande structure de formation et de renforcement des capacités, coaching des MPMEs et de facilitation d'accès au financement des projets. 
                 </p>
               </div>
@@ -347,7 +352,7 @@
           <div class="col-md-6 d-flex align-items-stretch mt-4" data-aos="fade-up" data-aos-delay="200">
             <div class="card" style="background-image: url(assets/img/values-3.jpg);">
               <div class="card-body">
-                <h5 class="card-title"><a href="">Notre Objectif</a></h5>
+                <h5 class="card-title"><a href="about">Notre Objectif</a></h5>
                 <p class="card-text">Nous avons pour objectif la promotion de l'esprit entrepreneurial par la formation axée sur la création d'entreprise et l'accompagnement des entreprises en RD Congo.</p>
               </div>
             </div>
@@ -355,7 +360,7 @@
           <div class="col-md-6 d-flex align-items-stretch mt-4" data-aos="fade-up" data-aos-delay="300">
             <div class="card" style="background-image: url(assets/img/values-4.jpg);">
               <div class="card-body">
-                <h5 class="card-title"><a href="">Notre Plan</a></h5>
+                <h5 class="card-title"><a href="about">Notre Plan</a></h5>
                 <p class="card-text">
                   Travailler durement pour sensibiliser davantage les entrepreneurs femmes et jeunes aux opportunités dans l'écosystème entrepreneurial. <br> <br>
                   Nous sommes convaincus que le développement des capacités humaines, 
