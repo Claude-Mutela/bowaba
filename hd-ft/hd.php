@@ -138,9 +138,16 @@ $nav = $nav ?? '';
     <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
     <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
+    <!-- Main Global CSS -->
+    <link href="assets/css/global.css" rel="stylesheet">
+
     <!-- Page Specific CSS -->
 <?php if (!empty($pageCss)): ?>
-    <link href="<?= htmlspecialchars($pageCss, ENT_QUOTES, 'UTF-8') ?>" rel="stylesheet">
+    <?php foreach ((array)$pageCss as $css): ?>
+        <?php if ($css !== 'assets/css/global.css'): ?>
+    <link href="<?= htmlspecialchars($css, ENT_QUOTES, 'UTF-8') ?>" rel="stylesheet">
+        <?php endif; ?>
+    <?php endforeach; ?>
 <?php endif; ?>
 </head>
 <body>
@@ -160,7 +167,7 @@ $nav = $nav ?? '';
     <div class="container d-flex align-items-center justify-content-between">
 
       <div class="logo">
-        <a href="index"><img src="assets/img/logo/logo-bw.png" alt="Bowaba n Congo Logo"></a>
+        <a href="index"><img src="assets/img/logo/logo-bw.png" alt="Bowaba n Congo Logo" style="max-height: 55px; width: auto;"></a>
       </div>
 
       <nav id="navbar" class="navbar">
