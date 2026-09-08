@@ -1,5 +1,5 @@
 <?php
-    require 'kon/conn.php';
+    require_once __DIR__ . '/kon/conn.php';
 
     // Get Slug
     $slug = filter_input(INPUT_GET, 'slug', FILTER_SANITIZE_SPECIAL_CHARS);
@@ -27,9 +27,9 @@
         }
         
         header("HTTP/1.0 404 Not Found");
-        require 'hd-ft/hd.php'; // Load header to show navbar even on 404
+        require_once __DIR__ . '/hd-ft/hd.php'; // Load header to show navbar even on 404
         echo '<div class="container my-5 text-center"><h1>Service introuvable</h1><p>Ce service n\'existe pas ou a été retiré.</p><a href="service.php" class="btn btn-primary">Retour aux services</a></div>';
-        require 'hd-ft/ft.php';
+        require_once __DIR__ . '/hd-ft/ft.php';
         exit;
     }
 
@@ -40,7 +40,7 @@
     $pageImage = $service['image']; // For OG
     $nav='details-service';
     
-    require'hd-ft/hd.php';
+    require_once __DIR__ . '/hd-ft/hd.php';
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -146,6 +146,6 @@
   <script src="assets/js/c_main.js"></script>
 </body>
 <?php
-    require'hd-ft/ft.php';
+    require_once __DIR__ . '/hd-ft/ft.php';
 ?>
 </html>
