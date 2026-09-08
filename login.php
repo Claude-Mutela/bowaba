@@ -1,7 +1,7 @@
 <?php 
 
 	$nav = 'login';
-	require'adm/config.php';
+	require_once __DIR__ . '/kon/conn.php';
 
 ?>
 <!DOCTYPE html>
