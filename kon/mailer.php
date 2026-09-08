@@ -40,21 +40,21 @@ function createMailer(string $profile = 'main'): PHPMailer
     // ── Sélection du profil ──────────────────────────────────────────────
     switch ($profile) {
         case 'main':
-            $host     = getenv('SMTP_HOST');
-            $port     = (int) (getenv('SMTP_PORT') ?: 465);
-            $user     = getenv('SMTP_USER');
-            $pass     = getenv('SMTP_PASS');
-            $from     = getenv('SMTP_FROM');
-            $fromName = getenv('SMTP_FROM_NAME') ?: 'Contact Web';
+            $host     = env('SMTP_HOST');
+            $port     = (int) (env('SMTP_PORT', 465));
+            $user     = env('SMTP_USER');
+            $pass     = env('SMTP_PASS');
+            $from     = env('SMTP_FROM');
+            $fromName = env('SMTP_FROM_NAME', 'Contact Web');
             break;
 
         case 'fondation':
-            $host     = getenv('FONDATION_SMTP_HOST');
-            $port     = (int) (getenv('FONDATION_SMTP_PORT') ?: 465);
-            $user     = getenv('FONDATION_SMTP_USER');
-            $pass     = getenv('FONDATION_SMTP_PASS');
-            $from     = getenv('FONDATION_SMTP_FROM');
-            $fromName = getenv('FONDATION_SMTP_FROM_NAME') ?: 'Fondation-BOWABA';
+            $host     = env('FONDATION_SMTP_HOST');
+            $port     = (int) (env('FONDATION_SMTP_PORT', 465));
+            $user     = env('FONDATION_SMTP_USER');
+            $pass     = env('FONDATION_SMTP_PASS');
+            $from     = env('FONDATION_SMTP_FROM');
+            $fromName = env('FONDATION_SMTP_FROM_NAME', 'Fondation-BOWABA');
             break;
 
         default:
