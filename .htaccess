@@ -1,0 +1,92 @@
+# ============================================================
+# Apache Configuration — Production (VPS) & Local
+# ============================================================
+
+# 1. Options & Sécurité
+Options -Indexes -MultiViews
+RewriteEngine On
+
+# 2. Sécurité : Bloquer l'accès direct aux fichiers sensibles
+<FilesMatch "(^\.|\.(sql|env|log|md|git|json)$)">
+    Require all denied
+</FilesMatch>
+
+# 3. Ne pas réécrire les fichiers réels (images, css, js, fonts) ni les répertoires existants
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# 4. Rediriger l'accès direct aux fichiers .php vers des URLs propres (sans extension)
+# On exclut /admin/ et /fondation/
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s([^?]+)\.php[\s?] [NC]
+RewriteCond %1 !^/(admin|fondation) [NC]
+RewriteRule ^(.+)\.php$ $1 [R=301,L]
+
+# ============================================================
+# 5. ROUTES FRONT-END (URLs propres)
+# ============================================================
+RewriteRule ^index/?$                 index.php [L]
+RewriteRule ^services/?$              service.php [L]
+RewriteRule ^blog/?$                  blog.php [L]
+RewriteRule ^contact/?$               contact.php [L]
+RewriteRule ^about/?$                 about.php [L]
+RewriteRule ^login/?$                 login.php [L]
+RewriteRule ^account/?$               account.php [L]
+RewriteRule ^account-success/?$       account-success.php [L]
+RewriteRule ^post-account/?$          post-account.php [L]
+RewriteRule ^post-contact/?$          post-contact.php [L]
+
+# ============================================================
+# 6. SLUGS DYNAMIQUES (Blog & Services)
+# ============================================================
+RewriteRule ^blog/([a-zA-Z0-9_-]+)/?$        blog-single.php?slug=$1 [QSA,L]
+RewriteRule ^service/([a-zA-Z0-9_-]+)/?$     service-details.php?slug=$1 [QSA,L]
+
+# ============================================================
+# 7. ROUTES ADMINISTRATION
+# ============================================================
+RewriteRule ^admin/?$                          admin/index.php [L]
+RewriteRule ^admin/login/?$                    admin/login.php [L]
+RewriteRule ^admin/logout/?$                   admin/logout.php [L]
+RewriteRule ^admin/setup/?$                    admin/setup.php [L]
+
+# Articles
+RewriteRule ^admin/articles/?$                 admin/articles/index.php [L]
+RewriteRule ^admin/articles/create/?$          admin/articles/create.php [L]
+RewriteRule ^admin/articles/edit/?$            admin/articles/edit.php [QSA,L]
+
+# Catégories
+RewriteRule ^admin/categories/?$               admin/categories/index.php [L]
+
+# Partenaires
+RewriteRule ^admin/partners/?$                 admin/partners/index.php [L]
+
+# Projets
+RewriteRule ^admin/projects/?$                 admin/projects/index.php [L]
+
+# Services
+RewriteRule ^admin/services/?$                 admin/services/index.php [L]
+
+# Étudiants / Apprenants
+RewriteRule ^admin/students/?$                 admin/students/index.php [L]
+
+# Témoignages
+RewriteRule ^admin/testimonials/?$             admin/testimonials/index.php [L]
+
+# Programmes de formation
+RewriteRule ^admin/training-programs/?$        admin/training-programs/index.php [L]
+
+# Utilisateurs
+RewriteRule ^admin/users/?$                    admin/users/index.php [L]
+
+# API Admin (Upload Image)
+RewriteRule ^admin/api/upload-image/?$         admin/api/upload-image.php [QSA,L]
+
+# ============================================================
+# 8. FALLBACK : Résolution automatique des fichiers PHP
+# ============================================================
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^([^/]+)/?$ $1.php [L]
+
+# Gestion d'erreur 404 (si vous créez une 404.php)
+# ErrorDocument 404 /index.php

@@ -1,0 +1,34 @@
+# ══════════════════════════════════════════════
+#  .gitignore — Bowaba
+# ══════════════════════════════════════════════
+
+# ── Secrets & configuration locale ──────────────
+.env
+.env.local
+.env.*.local
+
+# ── Logs ────────────────────────────────────────
+error_log
+*.log
+logs/
+
+# ── Dumps SQL & fichiers de debug ───────────────
+*.sql
+debug_schema.php
+check_services.php
+
+# ── Système d'exploitation ──────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── Éditeurs & IDEs ─────────────────────────────
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# ── Dépendances (si Composer est utilisé un jour) ─
+/vendor/
+composer.lock
