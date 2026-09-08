@@ -1,9 +1,6 @@
 <?php
-    $pageTitle='Blog & Actualités - Bowaba n Congo';
-    $pageDesc='Suivez nos actualités, articles et conseils sur l\'entrepreneuriat, le digital et la formation en RDC.';
-    $nav='blog';
-    require_once __DIR__ . '/hd-ft/hd.php';
     require_once __DIR__ . '/kon/conn.php';
+
     
     // ── Pagination & Filters ──
     $limit = 5;
@@ -91,37 +88,16 @@
 
     // Sidebar Data: All Tags
     $allTags = $conn->query("SELECT name, slug FROM tags ORDER BY name")->fetchAll(PDO::FETCH_ASSOC);
+    // ── Configuration SEO & Header ──
+    $pageTitle    = 'Blog & Actualités - Bowaba n Congo';
+    $pageDesc     = 'Retrouvez tous les articles, conseils et actualités de Bowaba n Congo sur l\'entrepreneuriat, la gestion de projets, le digital et l\'agrobusiness en RDC.';
+    $pageKeywords = 'Blog Bowaba, Actualités entrepreneuriat RDC, Conseils startups Kinshasa, Agrobusiness, Transformation digitale, Incubation';
+    $pageCss      = 'assets/css/blog.css';
+    $nav          = 'blog';
+
+    require_once __DIR__ . '/hd-ft/hd.php';
 ?>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog - Bowaba</title>
 
-    <meta content="Découvrez nos derniers articles" name="description">
-    
-    <!-- Favicons -->
-    <link href="assets/img/icone-bw.png" rel="icon">
-
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-
-    <!-- Vendor CSS Files -->
-    <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-
-    <!-- Main CSS Files -->
-    <link href="assets/css/global.css" rel="stylesheet">
-    <link href="assets/css/blog.css" rel="stylesheet">
-</head>
-
-<body>
 
     <!-- ======= Hero Section ======= -->
     <section id="hero">
@@ -287,19 +263,6 @@
 
     </main><!-- End #main -->
 
-    <!-- JS Files -->
-    <script src="assets/vendor/aos/aos.js"></script>
-    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-    <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-    <script src="assets/vendor/php-email-form/validate.js"></script>
-
-    <!-- Main JS File -->
-    <script src="assets/js/main.js"></script>
-
-</body>
 <?php
     require_once __DIR__ . '/hd-ft/ft.php';
-?>
-</html>
+?>

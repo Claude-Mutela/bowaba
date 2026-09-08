@@ -1,5 +1,8 @@
 <?php
     session_start();
+    require_once __DIR__ . '/../kon/config.php';
+    $fondationUrl  = rtrim(BASE_URL, '/') . '/fondation/';
+    $fondationLogo = rtrim(BASE_URL, '/') . '/fondation/assets/img/logo/logo.png';
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -10,20 +13,41 @@
     <title>Fondation Bowabancongo - Professionnalisation des acteurs non étatiques</title>
 
     <meta name="description" content="Fondation Bowaba - Professionnalisation des acteurs non étatiques en RDC. Formations en entrepreneuriat, agrobusiness, gestion et renforcement des capacités pour OSC et MPME.">
-      <!-- Favicons -->
-    <link href="assets/img/logo/icone-fondation-bowaba.png" rel="icon">
-    <link href="assets/img/logo" rel="apple-touch-icon">
+    <link rel="canonical" href="<?= $fondationUrl ?>">
 
-    <meta name="description" content="Fondation Bowaba - Professionnalisation des acteurs non étatiques en RDC. Formations en entrepreneuriat, agrobusiness, gestion et renforcement des capacités pour OSC et MPME.">
+    <!-- Favicons -->
+    <link href="assets/img/logo/icone-fondation-bowaba.png" rel="icon">
+    <link href="assets/img/logo/icone-fondation-bowaba.png" rel="apple-touch-icon">
+
+    <!-- Open Graph / Facebook / WhatsApp / LinkedIn -->
+    <meta property="og:site_name" content="Fondation Bowaba n Congo">
+    <meta property="og:locale" content="fr_FR">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Fondation Bowaba - Professionnalisation des acteurs non étatiques">
+    <meta property="og:description" content="Fondation Bowaba - Professionnalisation des acteurs non étatiques en RDC. Formations en entrepreneuriat, agrobusiness, gestion et renforcement des capacités pour OSC et MPME.">
+    <meta property="og:url" content="<?= $fondationUrl ?>">
+    <meta property="og:image" content="<?= $fondationLogo ?>">
+    <meta property="og:image:secure_url" content="<?= $fondationLogo ?>">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="200">
+    <meta property="og:image:height" content="200">
+    <meta property="og:image:alt" content="Logo Fondation Bowaba n Congo">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@bowabancongo">
+    <meta name="twitter:title" content="Fondation Bowaba - Professionnalisation des acteurs non étatiques">
+    <meta name="twitter:description" content="Fondation Bowaba - Professionnalisation des acteurs non étatiques en RDC. Formations en entrepreneuriat, agrobusiness, gestion et renforcement des capacités pour OSC et MPME.">
+    <meta name="twitter:image" content="<?= $fondationLogo ?>">
+    <meta name="twitter:image:alt" content="Logo Fondation Bowaba n Congo">
+
     <meta name="application-name" content="Fondation Bawaba n congo-Website">
     <meta name="author" content="Bowaba n Congo">
     <link rel="author" href="https://fondation.bowabancongo.com/">
-    <meta name="application-name" content="Bowaba n Congo-Website">
     <meta name="keywords" content="fondation bowaba, formation entrepreneuriat RDC, renforcement capacités Congo, agrobusiness Kinshasa, coaching MPME Afrique, 
     OSC République Démocratique Congo, formation gestion projet, financement organisations congolaises, entrepreneuriat féminin RDC, développement durable Congo">
     <meta name="creator" content="Bowaba n Congo">
     <meta name="publisher" content="Bowaba n Congo">
-
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="assets/css/main.css">

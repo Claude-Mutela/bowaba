@@ -1,39 +1,12 @@
 <?php
-    $pageTitle="A propos de nous - Bowaba n Congo";
-    $pageDesc="Découvrez Bowaba n Congo, le premier incubateur et academy multidisciplinaire en RDC pour l'accompagnement des entrepreneurs.";
-    $nav='about';
+    $pageTitle    = "À propos de nous - Bowaba n Congo";
+    $pageDesc     = "Découvrez Bowaba n Congo : 1er incubateur & academy multidisciplinaire en RDC. Notre mission, notre vision et notre engagement aux côtés des entrepreneurs et porteurs de projets.";
+    $pageKeywords = "Bowaba n Congo, À propos, Incubateur RDC, Academy Kinshasa, Entrepreneuriat, Formation certifiante, Accompagnement PME";
+    $pageCss      = "assets/css/about.css";
+    $nav          = 'about';
     require_once __DIR__ . '/hd-ft/hd.php';
-   
 ?>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A propos - Bowaba</title>
 
-    <meta content="Bowaba n Congo, Incubateur, Academy, RDC, Entrepreneuriat" name="keywords">
-
-  <!-- Favicons -->
-  <link rel="icon" href="assets/img/icone-bw.png" >
-  <link href="assets/img/icone-bw.png" rel="apple-touch-icon">
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-
-  <!--  CSS Files -->
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-
-  <!-- Template Main CSS File -->
-  <link href="assets/css/about.css" rel="stylesheet">
-</head>
-<body>
    <!-- ======= Hero Section ======= -->
   <section id="hero">
     <div class="hero-container">
@@ -239,19 +212,6 @@
       </div>
     </section><!-- End F.A.Q Section -->
 
-  <!-- JS Files -->
-  <script src="assets/vendor/aos/aos.js"></script>
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
-
-  <!--  JS File -->
-  <script src="assets/js/main.js"></script>
-  <script src="assets/js/c_main.js"></script>
-</body>
 <?php
     require_once __DIR__ . '/hd-ft/ft.php';
-?>
-</html>
+?>

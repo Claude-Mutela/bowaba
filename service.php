@@ -1,39 +1,13 @@
 <?php
-    $pageTitle='Nos Services - Bowaba n Congo';
-    $pageDesc='Découvrez l\'ensemble des services proposés par Bowaba n Congo : Incubateur, Formation, Développement Web, Marketing, et plus.';
-    $nav='service';
+    $pageTitle    = "Nos Services - Bowaba n Congo";
+    $pageDesc     = "Découvrez nos solutions complètes en RDC : incubation d'entreprises, formations professionnelles, conception de sites web, design graphique, comptabilité et gestion de projets.";
+    $pageKeywords = "Services Bowaba, Incubation RDC, Formation Kinshasa, Développement web Congo, Design graphique, Audit comptable, Suivi projets";
+    $pageCss      = "assets/css/service.css";
+    $nav          = 'service';
     require_once __DIR__ . '/hd-ft/hd.php';
     require_once __DIR__ . '/kon/conn.php';
 ?>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nos Services - Bowaba</title>
 
-    <meta content="Services, Incubateur, Formation, Web, Design, RDC" name="keywords">
-
-  <!-- Favicons -->
-  <link href="assets/img/icone-bw.png" rel="icon">
-  <link href="assets/img/icone-bw.png" rel="apple-touch-icon">
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-
-  <!--  CSS Files -->
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-
-  <!-- Main CSS  -->
-  <link href="assets/css/service.css" rel="stylesheet">
-</head>
-<body>
     
       <!-- ======= Hero Section ======= -->
   <section id="hero">
@@ -138,19 +112,8 @@
           </div>
         </div>
 
-  <!-- JS Files -->
-  <script src="assets/vendor/aos/aos.js"></script>
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
+  </section>
 
-  <!--  JS File -->
-  <script src="assets/js/main.js"></script>
-  <script src="assets/js/c_main.js"></script>
-</body>
 <?php
     require_once __DIR__ . '/hd-ft/ft.php';
 ?>
-</html>
