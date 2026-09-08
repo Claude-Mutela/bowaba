@@ -2,7 +2,7 @@
   $pageTitle="Bowaba n Congo - Agence Digitale & Formation";
   $pageDesc="Bowaba n Congo est une agence digitale experte en développement web, communication, marketing et formation.";
   $nav='index';
-  require 'hd-ft/hd.php';
+  require_once __DIR__ . '/hd-ft/hd.php';
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -415,6 +415,6 @@
 
 </body>
 <?php
-    require'hd-ft/ft.php';
+    require_once __DIR__ . '/hd-ft/ft.php';
 ?>
 </html>
