@@ -3,6 +3,9 @@
 
   // 1. Get Article Slug
   $slug = filter_input(INPUT_GET, 'slug', FILTER_SANITIZE_SPECIAL_CHARS);
+  if (!$slug && isset($_GET['slug'])) {
+      $slug = trim($_GET['slug']);
+  }
   if (!$slug) {
       header("Location: blog");
       exit;
@@ -102,68 +105,25 @@
       error_log("Views tracking error: " . $e->getMessage());
   }
 
-  // Page Metas & SEO
-  $pageTitle = $article['title'] . ' - Blog Bowaba';
-  // Use excerpt or strip tags from content, limit to 160 chars
-  $pageDesc  = $article['excerpt'] ?: mb_substr(strip_tags($article['content']), 0, 160) . '...';
-  $pageImage = $article['cover_image'];
-  // BASE_URL est défini dans hd.php (via config.php) — reconstruction propre pour production
-  $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
-  $pageUrl   = $protocol . '://' . $_SERVER['HTTP_HOST'] . rtrim(dirname(dirname($_SERVER['SCRIPT_NAME'])), '/') . '/blog/' . $slug;
+  // ── Page Metas & Open Graph ──────────────────────────────────────────────
+  $pageTitle   = $article['title'];
+  $pageDesc    = !empty($article['excerpt']) 
+      ? $article['excerpt'] 
+      : (function_exists('mb_substr') ? mb_substr(strip_tags($article['content']), 0, 180) : substr(strip_tags($article['content']), 0, 180)) . '...';
+  $pageImage   = $article['cover_image']; // Image de couverture de l'article pour Open Graph
+  $ogType      = 'article';
+  $pageUrl     = 'blog/' . $slug;
+  $articleData = [
+      'published_at'  => $article['published_at'] ?? null,
+      'author_name'   => $article['author_name'] ?? 'Bowaba n Congo',
+      'category_name' => $article['category_name'] ?? null,
+      'tags'          => $tags ?? []
+  ];
+  $pageCss     = 'assets/css/signle-blog.css';
+  $nav         = 'blog';
 
-  $nav = 'blog';
   require_once __DIR__ . '/hd-ft/hd.php'; 
 ?>
-<!DOCTYPE html>
-<html lang="fr">
-
-<head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title><?= htmlspecialchars($pageTitle) ?></title>
-  <meta name="description" content="<?= htmlspecialchars($pageDesc) ?>">
-
-  <!-- Open Graph (Facebook, LinkedIn, WhatsApp, etc.) -->
-  <meta property="og:type"        content="article">
-  <meta property="og:title"       content="<?= htmlspecialchars($pageTitle) ?>">
-  <meta property="og:description" content="<?= htmlspecialchars($pageDesc) ?>">
-  <meta property="og:url"         content="<?= htmlspecialchars($pageUrl) ?>">
-  <?php if (!empty($pageImage)): ?>
-  <meta property="og:image"       content="<?= htmlspecialchars((strpos($pageImage,'http')===0?$pageImage:'https://'.$_SERVER['HTTP_HOST'].'/'.$pageImage)) ?>">
-  <meta property="og:image:width"  content="1200">
-  <meta property="og:image:height" content="630">
-  <?php endif; ?>
-  <meta property="og:site_name"   content="Bowaba n Congo">
-  <meta property="og:locale"      content="fr_FR">
-
-  <!-- Twitter Card -->
-  <meta name="twitter:card"        content="summary_large_image">
-  <meta name="twitter:title"       content="<?= htmlspecialchars($pageTitle) ?>">
-  <meta name="twitter:description" content="<?= htmlspecialchars($pageDesc) ?>">
-  <?php if (!empty($pageImage)): ?>
-  <meta name="twitter:image"       content="<?= htmlspecialchars((strpos($pageImage,'http')===0?$pageImage:'https://'.$_SERVER['HTTP_HOST'].'/'.$pageImage)) ?>">
-  <?php endif; ?>
-
-  <link href="assets/img/icone-bw.png" rel="icon">
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-
-  <!-- Vendor CSS Files -->
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-
-  <!-- Template Main CSS File -->
-  <link href="assets/css/signle-blog.css" rel="stylesheet">
-
-</head>
-
-<body>
   <main id="main">
 
     <!-- ======= Breadcrumbs ======= -->
@@ -289,21 +249,6 @@
 
   </main><!-- End #main -->
 
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-  <!-- Vendor JS Files -->
-  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
-  <script src="assets/vendor/aos/aos.js"></script>
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-  <!-- validate.js supprimé -->
-
-  <!-- Template Main JS File -->
-  <script src="assets/js/main.js"></script>
-  <script src="assets/js/c_main.js"></script>
-
   <script>
     function copyToClipboard(text) {
       if (navigator.clipboard && window.isSecureContext) {
@@ -311,8 +256,7 @@
           alert("Lien copié dans le presse-papier !");
         });
       } else {
-        // Fallback for non-secure context or older browsers
-        let textArea = document.createElement("textarea");
+        var textArea = document.createElement("textarea");
         textArea.value = text;
         textArea.style.position = "fixed";
         textArea.style.left = "-9999px";
@@ -330,9 +274,6 @@
     }
   </script>
 
-</body>
-
-</html>
 <?php
   require_once __DIR__ . '/hd-ft/ft.php';
-?>
+?>
