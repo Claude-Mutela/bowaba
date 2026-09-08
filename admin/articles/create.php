@@ -65,16 +65,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   // Handle cover image upload
   $coverImage = null;
   if (!empty($_FILES['cover_image']['name'])) {
-    $uploadDir  = __DIR__ . '/../../assets/img/articles/';
-    if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
-    $ext        = strtolower(pathinfo($_FILES['cover_image']['name'], PATHINFO_EXTENSION));
-    $allowed    = ['jpg','jpeg','png','webp','gif'];
-    if (!in_array($ext, $allowed)) {
-      $errors[] = 'Format d\'image non autorisé.';
+    $fileError = $_FILES['cover_image']['error'];
+    if ($fileError !== UPLOAD_ERR_OK) {
+      $uploadErrors = [
+        UPLOAD_ERR_INI_SIZE   => "L'image dépasse la taille maximale autorisée par le serveur (upload_max_filesize).",
+        UPLOAD_ERR_FORM_SIZE  => "L'image dépasse la taille maximale autorisée par le formulaire.",
+        UPLOAD_ERR_PARTIAL    => "L'image n'a été que partiellement téléchargée.",
+        UPLOAD_ERR_NO_FILE    => "Aucun fichier n'a été sélectionné.",
+        UPLOAD_ERR_NO_TMP_DIR => "Dossier temporaire manquant sur le serveur.",
+        UPLOAD_ERR_CANT_WRITE => "Échec de l'écriture sur le disque (permissions serveur insuffisantes).",
+        UPLOAD_ERR_EXTENSION  => "Une extension PHP a arrêté le téléchargement de l'image.",
+      ];
+      $errors[] = $uploadErrors[$fileError] ?? "Erreur lors du transfert de l'image (code: $fileError).";
     } else {
-      $filename   = uniqid('art_') . '.' . $ext;
-      if (move_uploaded_file($_FILES['cover_image']['tmp_name'], $uploadDir . $filename)) {
-        $coverImage = 'assets/img/articles/' . $filename;
+      $uploadDir  = __DIR__ . '/../../assets/img/articles/';
+      if (!is_dir($uploadDir)) {
+        @mkdir($uploadDir, 0775, true);
+      }
+      $ext     = strtolower(pathinfo($_FILES['cover_image']['name'], PATHINFO_EXTENSION));
+      $allowed = ['jpg','jpeg','png','webp','gif'];
+      if (!in_array($ext, $allowed)) {
+        $errors[] = "Format d'image non autorisé (JPG, JPEG, PNG, WebP, GIF acceptés).";
+      } elseif ($_FILES['cover_image']['size'] > 5 * 1024 * 1024) {
+        $errors[] = "L'image de couverture ne doit pas dépasser 5 Mo.";
+      } else {
+        $filename = uniqid('art_') . '.' . $ext;
+        $destPath = $uploadDir . $filename;
+        if (move_uploaded_file($_FILES['cover_image']['tmp_name'], $destPath)) {
+          @chmod($destPath, 0664);
+          $coverImage = 'assets/img/articles/' . $filename;
+        } else {
+          $errors[] = "Impossible d'enregistrer l'image sur le serveur. Vérifiez les permissions d'écriture du dossier assets/img/articles/.";
+          error_log("[UPLOAD ERROR] Échec move_uploaded_file vers {$destPath}. is_dir=" . (is_dir($uploadDir)?'1':'0') . ", writable=" . (is_writable($uploadDir)?'1':'0'));
+        }
       }
     }
   }
@@ -162,6 +185,20 @@ include __DIR__ . '/../partials/header.php';
       <?php foreach ($errors as $err): ?>
         <div><?= htmlspecialchars($err) ?></div>
       <?php endforeach; ?>
+    </div>
+  </div>
+<?php endif; ?>
+
+<?php
+$articlesUploadDir = __DIR__ . '/../../assets/img/articles/';
+if (!is_dir($articlesUploadDir)) @mkdir($articlesUploadDir, 0775, true);
+if (!is_writable($articlesUploadDir)):
+?>
+  <div class="admin-alert admin-alert-info mb-4" style="border-left-color:#f59e0b;">
+    <i class="bi bi-info-circle-fill" style="color:#f59e0b;"></i>
+    <div>
+      <strong>Note permissions VPS :</strong> Le dossier <code>assets/img/articles/</code> n'est pas inscriptible par PHP.<br>
+      Si l'upload échoue, exécutez sur le VPS : <code>chmod -R 775 /var/www/bowaba/assets/img && chown -R deploy:www-data /var/www/bowaba/assets/img</code>
     </div>
   </div>
 <?php endif; ?>

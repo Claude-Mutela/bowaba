@@ -167,9 +167,11 @@
                             ?>
                                 <article class="entry">
 
-                                    <?php if($art['cover_image']): ?>
+                                    <?php if(!empty($art['cover_image'])): 
+                                        $coverUrl = (strpos($art['cover_image'], 'http') === 0) ? $art['cover_image'] : (defined('BASE_URL') ? BASE_URL : '/') . ltrim($art['cover_image'], '/');
+                                    ?>
                                     <div class="entry-img">
-                                        <img src="<?= htmlspecialchars($art['cover_image']) ?>" alt="" class="img-fluid">
+                                        <img src="<?= htmlspecialchars($coverUrl) ?>" alt="" class="img-fluid">
                                     </div>
                                     <?php endif; ?>
 
@@ -254,8 +256,10 @@
                                     $link = "blog/" . ($r['slug'] ?? 'article-'.$r['id']);
                                 ?>
                                     <div class="post-item clearfix">
-                                        <?php if($r['cover_image']): ?>
-                                        <img src="<?= htmlspecialchars($r['cover_image']) ?>" alt="">
+                                        <?php if(!empty($r['cover_image'])): 
+                                            $rCoverUrl = (strpos($r['cover_image'], 'http') === 0) ? $r['cover_image'] : (defined('BASE_URL') ? BASE_URL : '/') . ltrim($r['cover_image'], '/');
+                                        ?>
+                                        <img src="<?= htmlspecialchars($rCoverUrl) ?>" alt="">
                                         <?php endif; ?>
                                         <h4><a href="<?= $link ?>"><?= htmlspecialchars($r['title']) ?></a></h4>
                                         <time datetime="<?= $r['published_at'] ?>"><?= date('d M, Y', strtotime($r['published_at'])) ?></time>

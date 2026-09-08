@@ -186,9 +186,11 @@
 
             <article class="entry entry-single">
 
-              <?php if (!empty($article['cover_image'])): ?>
+              <?php if (!empty($article['cover_image'])): 
+                $coverUrl = (strpos($article['cover_image'], 'http') === 0) ? $article['cover_image'] : (defined('BASE_URL') ? BASE_URL : '/') . ltrim($article['cover_image'], '/');
+              ?>
               <div class="entry-img">
-                <img src="<?= htmlspecialchars($article['cover_image']) ?>" alt="" class="img-fluid">
+                <img src="<?= htmlspecialchars($coverUrl) ?>" alt="" class="img-fluid">
               </div>
               <?php endif; ?>
 
@@ -267,8 +269,10 @@
                      $recLink = "blog/" . ($rec['slug'] ?? 'article-'.$rec['id']);
                 ?>
                 <div class="post-item clearfix">
-                  <?php if($rec['cover_image']): ?>
-                  <img src="<?= htmlspecialchars($rec['cover_image']) ?>" alt="">
+                  <?php if(!empty($rec['cover_image'])): 
+                    $recCoverUrl = (strpos($rec['cover_image'], 'http') === 0) ? $rec['cover_image'] : (defined('BASE_URL') ? BASE_URL : '/') . ltrim($rec['cover_image'], '/');
+                  ?>
+                  <img src="<?= htmlspecialchars($recCoverUrl) ?>" alt="">
                   <?php endif; ?>
                   <h4><a href="<?= $recLink ?>"><?= htmlspecialchars($rec['title']) ?></a></h4>
                   <time datetime="<?= $rec['published_at'] ?>"><?= date('d M, Y', strtotime($rec['published_at'])) ?></time>

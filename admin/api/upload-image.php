@@ -12,20 +12,23 @@ if (!isset($adminUser) || !can('articles.create')) {
     exit;
 }
 
-// Adjust CORS if needed, but for same-origin admin panel it's fine
 header('Content-Type: application/json');
 
 // Check uploaded file
-if (!isset($_FILES['file']['name'])) {
+if (!isset($_FILES['file']['name']) || $_FILES['file']['error'] !== UPLOAD_ERR_OK) {
+    $errCode = $_FILES['file']['error'] ?? -1;
+    $msg = ($errCode === UPLOAD_ERR_INI_SIZE || $errCode === UPLOAD_ERR_FORM_SIZE)
+        ? 'Fichier trop volumineux (dépasse upload_max_filesize).'
+        : 'Aucun fichier reçu ou erreur de transfert.';
     header("HTTP/1.1 400 Bad Request");
-    echo json_encode(['error' => 'Aucun fichier reçu.']);
+    echo json_encode(['error' => $msg]);
     exit;
 }
 
 $file = $_FILES['file'];
 $uploadDir = __DIR__ . '/../../assets/img/uploads/';
 if (!is_dir($uploadDir)) {
-    mkdir($uploadDir, 0755, true);
+    @mkdir($uploadDir, 0775, true);
 }
 
 // Validation
@@ -49,67 +52,25 @@ $filename = uniqid('upload_') . '.' . $ext;
 $targetPath = $uploadDir . $filename;
 
 if (move_uploaded_file($file['tmp_name'], $targetPath)) {
-    // Return relative path for TinyMCE
-    // Assuming admin is at /admin/ and uploads are at /assets/img/uploads/
-    // The relative path from the page viewing it (e.g. blog-single.php) would be 'assets/img/uploads/...'
-    // But from admin/articles/create.php, it's '../../assets/...'
-    // TinyMCE needs an absolute path or relative to document base.
-    // Let's return absolute path from web root if possible, or relative.
-    
-    // We can use the global base path convention.
-    // If installed at root: /assets/img/uploads/filename
-    // If in subdir: /bowaba/assets/img/uploads/filename
-    
-    // Let's try to determine relative path from web root
-    $webPath = 'assets/img/uploads/' . $filename;
-    
-    // If the site is in a subdirectory (like /bowaba/), we might need to prepend it.
-    // However, TinyMCE usually handles relative paths well if document_base_url is set, or if we use valid relative paths.
-    // Since we don't know the exact web root depth from here easily without config,
-    // let's try to return a path relative to the admin folder or absolute.
-    
-    // A robust way is to use the location relative to the domain root if we knew it.
-    // simpler: return "../../assets/img/uploads/..." which works for admin pages, 
-    // BUT for the frontend display, this path will be broken if stored as is in DB?
-    // Wait, TinyMCE replaces the blob URI with this URL in the content HTML.
-    // If we store "../../assets/..." in DB, it will work in admin but break in "blog-single.php" (which is at root).
-    
-    // So we MUST return a path that works from the root, e.g. "assets/img/uploads/..." 
-    // AND ensure TinyMCE treats it correctly. 
-    // Or we return "/bowaba/assets/img/uploads/..." (absolute path).
-    
-    // Let's look at `index.php`: $adminBase = '../';
-    // The consistent way is "assets/img/uploads/..." and let the frontend add a base tag or prepend root.
-    // But TinyMCE inside admin needs to resolve it.
-    
-    // Best bet: return the path relative to the domain root (absolute path).
-    // Start with /
-    $uri_parts = explode('/', $_SERVER['REQUEST_URI']);
-    // Remove 'admin/api/upload-image.php'
-    // This is tricky.
-    
-    // Easier: Just return "../assets/img/uploads/filename" (works for admin)
-    // AND tell the user to configure 'relative_urls: false, remove_script_host: false, document_base_url: ...'
-    
-    // Let's try providing the path that works for the Admin editor first.
-    // Then we might need a fix for Frontend.
-    // Actually, if we return "assets/img/uploads/file.jpg", and the admin page is at "admin/articles/create.php",
-    // the browser resolves it to "admin/articles/assets/img...". INVALID.
-    
-    // So for admin, we need "../../assets/img/uploads/file.jpg".
-    // But then validation in DB has "../../". Frontend at root needs "assets/...".
-    
-    // SOLUTION: Use absolute path "/bowaba/assets/img/uploads/...".
-    // We can detect the base path.
-    $scriptDir = dirname($_SERVER['SCRIPT_NAME']); // /bowaba/admin/api
-    $baseDir = dirname(dirname($scriptDir)); // /bowaba
+    @chmod($targetPath, 0664);
+
+    // Détection de la racine web (support Local sous-dossier ex: /bowaba/ et Prod racine ex: /)
+    $scriptDir = dirname($_SERVER['SCRIPT_NAME']); // /bowaba/admin/api ou /admin/api
+    $baseDir   = dirname(dirname($scriptDir));      // /bowaba ou /
+    $baseDir   = str_replace('\\', '/', $baseDir);
+
+    if ($baseDir === '/' || $baseDir === '.' || $baseDir === '\\') {
+        $baseDir = '';
+    } else {
+        $baseDir = rtrim($baseDir, '/');
+    }
+
+    // URL absolue depuis la racine du domaine (NE DOIT JAMAIS COMMENCER PAR //)
     $location = $baseDir . '/assets/img/uploads/' . $filename;
-    
-    // Fix backslashes on Windows
-    $location = str_replace('\\', '/', $location);
-    
+
     echo json_encode(['location' => $location]);
 } else {
+    error_log("[UPLOAD ERROR] Impossible d'enregistrer dans {$uploadDir}. Is dir: " . (is_dir($uploadDir) ? 'oui' : 'non') . ", Writable: " . (is_writable($uploadDir) ? 'oui' : 'non'));
     header("HTTP/1.1 500 Server Error");
-    echo json_encode(['error' => 'Échec du déplacement du fichier.']);
+    echo json_encode(['error' => "Échec de l'enregistrement de l'image sur le serveur. Vérifiez les permissions du dossier assets/img/uploads/."]);
 }

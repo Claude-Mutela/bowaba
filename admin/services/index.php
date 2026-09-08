@@ -46,16 +46,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Handle image upload
     $image = $_POST['existing_image'] ?? null;
     if (!empty($_FILES['image']['name'])) {
-      $uploadDir = __DIR__ . '/../../assets/img/services/';
-      if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
-      $ext     = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
-      $allowed = ['jpg','jpeg','png','webp','gif','svg'];
-      if (!in_array($ext, $allowed)) {
-        $errors[] = 'Format d\'image non autorisé.';
+      $fileErr = $_FILES['image']['error'];
+      if ($fileErr !== UPLOAD_ERR_OK) {
+        $errors[] = "Erreur lors du transfert de l'image (code: $fileErr).";
       } else {
-        $filename = uniqid('svc_') . '.' . $ext;
-        if (move_uploaded_file($_FILES['image']['tmp_name'], $uploadDir . $filename)) {
-          $image = 'assets/img/services/' . $filename;
+        $uploadDir = __DIR__ . '/../../assets/img/services/';
+        if (!is_dir($uploadDir)) @mkdir($uploadDir, 0775, true);
+        $ext     = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
+        $allowed = ['jpg','jpeg','png','webp','gif','svg'];
+        if (!in_array($ext, $allowed)) {
+          $errors[] = 'Format d\'image non autorisé.';
+        } else {
+          $filename = uniqid('svc_') . '.' . $ext;
+          $destPath = $uploadDir . $filename;
+          if (move_uploaded_file($_FILES['image']['tmp_name'], $destPath)) {
+            @chmod($destPath, 0664);
+            $image = 'assets/img/services/' . $filename;
+          } else {
+            $errors[] = "Impossible d'enregistrer l'image sur le serveur (vérifiez permissions assets/img/services/).";
+          }
         }
       }
     }

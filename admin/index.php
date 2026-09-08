@@ -29,7 +29,7 @@ if (!isset($conn)) {
 
     // Recent articles
     $recentArticles = $conn->query(
-      "SELECT a.id, a.user_id, a.title, a.slug, a.status, a.is_featured, a.views_count, a.created_at,
+      "SELECT a.id, a.user_id, a.title, a.slug, a.cover_image, a.status, a.is_featured, a.views_count, a.created_at,
               c.name AS category_name, u.name AS author_name
        FROM articles a
        LEFT JOIN article_categories c ON a.category_id = c.id
@@ -215,7 +215,12 @@ include __DIR__ . '/partials/header.php';
               <tr>
                 <td>
                   <div style="display:flex; align-items:center; gap:10px;">
-                    <div class="article-thumb-placeholder"><i class="bi bi-image"></i></div>
+                    <?php if (!empty($art['cover_image'])): ?>
+                      <img src="../<?= htmlspecialchars(ltrim($art['cover_image'], '/')) ?>" alt=""
+                           style="width:38px; height:38px; object-fit:cover; border-radius:6px; border:1px solid #e2e8f0; flex-shrink:0;">
+                    <?php else: ?>
+                      <div class="article-thumb-placeholder"><i class="bi bi-image"></i></div>
+                    <?php endif; ?>
                     <div>
                       <div style="font-weight:600; font-size:13px; max-width:220px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
                         <?= htmlspecialchars($art['title']) ?>
