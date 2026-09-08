@@ -1,7 +1,7 @@
 # ══════════════════════════════════════════════
 #  .gitignore — Bowaba
 # ══════════════════════════════════════════════
-
+.htaccess
 # ── Secrets & configuration locale ──────────────
 .env
 .env.local

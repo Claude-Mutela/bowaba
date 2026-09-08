@@ -56,7 +56,7 @@
           <li><a class="nav-link scrollto <?php if($nav === 'about'):?>active <?php endif; ?>" href="about">Apropos</a></li>
           <li><a class="nav-link scrollto <?php if($nav === 'service'):?>active <?php endif; ?>" href="service">Services</a></li>
           <li><a class="nav-link scrollto <?php if($nav === 'blog'):?>active <?php endif; ?>" href="blog">Blog</a></li>
-          <li><a class="nav-link scrollto <?php if($nav === 'fondation'):?>active <?php endif; ?>" href="https://fondation.bowabancongo.com/" target="_blank">Fondation</a></li>
+          <li><a class="nav-link scrollto <?php if($nav === 'fondation'):?>active <?php endif; ?>" href="fondation/">Fondation</a></li>
           <li><a class="nav-link scrollto <?php if($nav === 'contact'):?>active <?php endif; ?>" href="contact">Contact</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
