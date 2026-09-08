@@ -1,6 +1,6 @@
 <?php
 
-    require'adm/config.php';
+    require_once __DIR__ . '/kon/conn.php';
     //Sécurisation de la validation des données
 
 	function test_input($data){
