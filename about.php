@@ -2,7 +2,7 @@
     $pageTitle="A propos de nous - Bowaba n Congo";
     $pageDesc="Découvrez Bowaba n Congo, le premier incubateur et academy multidisciplinaire en RDC pour l'accompagnement des entrepreneurs.";
     $nav='about';
-    require 'hd-ft/hd.php';
+    require_once __DIR__ . '/hd-ft/hd.php';
    
 ?>
 <!DOCTYPE html>
@@ -252,6 +252,6 @@
   <script src="assets/js/c_main.js"></script>
 </body>
 <?php
-    require'hd-ft/ft.php';
+    require_once __DIR__ . '/hd-ft/ft.php';
 ?>
 </html>
