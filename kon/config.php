@@ -1,53 +1,31 @@
 <?php
-// Détection automatique de l'URL de base pour gérer les rewrites et les assets
-$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
-$host = $_SERVER['HTTP_HOST'];
+// Protection contre les redéfinitions de BASE_URL
+if (!defined('BASE_URL')) {
+    $host = $_SERVER['HTTP_HOST'] ?? 'bowabancongo.com';
 
-// Détermine le chemin du dossier racine du projet
-// En local wamp/mamp : /bowaba/
-// En prod racine : /
-$scriptName = $_SERVER['SCRIPT_NAME'];
-$scriptDir = dirname($scriptName);
+    // Détection HTTPS robuste (compatible Nginx, Apache, Cloudflare, Traefik reverse proxy)
+    $isHttps = (!empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off')
+            || (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 443)
+            || (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && strtolower($_SERVER['HTTP_X_FORWARDED_PROTO']) === 'https')
+            || (!empty($_SERVER['HTTP_X_FORWARDED_SSL']) && strtolower($_SERVER['HTTP_X_FORWARDED_SSL']) === 'on');
 
-// Nettoyage des backslashes (Windows)
-$scriptDir = str_replace('\\', '/', $scriptDir);
+    // En production sur bowabancongo.com, toujours forcer HTTPS pour les crawlers de réseaux sociaux
+    if (strpos($host, 'bowabancongo.com') !== false) {
+        define('BASE_URL', 'https://' . $host . '/');
+    } else {
+        $protocol = $isHttps ? "https://" : "http://";
+        $scriptName = $_SERVER['SCRIPT_NAME'] ?? '/';
+        $scriptDir  = str_replace('\\', '/', dirname($scriptName));
 
-// Retirer les éventuels sous-dossiers (admin, etc.) pour revenir à la racine du site si nécessaire
-// Ici, on suppose que config.php est appelé depuis la racine ou via un include qui connait le contexte.
-// Pour plus de sûreté, on peut définir manuellement en PROD si l'auto-détection échoue.
-// define('BASE_URL', 'https://bowabancongo.com/'); 
+        // En local sous Apache/MAMP (ex: /bowaba/)
+        if (preg_match('#^(/[^/]+)#', $scriptName, $matches) && !in_array($matches[1], ['/admin', '/fondation', '/assets'])) {
+            $basePath = $matches[1];
+        } else {
+            $basePath = ($scriptDir === '/' || $scriptDir === '.') ? '' : $scriptDir;
+        }
 
-// Auto-détection simple basée sur le fait que index.php est à la racine
-// Si on est dans /admin/, on veut peut-être la racine du site quand même.
-// Pour l'instant, on se base sur le dossier courant du script exécuté, 
-// MAIS attention aux rewrites.
-
-// APPROCHE ROBUSTE :
-// On définit la racine par rapport à l'emplacement de ce fichier config.php ? 
-// Non, car il est dans /kon/.
-
-// On va utiliser une approche flexible :
-// Si PROD (domaine bowabancongo.com), c'est la racine.
-if (strpos($host, 'bowabancongo.com') !== false) {
-    define('BASE_URL', $protocol . $host . '/');
-} else {
-    // LOCAL (localhost ou autre) -> on essaie de garder le sous-dossier s'il existe
-    // On suppose que le site est dans le dossier parent de 'kon' ?
-    // Non, le plus simple est de définir manuellement pour le local si l'auto-détection foire.
-    // Mais pour MAMP par défaut : localhost/bowaba/
-    
-    // On prend le dirname du script en cours, et on remonte jusqu'à trouver 'bowaba' ou on prend la racine
-    // Simplification : on utilise le dossier du script courant en s'assurant de finir par /
-    
-    // Correction pour les rewrites :
-    // Quand on appelle /blog/mon-article, le script exécuté est /bowaba/blog-single.php
-    // Donc dirname est /bowaba. C'est correct !
-    
-    $baseUrl = $protocol . $host . $scriptDir;
-    
-    // Assurer le slash final
-    $baseUrl = rtrim($baseUrl, '/') . '/';
-    
-    define('BASE_URL', $baseUrl);
+        $baseUrl = rtrim($protocol . $host . $basePath, '/') . '/';
+        define('BASE_URL', $baseUrl);
+    }
 }
-?>
+
