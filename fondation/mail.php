@@ -29,7 +29,7 @@
         $mail->addReplyTo($email, $name);
 
         // Destinataire
-        $mail->addAddress(getenv('FONDATION_SMTP_FROM'), 'Fondation-BOWABA');
+        $mail->addAddress(env('FONDATION_SMTP_FROM'), 'Fondation-BOWABA');
 
         // Contenu du mail
         $mail->isHTML(true);                                  // Format HTML
