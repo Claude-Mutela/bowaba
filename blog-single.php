@@ -1,5 +1,5 @@
 <?php
-  require 'kon/conn.php'; // DB Connection
+  require_once __DIR__ . '/kon/conn.php'; // DB Connection
 
   // 1. Get Article Slug
   $slug = filter_input(INPUT_GET, 'slug', FILTER_SANITIZE_SPECIAL_CHARS);
@@ -112,7 +112,7 @@
   $pageUrl   = $protocol . '://' . $_SERVER['HTTP_HOST'] . rtrim(dirname(dirname($_SERVER['SCRIPT_NAME'])), '/') . '/blog/' . $slug;
 
   $nav = 'blog';
-  require 'hd-ft/hd.php'; 
+  require_once __DIR__ . '/hd-ft/hd.php'; 
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -330,5 +330,5 @@
 
 </html>
 <?php
-  require 'hd-ft/ft.php';
+  require_once __DIR__ . '/hd-ft/ft.php';
 ?>
