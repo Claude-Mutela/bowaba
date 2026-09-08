@@ -2,8 +2,8 @@
     $pageTitle='Nos Services - Bowaba n Congo';
     $pageDesc='Découvrez l\'ensemble des services proposés par Bowaba n Congo : Incubateur, Formation, Développement Web, Marketing, et plus.';
     $nav='service';
-    require'hd-ft/hd.php';
-    require'kon/conn.php';
+    require_once __DIR__ . '/hd-ft/hd.php';
+    require_once __DIR__ . '/kon/conn.php';
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -151,6 +151,6 @@
   <script src="assets/js/c_main.js"></script>
 </body>
 <?php
-    require'hd-ft/ft.php';
+    require_once __DIR__ . '/hd-ft/ft.php';
 ?>
 </html>
