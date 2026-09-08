@@ -2,8 +2,8 @@
     $pageTitle='Blog & Actualités - Bowaba n Congo';
     $pageDesc='Suivez nos actualités, articles et conseils sur l\'entrepreneuriat, le digital et la formation en RDC.';
     $nav='blog';
-    require'hd-ft/hd.php';
-    require'kon/conn.php';
+    require_once __DIR__ . '/hd-ft/hd.php';
+    require_once __DIR__ . '/kon/conn.php';
     
     // ── Pagination & Filters ──
     $limit = 5;
@@ -296,6 +296,6 @@
 
 </body>
 <?php
-    require'hd-ft/ft.php';
+    require_once __DIR__ . '/hd-ft/ft.php';
 ?>
 </html>
