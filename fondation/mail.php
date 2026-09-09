@@ -35,26 +35,31 @@
 
             // Contenu du mail
             $mail->isHTML(true);                                  // Format HTML
-            $mail->Subject = $subject;
+            $mail->Subject = '[Fondation] ' . $subject;
             // Construire le corps du message HTML
             $nameHtml    = htmlspecialchars($name, ENT_QUOTES, 'UTF-8');
             $emailHtml   = htmlspecialchars($email, ENT_QUOTES, 'UTF-8');
             $messageHtml = nl2br(htmlspecialchars($message, ENT_QUOTES, 'UTF-8'));
 
             $body = "
-            <h5>Nouveau message de {$nameHtml}</h5>
+            <h5>Nouveau message pour la Fondation de {$nameHtml}</h5>
             <p><strong>Email :</strong> {$emailHtml}</p>
+            <p><strong>Sujet :</strong> {$subject}</p>
             <p>{$messageHtml}</p>";
             $mail->Body = $body;
 
             $mail->send();
             $_SESSION['success'] = true; // Message de succès
+            unset($_SESSION['error']);
+            unset($_SESSION['error_detail']);
         } catch (\Throwable $e) {
-            error_log('[fondation/mail] Erreur envoi email : ' . $e->getMessage());
-            if ($mail instanceof PHPMailer && !empty($mail->ErrorInfo)) {
-                error_log('[fondation/mail] PHPMailer ErrorInfo : ' . $mail->ErrorInfo);
+            $errDetail = $e->getMessage();
+            if ($mail instanceof PHPMailer && !empty($mail->ErrorInfo) && $mail->ErrorInfo !== $errDetail) {
+                $errDetail .= ' (' . $mail->ErrorInfo . ')';
             }
+            error_log('[fondation/mail] Erreur envoi email : ' . $errDetail);
             $_SESSION['error'] = true;
+            $_SESSION['error_detail'] = $errDetail;
         }
         
         // Redirection vers la page de contact avec le message de succès/erreur

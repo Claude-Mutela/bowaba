@@ -1,8 +1,9 @@
 <?php
 /**
  * Script de diagnostic SMTP pour Bowaba
- * Exécution recommandée en CLI sur le serveur :
- *   php kon/test-smtp.php
+ * Usage CLI :
+ *   php kon/test-smtp.php             -> Teste le profil 'main' (site principal)
+ *   php kon/test-smtp.php fondation   -> Teste le profil 'fondation'
  */
 
 // Sécurité : n'autoriser l'accès web qu'en local ou avec une clé, ou autoriser en CLI
@@ -10,14 +11,25 @@ if (php_sapi_name() !== 'cli') {
     session_start();
     if (!isset($_SESSION['admin_id']) && (!isset($_GET['key']) || $_GET['key'] !== 'bowaba2026')) {
         http_response_code(403);
-        die("Accès refusé. Exécutez ce script en ligne de commande : php kon/test-smtp.php\n");
+        die("Accès refusé. Exécutez ce script en ligne de commande : php kon/test-smtp.php [main|fondation]\n");
     }
 }
 
 header('Content-Type: text/plain; charset=utf-8');
 
+$profile = 'main';
+if (php_sapi_name() === 'cli') {
+    if (isset($argv[1]) && strtolower($argv[1]) === 'fondation') {
+        $profile = 'fondation';
+    }
+} else {
+    if (isset($_GET['profile']) && strtolower($_GET['profile']) === 'fondation') {
+        $profile = 'fondation';
+    }
+}
+
 echo "====================================================\n";
-echo "  DIAGNOSTIC SMTP BOWABA - " . date('Y-m-d H:i:s') . "\n";
+echo "  DIAGNOSTIC SMTP BOWABA [Profil : " . strtoupper($profile) . "] - " . date('Y-m-d H:i:s') . "\n";
 echo "====================================================\n\n";
 
 // 1. Détection de l'utilisateur système
@@ -42,33 +54,45 @@ if (file_exists($envPath)) {
     echo "    - Permissions actuelles : {$perms}\n";
 }
 
-// 3. Inspection des variables SMTP
-$host     = env('SMTP_HOST');
-$port     = env('SMTP_PORT', 465);
-$user     = env('SMTP_USER');
-$pass     = env('SMTP_PASS');
-$from     = env('SMTP_FROM') ?: $user;
-$fromName = env('SMTP_FROM_NAME', 'Contact Web');
+// 3. Inspection des variables SMTP selon le profil
+if ($profile === 'fondation') {
+    $prefix   = 'FONDATION_';
+    $host     = env('FONDATION_SMTP_HOST');
+    $port     = env('FONDATION_SMTP_PORT', 587);
+    $user     = env('FONDATION_SMTP_USER');
+    $pass     = env('FONDATION_SMTP_PASS');
+    $from     = env('FONDATION_SMTP_FROM') ?: $user;
+    $fromName = env('FONDATION_SMTP_FROM_NAME', 'Fondation-BOWABA');
+} else {
+    $prefix   = '';
+    $host     = env('SMTP_HOST');
+    $port     = env('SMTP_PORT', 587);
+    $user     = env('SMTP_USER');
+    $pass     = env('SMTP_PASS');
+    $from     = env('SMTP_FROM') ?: $user;
+    $fromName = env('SMTP_FROM_NAME', 'Contact Web');
+}
 
-echo "\n[3] Variables SMTP chargées :\n";
-echo "    - SMTP_HOST      : " . ($host ?: "MANQUANT") . "\n";
-echo "    - SMTP_PORT      : " . ($port ?: "MANQUANT") . "\n";
-echo "    - SMTP_USER      : " . ($user ?: "MANQUANT") . "\n";
-echo "    - SMTP_PASS      : " . ($pass ? (str_repeat('*', strlen($pass) - 2) . substr($pass, -2)) : "MANQUANT") . "\n";
-echo "    - SMTP_FROM      : " . ($from ?: "MANQUANT") . (empty(env('SMTP_FROM')) && !empty($user) ? " (par défaut = SMTP_USER)" : "") . "\n";
-echo "    - SMTP_FROM_NAME : {$fromName}\n";
+echo "\n[3] Variables SMTP chargées pour [{$profile}] :\n";
+echo "    - {$prefix}SMTP_HOST      : " . ($host ?: "MANQUANT") . "\n";
+echo "    - {$prefix}SMTP_PORT      : " . ($port ?: "MANQUANT") . "\n";
+echo "    - {$prefix}SMTP_USER      : " . ($user ?: "MANQUANT") . "\n";
+echo "    - {$prefix}SMTP_PASS      : " . ($pass ? (str_repeat('*', max(0, strlen($pass) - 2)) . substr($pass, -2)) : "MANQUANT") . "\n";
+echo "    - {$prefix}SMTP_FROM      : " . ($from ?: "MANQUANT") . "\n";
+echo "    - {$prefix}SMTP_FROM_NAME : {$fromName}\n";
 
 if (empty($host) || empty($user) || empty($pass) || empty($from)) {
-    echo "\n❌ ERREUR FATALE : Configuration SMTP incomplète dans le .env.\n";
-    echo "   Vérifiez que le fichier .env contient bien SMTP_HOST, SMTP_USER, SMTP_PASS, SMTP_FROM.\n";
+    echo "\n❌ ERREUR FATALE : Configuration SMTP incomplète dans le .env pour le profil '{$profile}'.\n";
+    echo "   Veuillez vérifier les variables {$prefix}SMTP_HOST, {$prefix}SMTP_USER, {$prefix}SMTP_PASS dans votre fichier .env.\n";
     exit(1);
 }
 
 // 4. Test DNS
 echo "\n[4] Résolution DNS de '{$host}' :\n";
 $ip = gethostbyname($host);
-if ($ip === $host) {
-    echo "    ❌ Impossible de résoudre l'adresse IP de '{$host}'. Vérifiez le nom d'hôte ou les DNS du serveur.\n";
+if ($ip === $host && !filter_var($host, FILTER_VALIDATE_IP)) {
+    echo "    ❌ Impossible de résoudre l'adresse IP de '{$host}'. Hôte inconnu !\n";
+    echo "       -> Vérifiez le nom du serveur SMTP (ex: mail.bowabancongo.com).\n";
 } else {
     echo "    ✅ Résolu avec succès : {$ip}\n";
 }
@@ -83,7 +107,7 @@ $socket = @fsockopen($host, (int)$port, $errno, $errstr, $timeout);
 if (!$socket) {
     echo "    ❌ ÉCHEC : Impossible d'ouvrir la connexion vers {$host}:{$port}.\n";
     echo "       Erreur [{$errno}] : {$errstr}\n";
-    echo "       -> Cause probable : le port {$port} sortant est bloqué par le pare-feu du VPS ou l'hébergeur.\n";
+    echo "       -> Cause probable : port {$port} bloqué ou serveur inaccessible.\n";
 } else {
     echo "    ✅ Connexion TCP établie avec succès sur le port {$port}.\n";
     $banner = fgets($socket, 512);
@@ -93,12 +117,12 @@ if (!$socket) {
     fclose($socket);
 }
 
-// 6. Test PHPMailer complet avec authentification
-echo "\n[6] Test d'authentification PHPMailer :\n";
+// 6. Test PHPMailer complet avec authentification et envoi réel
+echo "\n[6] Test PHPMailer avec authentification pour [{$profile}] :\n";
 require_once __DIR__ . '/mailer.php';
 
 try {
-    $mail = createMailer('main');
+    $mail = createMailer($profile);
     $mail->SMTPDebug = 2; // Niveau debug détaillé
     $mail->Debugoutput = function($str, $level) {
         echo "    [SMTP-DEBUG] {$str}\n";
@@ -111,13 +135,13 @@ try {
         echo "\n[7] Test d'envoi réel d'un e-mail :\n";
         $testRecipient = $user;
         $mail->addAddress($testRecipient);
-        $mail->Subject = '[Diagnostic Bowaba] Test SMTP réussi';
-        $mail->Body = "Ceci est un message de test automatique pour valider l'envoi d'e-mails depuis bowabancongo.com.\nDate : " . date('Y-m-d H:i:s');
+        $mail->Subject = "[Diagnostic Bowaba - {$profile}] Test SMTP réussi";
+        $mail->Body = "Ceci est un message de test automatique pour valider l'envoi d'e-mails depuis bowabancongo.com (profil {$profile}).\nDate : " . date('Y-m-d H:i:s');
         
         echo "    -> Envoi en cours vers {$testRecipient}...\n";
         $mail->send();
-        echo "\n🎉 SUCCÈS TOTAL : E-mail de test envoyé et accepté par le serveur SMTP !\n";
-        echo "   Votre formulaire de contact en ligne fonctionnera parfaitement.\n";
+        echo "\n🎉 SUCCÈS TOTAL : E-mail de test envoyé et accepté par le serveur SMTP pour [{$profile}] !\n";
+        echo "   Le formulaire de contact fonctionnera parfaitement.\n";
     } else {
         echo "\n❌ ÉCHEC : Impossible de se connecter via PHPMailer.\n";
         echo "   Détail : " . $mail->ErrorInfo . "\n";

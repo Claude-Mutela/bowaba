@@ -527,7 +527,11 @@
                             <?php endif ?>
 
                             <?php if(isset($_SESSION['error'])) : ?>
-                                <p class="error-message btn-status"> Message non envoye, Ressayé !</p>
+                                <p class="error-message btn-status"> Message non envoyé, veuillez réessayer !
+                                    <?php if(!empty($_SESSION['error_detail'])): ?>
+                                        <br><small style="font-size: 0.85em; font-weight: bold; color: #fff;">[Cause : <?= htmlspecialchars($_SESSION['error_detail'], ENT_QUOTES, 'UTF-8'); ?>]</small>
+                                    <?php endif; ?>
+                                </p>
                             <?php endif ?>
                         </div>
                         <div class="form-group">
@@ -640,11 +644,12 @@
         }
 </script>
     <?php 
-    //Netoyage des sessions
+    // Nettoyage des sessions
     unset($_SESSION['inputs']);
     unset($_SESSION['success']);
     unset($_SESSION['errors']);
-
+    unset($_SESSION['error']);
+    unset($_SESSION['error_detail']); 
     ?> 
 </body>
 
