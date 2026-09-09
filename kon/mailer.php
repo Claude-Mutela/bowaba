@@ -40,23 +40,25 @@ function createMailer(string $profile = 'main'): PHPMailer
     // ── Sélection du profil ──────────────────────────────────────────────
     switch ($profile) {
         case 'main':
-            $host     = env('SMTP_HOST');
-            $port     = (int) (env('SMTP_PORT', 465));
-            $user     = env('SMTP_USER');
-            $pass     = env('SMTP_PASS');
-            $from     = env('SMTP_FROM');
-            $fromName = env('SMTP_FROM_NAME', 'Contact Web');
-            $secure   = env('SMTP_SECURE');
+            $host      = env('SMTP_HOST');
+            $port      = (int) (env('SMTP_PORT', 465));
+            $user      = env('SMTP_USER');
+            $pass      = env('SMTP_PASS');
+            $from      = env('SMTP_FROM') ?: $user;
+            $fromName  = env('SMTP_FROM_NAME', 'Contact Web');
+            $secure    = env('SMTP_SECURE');
+            $verifySsl = env('SMTP_VERIFY_SSL', 'true');
             break;
 
         case 'fondation':
-            $host     = env('FONDATION_SMTP_HOST');
-            $port     = (int) (env('FONDATION_SMTP_PORT', 465));
-            $user     = env('FONDATION_SMTP_USER');
-            $pass     = env('FONDATION_SMTP_PASS');
-            $from     = env('FONDATION_SMTP_FROM');
-            $fromName = env('FONDATION_SMTP_FROM_NAME', 'Fondation-BOWABA');
-            $secure   = env('FONDATION_SMTP_SECURE');
+            $host      = env('FONDATION_SMTP_HOST');
+            $port      = (int) (env('FONDATION_SMTP_PORT', 465));
+            $user      = env('FONDATION_SMTP_USER');
+            $pass      = env('FONDATION_SMTP_PASS');
+            $from      = env('FONDATION_SMTP_FROM') ?: $user;
+            $fromName  = env('FONDATION_SMTP_FROM_NAME', 'Fondation-BOWABA');
+            $secure    = env('FONDATION_SMTP_SECURE');
+            $verifySsl = env('FONDATION_SMTP_VERIFY_SSL', 'true');
             break;
 
         default:

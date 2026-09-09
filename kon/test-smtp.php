@@ -47,7 +47,7 @@ $host     = env('SMTP_HOST');
 $port     = env('SMTP_PORT', 465);
 $user     = env('SMTP_USER');
 $pass     = env('SMTP_PASS');
-$from     = env('SMTP_FROM');
+$from     = env('SMTP_FROM') ?: $user;
 $fromName = env('SMTP_FROM_NAME', 'Contact Web');
 
 echo "\n[3] Variables SMTP chargées :\n";
@@ -55,7 +55,7 @@ echo "    - SMTP_HOST      : " . ($host ?: "MANQUANT") . "\n";
 echo "    - SMTP_PORT      : " . ($port ?: "MANQUANT") . "\n";
 echo "    - SMTP_USER      : " . ($user ?: "MANQUANT") . "\n";
 echo "    - SMTP_PASS      : " . ($pass ? (str_repeat('*', strlen($pass) - 2) . substr($pass, -2)) : "MANQUANT") . "\n";
-echo "    - SMTP_FROM      : " . ($from ?: "MANQUANT") . "\n";
+echo "    - SMTP_FROM      : " . ($from ?: "MANQUANT") . (empty(env('SMTP_FROM')) && !empty($user) ? " (par défaut = SMTP_USER)" : "") . "\n";
 echo "    - SMTP_FROM_NAME : {$fromName}\n";
 
 if (empty($host) || empty($user) || empty($pass) || empty($from)) {
