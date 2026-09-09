@@ -3,7 +3,8 @@
     $pageDesc     = "Découvrez nos solutions complètes en RDC : incubation d'entreprises, formations professionnelles, conception de sites web, design graphique, comptabilité et gestion de projets.";
     $pageKeywords = "Services Bowaba, Incubation RDC, Formation Kinshasa, Développement web Congo, Design graphique, Audit comptable, Suivi projets";
     $pageCss      = "assets/css/service.css";
-    $nav          = 'service';
+    $pageUrl      = "services";
+    $nav          = 'services';
     require_once __DIR__ . '/hd-ft/hd.php';
     require_once __DIR__ . '/kon/conn.php';
 ?>
@@ -27,7 +28,10 @@
               </div>
             </div>
           </div>
-          </div>
+
+        </div>
+      </div>
+    </div>
   </section><!-- End Hero -->
 
 
@@ -38,7 +42,6 @@
         <div class="section-header">
           <h2>NOS SERVICES</h2>
         </div>
-    </section><!-- End Testimonials Section -->
 
         <div class="container" id="contente">
           <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
@@ -112,6 +115,7 @@
           </div>
         </div>
 
+      </div>
   </section>
 
 <?php

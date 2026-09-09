@@ -26,7 +26,7 @@ RewriteRule ^(.+)\.php$ $1 [R=301,L]
 # 5. ROUTES FRONT-END (URLs propres)
 # ============================================================
 RewriteRule ^index/?$                 index.php [L]
-RewriteRule ^services/?$              service.php [L]
+RewriteRule ^services?/?$             service.php [L]
 RewriteRule ^blog/?$                  blog.php [L]
 RewriteRule ^contact/?$               contact.php [L]
 RewriteRule ^about/?$                 about.php [L]
@@ -40,7 +40,7 @@ RewriteRule ^post-contact/?$          post-contact.php [L]
 # 6. SLUGS DYNAMIQUES (Blog & Services)
 # ============================================================
 RewriteRule ^blog/([a-zA-Z0-9_-]+)/?$        blog-single.php?slug=$1 [QSA,L]
-RewriteRule ^service/([a-zA-Z0-9_-]+)/?$     service-details.php?slug=$1 [QSA,L]
+RewriteRule ^services?/([a-zA-Z0-9_-]+)/?$   service-details.php?slug=$1 [QSA,L]
 
 # ============================================================
 # 7. ROUTES ADMINISTRATION

@@ -10,7 +10,7 @@ RewriteRule ^ /%1 [R=301,L]
 # FRONT-END ROUTES
 # ============================================================
 RewriteRule ^index$                 index.php [L]
-RewriteRule ^services$              service.php [L]
+RewriteRule ^services?$              service.php [L]
 RewriteRule ^blog$                  blog.php [L]
 RewriteRule ^contact$               contact.php [L]
 RewriteRule ^about$                 about.php [L]
@@ -25,7 +25,7 @@ RewriteRule ^post-contact$          post-contact.php [L]
 RewriteRule ^blog/([a-zA-Z0-9_-]+)$       blog-single.php?slug=$1 [QSA,L]
 
 # Service Detail Rewrite (Slug)
-RewriteRule ^service/([a-zA-Z0-9_-]+)$    service-details.php?slug=$1 [QSA,L]
+RewriteRule ^services?/([a-zA-Z0-9_-]+)$  service-details.php?slug=$1 [QSA,L]
 
 # ============================================================
 # ADMIN ROUTES (no .php stripping for admin)

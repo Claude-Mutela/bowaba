@@ -19,7 +19,7 @@
             <h4>Liens de navigation</h4>
             <ul>
               <li><i class="bx bx-chevron-right"></i> <a href="index">Accueil</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="service">Services</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="services">Services</a></li>
               <li><i class="bx bx-chevron-right"></i> <a href="about">A propos</a></li>
               <li><i class="bx bx-chevron-right"></i> <a href="blog">Blog</a></li>
               <li><i class="bx bx-chevron-right"></i> <a href="fondation">fondation</a></li>

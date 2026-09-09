@@ -31,7 +31,7 @@
         
         header("HTTP/1.0 404 Not Found");
         require_once __DIR__ . '/hd-ft/hd.php'; // Load header to show navbar even on 404
-        echo '<div class="container my-5 text-center"><h1>Service introuvable</h1><p>Ce service n\'existe pas ou a été retiré.</p><a href="service.php" class="btn btn-primary">Retour aux services</a></div>';
+        echo '<div class="container my-5 text-center"><h1>Service introuvable</h1><p>Ce service n\'existe pas ou a été retiré.</p><a href="services" class="btn btn-primary">Retour aux services</a></div>';
         require_once __DIR__ . '/hd-ft/ft.php';
         exit;
     }
@@ -53,14 +53,14 @@
       <div class="content">
         <!-- Desktop: Breadcrumb complet avec titre -->
         <ol class="d-none d-md-flex">
-          <li><a href="index.php">Accueil</a> /</li>
-          <li><a href="service.php">Services</a> /</li>
+          <li><a href="index">Accueil</a> /</li>
+          <li><a href="services">Services</a> /</li>
           <li class="active"><?= htmlspecialchars($service['title']) ?></li>
         </ol>
         
         <!-- Mobile: Lien retour simple sans titre -->
         <div class="d-md-none">
-            <a href="service.php" style="color: #fff; font-weight: 600; text-decoration: none; display: flex; align-items: center;">
+            <a href="services" style="color: #fff; font-weight: 600; text-decoration: none; display: flex; align-items: center;">
                 <i class="bx bx-left-arrow-alt fs-4 me-2"></i> Retour aux services
             </a>
         </div>

@@ -240,7 +240,7 @@
           <div class="col-lg-4 col-md-6" data-aos="fade-up">
             <div class="icon-box">
               <div class="icon"><i class="bi bi-briefcase"></i></div>
-              <h4 class="title"><a href="service">Coaching et Mentorat Entrepreneuriaux personnels et d’entreprises
+              <h4 class="title"><a href="services">Coaching et Mentorat Entrepreneuriaux personnels et d’entreprises
               </a></h4>
               <p class="description"></p>
             </div>
@@ -248,7 +248,7 @@
           <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
             <div class="icon-box">
               <div class="icon"><i class="bi bi-card-checklist"></i></div>
-              <h4 class="title"><a href="service">Rédaction des projets économiques et de développement </a></h4>
+              <h4 class="title"><a href="services">Rédaction des projets économiques et de développement </a></h4>
               <p class="description">
               </p>
             </div>
@@ -256,28 +256,28 @@
           <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
             <div class="icon-box">
               <div class="icon"><i class="bi bi-bar-chart"></i></div>
-              <h4 class="title"><a href="service">Formation professionnelle et renforcement des capacités</a></h4>
+              <h4 class="title"><a href="services">Formation professionnelle et renforcement des capacités</a></h4>
               <p class="description"></p>
             </div>
           </div>
           <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
             <div class="icon-box">
               <div class="icon"><i class="bi bi-code-slash"></i></div>
-              <h4 class="title"><a href="service">Conception des Sites Web & Design Graphique</a></h4>
+              <h4 class="title"><a href="services">Conception des Sites Web & Design Graphique</a></h4>
               <p class="description"></p>
             </div>
           </div>
           <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
             <div class="icon-box">
               <div class="icon"><i class="bi bi-brightness-high"></i></div>
-              <h4 class="title"><a href="service">Le Suivi & Évaluation des projets </a></h4>
+              <h4 class="title"><a href="services">Le Suivi & Évaluation des projets </a></h4>
               <p class="description"></p>
             </div>
           </div>
           <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="500">
             <div class="icon-box">
               <div class="icon"><i class="bi bi-calendar4-week"></i></div>
-              <h4 class="title"><a href="service">Organisation comptable (élaboration des actifs financier pour les PME)</a></h4>
+              <h4 class="title"><a href="services">Organisation comptable (élaboration des actifs financier pour les PME)</a></h4>
               <p class="description"></p>
             </div>
           </div>

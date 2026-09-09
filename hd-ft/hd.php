@@ -187,7 +187,7 @@ $nav = $nav ?? '';
         <ul>
           <li><a class="nav-link scrollto <?= ($nav === 'index') ? 'active' : '' ?>" href="index">Accueil</a></li>
           <li><a class="nav-link scrollto <?= ($nav === 'about') ? 'active' : '' ?>" href="about">À propos</a></li>
-          <li><a class="nav-link scrollto <?= ($nav === 'service' || $nav === 'details-service') ? 'active' : '' ?>" href="service">Services</a></li>
+          <li><a class="nav-link scrollto <?= ($nav === 'service' || $nav === 'services' || $nav === 'details-service') ? 'active' : '' ?>" href="services">Services</a></li>
           <li><a class="nav-link scrollto <?= ($nav === 'blog') ? 'active' : '' ?>" href="blog">Blog</a></li>
           <li><a class="nav-link scrollto <?= ($nav === 'fondation') ? 'active' : '' ?>" href="fondation/" target="_blank">Fondation</a></li>
           <li><a class="nav-link scrollto <?= ($nav === 'contact') ? 'active' : '' ?>" href="contact">Contact</a></li>
