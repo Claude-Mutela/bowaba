@@ -605,7 +605,7 @@
                         </li>
                         <li>
                             <i class="fas fa-envelope"></i>
-                            <a href="mailto:contact.fondation@bowabancongo.com">contact@fondation.bowabancongo.com</a>
+                            <a href="mailto:contact.fondation@bowabancongo.com">contact.fondation@bowabancongo.com</a>
                         </li>
                     </ul>
                 </div>
@@ -639,7 +639,7 @@
                 "@type": "ContactPoint",
                 "telephone": "+243 816 695 000",
                 "contactType": "Customer service",
-                "email": "contact@fondation.bowabancongo.com"
+                "email": "contact.fondation@bowabancongo.com"
             }
         }
 </script>

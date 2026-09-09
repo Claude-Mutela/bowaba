@@ -105,7 +105,7 @@
             <div id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="5000">
                 <ol class="carousel-indicators" id="hero-carousel-indicators"></ol>
                 <div class="carousel-inner" role="listbox">
-                    <div class="carousel-item active" style="background-image: url('assets/img/carte.jpeg');">
+                    <div class="carousel-item active" style="background-image: url('assets/img/article-hero.jpg');">
                         <div class="carousel-container">
                             <div class="carousel-content container">
                                 <h2 class="animate__animated animate__fadeInDown"><span>Nos Articles</span></h2>
