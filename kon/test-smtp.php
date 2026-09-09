@@ -57,12 +57,13 @@ if (file_exists($envPath)) {
 // 3. Inspection des variables SMTP selon le profil
 if ($profile === 'fondation') {
     $prefix   = 'FONDATION_';
-    $host     = env('FONDATION_SMTP_HOST');
-    $port     = env('FONDATION_SMTP_PORT', 587);
-    $user     = env('FONDATION_SMTP_USER');
-    $pass     = env('FONDATION_SMTP_PASS');
-    $from     = env('FONDATION_SMTP_FROM') ?: $user;
+    $host     = env('FONDATION_SMTP_HOST') ?: env('SMTP_HOST');
+    $port     = env('FONDATION_SMTP_PORT') ?: env('SMTP_PORT', 587);
+    $user     = env('FONDATION_SMTP_USER') ?: env('SMTP_USER');
+    $pass     = env('FONDATION_SMTP_PASS') ?: env('SMTP_PASS');
+    $from     = env('FONDATION_SMTP_FROM') ?: (env('SMTP_FROM') ?: $user);
     $fromName = env('FONDATION_SMTP_FROM_NAME', 'Fondation-BOWABA');
+    $isFallback = empty(env('FONDATION_SMTP_USER'));
 } else {
     $prefix   = '';
     $host     = env('SMTP_HOST');

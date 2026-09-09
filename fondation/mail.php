@@ -30,7 +30,7 @@
             $mail->addReplyTo($email, $name);
 
             // Destinataire
-            $destinataire = env('FONDATION_SMTP_FROM', 'contact@fondation.bowabancongo.com');
+            $destinataire = env('FONDATION_RECIPIENT') ?: (env('FONDATION_SMTP_FROM') ?: (env('SMTP_FROM') ?: 'contact@bowabancongo.com'));
             $mail->addAddress($destinataire, 'Fondation-BOWABA');
 
             // Contenu du mail
