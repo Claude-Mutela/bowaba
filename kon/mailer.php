@@ -46,6 +46,7 @@ function createMailer(string $profile = 'main'): PHPMailer
             $pass     = env('SMTP_PASS');
             $from     = env('SMTP_FROM');
             $fromName = env('SMTP_FROM_NAME', 'Contact Web');
+            $secure   = env('SMTP_SECURE');
             break;
 
         case 'fondation':
@@ -55,6 +56,7 @@ function createMailer(string $profile = 'main'): PHPMailer
             $pass     = env('FONDATION_SMTP_PASS');
             $from     = env('FONDATION_SMTP_FROM');
             $fromName = env('FONDATION_SMTP_FROM_NAME', 'Fondation-BOWABA');
+            $secure   = env('FONDATION_SMTP_SECURE');
             break;
 
         default:
@@ -63,9 +65,8 @@ function createMailer(string $profile = 'main'): PHPMailer
 
     // ── Validation des variables obligatoires ───────────────────────────
     if (empty($host) || empty($user) || empty($pass) || empty($from)) {
-        // On ne révèle pas les valeurs manquantes dans le log public
         error_log("[mailer] Configuration SMTP incomplète pour le profil \"{$profile}\". Vérifier le fichier .env.");
-        throw new Exception("Configuration SMTP incomplète. Contacter l'administrateur.");
+        throw new \RuntimeException("Configuration SMTP incomplète pour le profil \"{$profile}\". Vérifier le fichier .env.");
     }
 
     // ── Instanciation PHPMailer ──────────────────────────────────────────
@@ -77,8 +78,18 @@ function createMailer(string $profile = 'main'): PHPMailer
     $mail->SMTPAuth   = true;
     $mail->Username   = $user;
     $mail->Password   = $pass;
-    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; // Port 465 → SMTPS
-    $mail->Port       = $port;
+
+    // Chiffrement selon le port ou la variable explicite
+    if ($secure === 'tls' || ($port === 587 && empty($secure))) {
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+    } elseif ($secure === 'ssl' || ($port === 465 && empty($secure))) {
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+    } else {
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+    }
+
+    $mail->Port    = $port;
+    $mail->Timeout = 15; // Évite les blocages de requête si le serveur SMTP met trop de temps à répondre
 
     // Encodage
     $mail->CharSet  = 'UTF-8';

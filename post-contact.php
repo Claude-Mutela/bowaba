@@ -2,102 +2,113 @@
 session_start();
 
 use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
+
+// Redirection directe si la page est accédée en GET
+if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
+    header('Location: contact');
+    exit();
+}
 
 // Chargement de la factory SMTP centralisée (lit les secrets depuis .env)
 require_once __DIR__ . '/kon/mailer.php';
 
-$errors = [];
-
 // 1. HONEYPOT CHECK (Anti-Spam)
-// If the hidden field 'website' is filled, it's likely a bot.
+// Si le champ masqué 'website' est rempli, c'est probablement un robot.
 if (!empty($_POST['website'])) {
-    // Silent fail: Redirect as if successful to fool the bot, but don't send email.
+    // Échec silencieux : redirection simulant le succès pour dérouter le bot
     $_SESSION['success'] = 1;
     header('Location: contact');
     exit();
 }
 
-// 2. INPUT VALIDATION
-if (!isset($_POST['name']) || trim($_POST['name']) === '') {
+// 2. VALIDATION DES ENTRÉES
+$errors = [];
+
+$name    = isset($_POST['name']) ? trim((string)$_POST['name']) : '';
+$email   = isset($_POST['email']) ? trim((string)$_POST['email']) : '';
+$subject = isset($_POST['subject']) ? trim((string)$_POST['subject']) : '';
+$message = isset($_POST['message']) ? trim((string)$_POST['message']) : '';
+
+if ($name === '') {
     $errors['name'] = "Vous n'avez pas renseigné votre nom.";
 }
 
-if (!isset($_POST['email']) || trim($_POST['email']) === '' || !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+if ($email === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
     $errors['email'] = "L'adresse email n'est pas valide.";
 }
 
-if (!isset($_POST['subject']) || trim($_POST['subject']) === '') {
+if ($subject === '') {
     $errors['subject'] = "Vous n'avez pas renseigné le sujet.";
 }
 
-if (!isset($_POST['message']) || trim($_POST['message']) === '') {
+if ($message === '') {
     $errors['message'] = "Vous n'avez pas écrit de message.";
 }
 
-// 3. ERROR HANDLING OR PROCESSING
+// 3. GESTION DES ERREURS DE VALIDATION
 if (!empty($errors)) {
     $_SESSION['errors'] = $errors;
     $_SESSION['inputs'] = $_POST;
     header('Location: contact');
     exit();
-} 
+}
 
-// 4. SANITIZATION & EMAIL SENDING
-$name = trim($_POST['name']);
-$email = filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL);
-$subject = trim($_POST['subject']);
-$message = trim($_POST['message']);
-
-// Création de l'instance PHPMailer via la factory (credentials lus depuis .env)
-$mail = createMailer('main');
-
+// 4. PRÉPARATION ET ENVOI DE L'EMAIL (Sécurisé dans try/catch global)
+$mail = null;
 try {
+    // Création de l'instance PHPMailer configurée depuis .env
+    $mail = createMailer('main');
 
-    //Recipients
-    $mail->setFrom('contact@bowabancongo.com', 'Contact Web');
-    $mail->addAddress('contact@bowabancongo.com');     //Add a recipient
+    // Destinataire et Reply-To
+    $recipient = env('CONTACT_RECIPIENT', env('SMTP_FROM', 'contact@bowabancongo.com'));
+    $mail->addAddress($recipient);
     $mail->addReplyTo($email, $name);
 
-    //Content
-    $mail->isHTML(true);                                  //Set email format to HTML
+    // Format HTML & Sujet
+    $mail->isHTML(true);
     $mail->Subject = '[Contact Web] ' . $subject;
-    
-    // HTML Message Body
+
+    // Protection XSS dans le template HTML
     $nameHtml    = htmlspecialchars($name, ENT_QUOTES, 'UTF-8');
     $emailHtml   = htmlspecialchars($email, ENT_QUOTES, 'UTF-8');
     $subjectHtml = htmlspecialchars($subject, ENT_QUOTES, 'UTF-8');
     $messageHtml = nl2br(htmlspecialchars($message, ENT_QUOTES, 'UTF-8'));
 
-    $mail->Body    = "
-        <h2>Nouveau message depuis le site web</h2>
-        <p><strong>Nom:</strong> {$nameHtml}</p>
-        <p><strong>Email:</strong> {$emailHtml}</p>
-        <p><strong>Sujet:</strong> {$subjectHtml}</p>
-        <p><strong>Message:</strong><br>{$messageHtml}</p>
-        <br>
-        <small>Ce message a été envoyé via le formulaire de contact de bowabancongo.com</small>
+    $mail->Body = "
+        <div style=\"font-family: Arial, sans-serif; font-size: 15px; color: #333; line-height: 1.6;\">
+            <h2 style=\"color: #0b2341; border-bottom: 2px solid #ff7a00; padding-bottom: 8px;\">Nouveau message depuis le site web</h2>
+            <p><strong>Nom :</strong> {$nameHtml}</p>
+            <p><strong>Email :</strong> <a href=\"mailto:{$emailHtml}\">{$emailHtml}</a></p>
+            <p><strong>Sujet :</strong> {$subjectHtml}</p>
+            <p><strong>Message :</strong></p>
+            <div style=\"background: #f8f9fa; border-left: 4px solid #ff7a00; padding: 12px 16px; margin: 12px 0;\">
+                {$messageHtml}
+            </div>
+            <br>
+            <small style=\"color: #888;\">Ce message a été envoyé via le formulaire de contact de <a href=\"https://bowabancongo.com\">bowabancongo.com</a></small>
+        </div>
     ";
-    
-    // Plain Text Alt Body
-    $mail->AltBody = "Nouveau message de {$name} ({$email})\n\nSujet: {$subject}\n\nMessage:\n{$message}";
 
+    // Version texte brut
+    $mail->AltBody = "Nouveau message depuis bowabancongo.com\n\nNom: {$name}\nEmail: {$email}\nSujet: {$subject}\n\nMessage:\n{$message}";
+
+    // Envoi
     $mail->send();
-    
+
     $_SESSION['success'] = 1;
     unset($_SESSION['inputs']);
     header('Location: contact');
     exit();
-    
-} catch (Exception $e) {
-    error_log('[post-contact] PHPMailer error: ' . $mail->ErrorInfo);
-    $_SESSION['errors'] = ["Une erreur technique est survenue lors de l'envoi du message. Veuillez réessayer plus tard."];
+
+} catch (\Throwable $e) {
+    // Journalisation détaillée sans crash HTTP 500
+    error_log('[post-contact] Erreur lors de l\'envoi : ' . $e->getMessage());
+    if ($mail instanceof PHPMailer && !empty($mail->ErrorInfo)) {
+        error_log('[post-contact] PHPMailer ErrorInfo : ' . $mail->ErrorInfo);
+    }
+
+    $_SESSION['errors'] = ["Une erreur technique est survenue lors de l'envoi de votre message. Veuillez réessayer ultérieurement ou nous contacter directement par téléphone au +243 816 695 000."];
     $_SESSION['inputs'] = $_POST;
     header('Location: contact');
     exit();
 }
-
-
-
-
-
