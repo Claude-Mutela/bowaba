@@ -106,9 +106,18 @@ try {
 
     echo "    -> Tentative de négociation et d'authentification...\n";
     if ($mail->smtpConnect()) {
-        echo "\n🎉 SUCCÈS TOTAL : L'authentification SMTP a réussi avec brio !\n";
-        echo "   Votre formulaire de contact peut maintenant envoyer des emails.\n";
-        $mail->smtpClose();
+        echo "    ✅ Connexion et authentification réussies !\n";
+
+        echo "\n[7] Test d'envoi réel d'un e-mail :\n";
+        $testRecipient = $user;
+        $mail->addAddress($testRecipient);
+        $mail->Subject = '[Diagnostic Bowaba] Test SMTP réussi';
+        $mail->Body = "Ceci est un message de test automatique pour valider l'envoi d'e-mails depuis bowabancongo.com.\nDate : " . date('Y-m-d H:i:s');
+        
+        echo "    -> Envoi en cours vers {$testRecipient}...\n";
+        $mail->send();
+        echo "\n🎉 SUCCÈS TOTAL : E-mail de test envoyé et accepté par le serveur SMTP !\n";
+        echo "   Votre formulaire de contact en ligne fonctionnera parfaitement.\n";
     } else {
         echo "\n❌ ÉCHEC : Impossible de se connecter via PHPMailer.\n";
         echo "   Détail : " . $mail->ErrorInfo . "\n";
