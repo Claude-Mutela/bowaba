@@ -138,8 +138,28 @@ $nav = $nav ?? '';
     <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
     <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
+    <!-- Core Template CSS (Topbar, Header, Navbar, Footer, Base Elements) -->
+    <link href="assets/css/global.css" rel="stylesheet">
+
+    <!-- Inline Header Logo Safeguard -->
+    <style>
+      #header .logo img {
+        max-height: 55px;
+        width: auto;
+        max-width: 220px;
+        object-fit: contain;
+        display: block;
+      }
+      @media (max-width: 991px) {
+        #header .logo img {
+          max-height: 45px;
+          max-width: 180px;
+        }
+      }
+    </style>
+
     <!-- Page Specific CSS -->
-<?php if (!empty($pageCss)): ?>
+<?php if (!empty($pageCss) && $pageCss !== 'assets/css/global.css'): ?>
     <link href="<?= htmlspecialchars($pageCss, ENT_QUOTES, 'UTF-8') ?>" rel="stylesheet">
 <?php endif; ?>
 </head>

@@ -25,20 +25,50 @@
 
   // 404 if not found
   if (!$article) {
-      // Try to find by ID for backward compatibility or if slug fails
+      // Try to find by ID for backward compatibility or if slug is numeric
       $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
-      if($id){
-         $stmt = $conn->prepare("SELECT slug FROM articles WHERE id=:id");
-         $stmt->execute([':id'=>$id]);
-         $found = $stmt->fetchColumn();
-         if($found){
-             header("Location: blog/" . $found, true, 301);
+      if (!$id && is_numeric($slug)) {
+          $id = (int)$slug;
+      }
+      if ($id) {
+         $stmt = $conn->prepare("
+             SELECT a.*, u.name as author_name, c.name as category_name, c.slug as category_slug
+             FROM articles a
+             LEFT JOIN users u ON a.user_id = u.id
+             LEFT JOIN article_categories c ON a.category_id = c.id
+             WHERE a.id = :id AND (a.status = 'published' OR a.status IS NULL)
+             LIMIT 1
+         ");
+         $stmt->execute([':id' => $id]);
+         $article = $stmt->fetch(PDO::FETCH_ASSOC);
+         if ($article && !empty($article['slug'])) {
+             header("Location: blog/" . $article['slug'], true, 301);
              exit;
          }
       }
+  }
 
-      header("HTTP/1.0 404 Not Found");
-      echo "Article introuvable.";
+  // Si l'article n'existe pas, afficher une page 404 propre avec header et footer
+  if (!$article) {
+      $pageTitle = "Article non trouvé - Bowaba n Congo";
+      $pageDesc  = "L'article demandé est introuvable ou n'est plus disponible.";
+      $pageCss   = 'assets/css/blog.css';
+      $nav       = 'blog';
+      http_response_code(404);
+      require_once __DIR__ . '/hd-ft/hd.php';
+      ?>
+      <main id="main">
+        <section class="d-flex align-items-center justify-content-center" style="min-height: 50vh; padding: 80px 0;">
+          <div class="container text-center">
+            <h1 class="display-3 fw-bold text-primary mb-3">404</h1>
+            <h2 class="h3 fw-bold mb-3" style="color: #0b2341;">Article introuvable</h2>
+            <p class="text-muted mb-4">L'article que vous recherchez n'existe pas, est en cours de rédaction ou a été déplacé.</p>
+            <a href="blog" class="btn btn-primary px-4 py-2 rounded-pill fw-bold" style="background: #008ff2; border: none;">Retour aux articles</a>
+          </div>
+        </section>
+      </main>
+      <?php
+      require_once __DIR__ . '/hd-ft/ft.php';
       exit;
   }
   
@@ -119,7 +149,7 @@
       'category_name' => $article['category_name'] ?? null,
       'tags'          => $tags ?? []
   ];
-  $pageCss     = 'assets/css/signle-blog.css';
+  $pageCss     = 'assets/css/blog.css';
   $nav         = 'blog';
 
   require_once __DIR__ . '/hd-ft/hd.php'; 
