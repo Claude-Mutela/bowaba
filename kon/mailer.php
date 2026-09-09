@@ -95,6 +95,17 @@ function createMailer(string $profile = 'main'): PHPMailer
     $mail->CharSet  = 'UTF-8';
     $mail->Encoding = 'base64';
 
+    // Options SSL optionnelles (si certificats intermédiaires non reconnus sur le serveur)
+    if (env('SMTP_VERIFY_SSL') === 'false') {
+        $mail->SMTPOptions = [
+            'ssl' => [
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true,
+            ],
+        ];
+    }
+
     // Expéditeur par défaut
     $mail->setFrom($from, $fromName);
 

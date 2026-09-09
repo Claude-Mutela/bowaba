@@ -107,7 +107,16 @@ try {
         error_log('[post-contact] PHPMailer ErrorInfo : ' . $mail->ErrorInfo);
     }
 
-    $_SESSION['errors'] = ["Une erreur technique est survenue lors de l'envoi de votre message. Veuillez réessayer ultérieurement ou nous contacter directement par téléphone au +243 816 695 000."];
+    $techError = '';
+    if (env('APP_DEBUG') === 'true' || env('APP_ENV') === 'local') {
+        $detail = $e->getMessage();
+        if ($mail instanceof PHPMailer && !empty($mail->ErrorInfo) && $mail->ErrorInfo !== $detail) {
+            $detail .= ' (' . $mail->ErrorInfo . ')';
+        }
+        $techError = '<br><small class="fw-bold">[Diagnostic : ' . htmlspecialchars($detail, ENT_QUOTES, 'UTF-8') . ']</small>';
+    }
+
+    $_SESSION['errors'] = ["Une erreur technique est survenue lors de l'envoi de votre message. Veuillez réessayer ultérieurement ou nous contacter directement par téléphone au +243 816 695 000." . $techError];
     $_SESSION['inputs'] = $_POST;
     header('Location: contact');
     exit();
